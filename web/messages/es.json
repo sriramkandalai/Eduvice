@@ -100,7 +100,7 @@
   },
   "Chat": {
     "title": "Pregunte sobre las escuelas de EE. UU.",
-    "intro": "Escriba su pregunta con sus propias palabras. Las respuestas vienen de nuestra guía del sistema escolar.",
+    "intro": "Haga cualquier pregunta, con sus propias palabras y en su propio idioma. Cuando nuestra guía escolar incluya información sobre su pregunta, la respuesta le mostrará de dónde proviene.",
     "inputLabel": "Su pregunta",
     "placeholder": "Ejemplo: ¿Puede mi hijo inscribirse sin número de Seguro Social?",
     "submit": "Preguntar",
@@ -130,7 +130,7 @@
     "principle2Title": "Privado",
     "principle2Body": "Nunca pedimos su nombre ni su estatus migratorio, y no guardamos sus conversaciones.",
     "principle3Title": "Cuidadoso",
-    "principle3Body": "Las respuestas vienen solo de nuestra guía escolar, y cada respuesta muestra su fuente.",
+    "principle3Body": "Cuando nuestra guía escolar revisada tenga información sobre una pregunta, las respuestas la utilizan y muestran de dónde se obtuvo.",
     "principle4Title": "Respetuoso",
     "principle4Body": "Toda pregunta es una buena pregunta, en cualquier idioma.",
     "limitsTitle": "Lo que EduVice no es",
@@ -188,7 +188,7 @@
       },
       {
         "heading": "Las respuestas pueden tener errores",
-        "body": "Las respuestas se escriben con ayuda de inteligencia artificial a partir de nuestra guía escolar. Trabajamos para que sean correctas, pero pueden estar incompletas, desactualizadas o equivocadas. No dependa solo de EduVice para decisiones importantes."
+        "body": "Las respuestas se escriben con la ayuda de inteligencia artificial, usando nuestra guía escolar cuando corresponde. Nos esforzamos por mantenerlas acertadas, pero podrían estar incompletas, desactualizadas o tener errores. No tome decisiones importantes basándose únicamente en EduVice."
       },
       {
         "heading": "Uso justo",

@@ -100,7 +100,7 @@
   },
   "Chat": {
     "title": "Ask about US schools",
-    "intro": "Type your question in your own words. Answers come from our school-system guide.",
+    "intro": "Ask anything, in your own words and your own language. When our school guide covers your question, the answer shows its source.",
     "inputLabel": "Your question",
     "placeholder": "Example: Can my child enroll without a Social Security number?",
     "submit": "Ask",
@@ -130,7 +130,7 @@
     "principle2Title": "Private",
     "principle2Body": "We never ask for your name or immigration status, and we don't save your conversations.",
     "principle3Title": "Careful",
-    "principle3Body": "Answers come only from our school guide, and each answer shows its source.",
+    "principle3Body": "When our reviewed school guide covers a question, answers use it and show the source.",
     "principle4Title": "Respectful",
     "principle4Body": "Every question is a good question, in any language.",
     "limitsTitle": "What EduVice is not",
@@ -188,7 +188,7 @@
       },
       {
         "heading": "Answers can be wrong",
-        "body": "Answers are written with the help of artificial intelligence based on our school guide. We work to keep them accurate, but they may be incomplete, out of date, or wrong. Don't rely on EduVice alone for important decisions."
+        "body": "Answers are written with the help of artificial intelligence, using our school guide when it applies. We work to keep them accurate, but they may be incomplete, out of date, or wrong. Don't rely on EduVice alone for important decisions."
       },
       {
         "heading": "Fair use",

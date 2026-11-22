@@ -114,7 +114,7 @@ export async function POST(req: Request) {
       config: {
         systemInstruction: buildSystemPrompt(sources, locale),
         temperature: 0.2,
-        maxOutputTokens: 600,
+        maxOutputTokens: 2048,
         // Short factual answers need little "thinking"; LOW keeps replies fast and cheap.
         // (gemini-3.8-flash rejects MINIMAL.)
         thinkingConfig: { thinkingLevel: ThinkingLevel.LOW },

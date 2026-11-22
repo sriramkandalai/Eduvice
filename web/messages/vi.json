@@ -100,7 +100,7 @@
   },
   "Chat": {
     "title": "Hỏi về trường học tại Mỹ",
-    "intro": "Hãy nhập câu hỏi bằng cách diễn đạt quen thuộc của quý vị. Câu trả lời được tổng hợp từ cẩm nang trường học của chúng tôi.",
+    "intro": "Xin quý phụ huynh cứ thoải mái hỏi bất cứ điều gì, bằng lời văn và ngôn ngữ quen thuộc của mình. Khi cẩm nang học đường của chúng tôi có thông tin về câu hỏi của quý vị, câu trả lời sẽ hiển thị rõ nguồn.",
     "inputLabel": "Câu hỏi của quý vị",
     "placeholder": "Ví dụ: Con tôi có thể nhập học mà không cần số An sinh Xã hội không?",
     "submit": "Gửi câu hỏi",
@@ -130,7 +130,7 @@
     "principle2Title": "Riêng tư",
     "principle2Body": "Chúng tôi không bao giờ hỏi tên hay tình trạng di trú của quý vị, và chúng tôi cũng không lưu lại nội dung trò chuyện.",
     "principle3Title": "Cẩn trọng",
-    "principle3Body": "Mọi câu trả lời đều chỉ lấy từ tài liệu hướng dẫn học đường của chúng tôi, và mỗi câu trả lời đều ghi rõ nguồn thông tin.",
+    "principle3Body": "Khi cẩm nang học đường đã được kiểm duyệt của chúng tôi có thông tin về câu hỏi, câu trả lời sẽ sử dụng thông tin đó và ghi rõ nguồn gốc.",
     "principle4Title": "Tôn trọng",
     "principle4Body": "Mọi câu hỏi đều đáng quý, bằng bất kỳ ngôn ngữ nào.",
     "limitsTitle": "Những điều EduVice không hỗ trợ",
@@ -188,7 +188,7 @@
       },
       {
         "heading": "Câu trả lời có thể có thiếu sót",
-        "body": "Các câu trả lời được soạn với sự hỗ trợ của trí tuệ nhân tạo dựa trên tài liệu hướng dẫn học đường của chúng tôi. Chúng tôi luôn nỗ lực giữ cho thông tin chính xác, tuy nhiên câu trả lời vẫn có thể chưa đủ ý, đã cũ hoặc có sai sót. Quý vị xin đừng chỉ dựa vào một mình EduVice để đưa ra những quyết định quan trọng."
+        "body": "Các câu trả lời được soạn với sự hỗ trợ của trí tuệ nhân tạo, có sử dụng cẩm nang học đường của chúng tôi khi phù hợp. Chúng tôi luôn cố gắng giữ thông tin chính xác, nhưng nội dung có thể chưa đầy đủ, đã cũ hoặc có sai sót. Xin quý vị đừng chỉ dựa vào một mình EduVice khi đưa ra các quyết định quan trọng."
       },
       {
         "heading": "Sử dụng đúng mực",

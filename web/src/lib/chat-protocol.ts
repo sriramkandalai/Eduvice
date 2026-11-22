@@ -41,7 +41,7 @@ export function decodeTextHeader(header: string | null): string | null {
     return null;
   }
 }
-export const MAX_QUESTION_LENGTH = 1000;
+export const MAX_QUESTION_LENGTH = 4000;
 
 export interface ChatRequestBody {
   question: string;
