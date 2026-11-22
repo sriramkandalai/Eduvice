@@ -15,7 +15,9 @@ export function Navbar() {
       >
         <Link href="/" aria-label={t("homeLink")} className="flex items-center gap-2">
           <Logo className="h-9 w-auto" />
-          <span className="wordmark text-2xl sm:text-3xl">{brand("name")}</span>
+          <span className="wordmark brand text-2xl sm:text-3xl" lang="en">
+            {brand("name")}
+          </span>
         </Link>
 
         <div className="flex flex-wrap items-center gap-x-3 gap-y-2 sm:gap-x-4">

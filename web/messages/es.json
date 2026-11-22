@@ -24,7 +24,10 @@
     "label": "Idioma",
     "names": {
       "en": "English",
-      "es": "Español"
+      "es": "Español",
+      "zh": "中文",
+      "vi": "Tiếng Việt",
+      "ar": "العربية"
     }
   },
   "Footer": {
@@ -102,9 +105,14 @@
     "placeholder": "Ejemplo: ¿Puede mi hijo inscribirse sin número de Seguro Social?",
     "submit": "Preguntar",
     "thinking": "Buscando una respuesta…",
+    "thinkingLong": "Seguimos trabajando… buscar en sitios web oficiales puede tardar unos segundos más.",
     "answerLabel": "Respuesta",
     "sourceLabel": "Fuente",
     "readMore": "Leer el tema completo",
+    "webSourcesLabel": "Fuentes (sitios web oficiales)",
+    "webNote": "Esta respuesta viene de una búsqueda en vivo en College Board y en sitios web oficiales de universidades. Las políticas pueden cambiar cada año, así que confírmelo con la universidad.",
+    "webNoResult": "No encontré esta información en College Board ni en sitios web oficiales de universidades. Puede buscarla con la herramienta AP Credit Policy Search de College Board en apstudents.collegeboard.org, o revisar el sitio web de admisiones o del registro de la universidad.",
+    "searchSuggestionsLabel": "Sugerencias de búsqueda de Google",
     "errorEmpty": "Por favor, escriba una pregunta primero.",
     "errorGeneric": "Algo salió mal. Por favor, inténtelo de nuevo.",
     "errorRateLimit": "Ha hecho muchas preguntas en poco tiempo. Por favor, espere un minuto e inténtelo de nuevo.",
@@ -145,7 +153,7 @@
       },
       {
         "heading": "Cómo se responden sus preguntas",
-        "body": "Para responder, enviamos el texto de su pregunta al servicio Gemini de Google, que ayuda a encontrar el tema correcto y a escribir la respuesta. Google procesa este texto según sus propios términos y puede guardarlo y usarlo para mejorar sus servicios. Por favor, no incluya nombres, direcciones, números de caso ni otros datos personales en sus preguntas."
+        "body": "Para responder, enviamos el texto de su pregunta al servicio Gemini de Google, que ayuda a encontrar el tema correcto y a escribir la respuesta. Para preguntas sobre qué universidades dan créditos por los exámenes AP, Gemini también usa la Búsqueda de Google para consultar College Board y sitios web oficiales de universidades. Google procesa este texto según sus propios términos y puede guardarlo y usarlo para mejorar sus servicios. Por favor, no incluya nombres, direcciones, números de caso ni otros datos personales en sus preguntas."
       },
       {
         "heading": "Lo que no hacemos",

@@ -3,6 +3,10 @@
 // translations with the same slugs (see scripts/translate.ts).
 
 import en from "../../data/faqs/en.json";
+import es from "../../data/faqs/es.json";
+import zh from "../../data/faqs/zh.json";
+import vi from "../../data/faqs/vi.json";
+import ar from "../../data/faqs/ar.json";
 import type { Locale } from "@/i18n/routing";
 
 export const CATEGORIES = [
@@ -68,9 +72,14 @@ function toTranslationMap(raw: unknown, label: string): TranslationMap {
 /**
  * Translations, keyed by locale. Each file only needs `slug`, `title` and `text`;
  * category always comes from English. Missing topics fall back to English.
- * Add a line here for each data/faqs/<locale>.json file.
+ * Add a line here for each data/faqs/<locale>.json file (created by `npm run translate`).
  */
-const TRANSLATIONS: Partial<Record<Locale, TranslationMap>> = {};
+const TRANSLATIONS: Partial<Record<Locale, TranslationMap>> = {
+  es: toTranslationMap(es, "data/faqs/es.json"),
+  zh: toTranslationMap(zh, "data/faqs/zh.json"),
+  vi: toTranslationMap(vi, "data/faqs/vi.json"),
+  ar: toTranslationMap(ar, "data/faqs/ar.json"),
+};
 
 function localize(faq: Faq, locale: Locale): LocalizedFaq {
   if (locale === "en") return { ...faq, isFallback: false };

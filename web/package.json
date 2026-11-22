@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
-    "seed": "tsx --env-file=.env.local scripts/seed.ts"
+    "seed": "tsx --env-file=.env.local scripts/seed.ts",
+    "translate": "tsx --env-file=.env.local scripts/translate.ts"
   },
   "dependencies": {
     "@google/genai": "^3.6.1",
@@ -25,6 +26,7 @@
     "@types/react-dom": "^18.3.1",
     "eslint": "^8.57.1",
     "eslint-config-next": "^14.2.30",
+    "intl-messageformat": "^10.7.18",
     "tailwindcss": "^4.1.0",
     "tsx": "^4.19.2",
     "typescript": "^5.6.3"

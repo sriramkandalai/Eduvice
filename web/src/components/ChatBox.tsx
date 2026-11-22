@@ -6,9 +6,14 @@ import { Link } from "@/i18n/navigation";
 import {
   MAX_QUESTION_LENGTH,
   SOURCE_HEADER,
+  SUGGESTIONS_HEADER,
+  WEB_SOURCES_HEADER,
   decodeSource,
+  decodeTextHeader,
+  decodeWebSources,
   type ChatRequestBody,
   type ChatSource,
+  type WebSource,
 } from "@/lib/chat-protocol";
 
 type Status = "idle" | "loading" | "streaming" | "done" | "error";
@@ -24,11 +29,24 @@ export function ChatBox() {
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState("");
   const [source, setSource] = useState<ChatSource | null>(null);
+  const [webSources, setWebSources] = useState<WebSource[]>([]);
+  const [suggestionsHtml, setSuggestionsHtml] = useState<string | null>(null);
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState<ErrorKey | null>(null);
   const abortRef = useRef<AbortController | null>(null);
+  const [slow, setSlow] = useState(false);
 
   useEffect(() => () => abortRef.current?.abort(), []);
+
+  // Live web answers (AP credit questions) can take 10+ seconds; reassure the parent.
+  useEffect(() => {
+    if (status !== "loading") {
+      setSlow(false);
+      return;
+    }
+    const timer = setTimeout(() => setSlow(true), 4000);
+    return () => clearTimeout(timer);
+  }, [status]);
 
   const busy = status === "loading" || status === "streaming";
 
@@ -46,6 +64,8 @@ export function ChatBox() {
 
     setAnswer("");
     setSource(null);
+    setWebSources([]);
+    setSuggestionsHtml(null);
     setError(null);
     setStatus("loading");
 
@@ -61,6 +81,8 @@ export function ChatBox() {
       if (!res.ok || !res.body) throw new Error(`HTTP ${res.status}`);
 
       setSource(decodeSource(res.headers.get(SOURCE_HEADER)));
+      setWebSources(decodeWebSources(res.headers.get(WEB_SOURCES_HEADER)));
+      setSuggestionsHtml(decodeTextHeader(res.headers.get(SUGGESTIONS_HEADER)));
       setStatus("streaming");
 
       const reader = res.body.getReader();
@@ -124,7 +146,7 @@ export function ChatBox() {
       </form>
 
       <div aria-live="polite" className="flex flex-col gap-4">
-        {status === "loading" && <p className="font-medium">{t("thinking")}</p>}
+        {status === "loading" && <p className="font-medium">{t(slow ? "thinkingLong" : "thinking")}</p>}
 
         {error && (
           <p role="alert" className="rounded-xl border-2 border-blue-dark bg-cream px-4 py-3 font-medium">
@@ -139,6 +161,38 @@ export function ChatBox() {
             </h2>
             <p className="whitespace-pre-wrap leading-relaxed">{answer}</p>
           </section>
+        )}
+
+        {webSources.length > 0 && (status === "streaming" || status === "done") && (
+          <aside className="flex flex-col gap-3 rounded-2xl border-s-4 border-blue bg-cream px-5 py-4">
+            <h2 className="text-sm font-bold uppercase tracking-wide text-blue">{t("webSourcesLabel")}</h2>
+            <ul className="flex flex-wrap gap-2">
+              {webSources.map((s) => (
+                <li key={s.domain}>
+                  <a
+                    href={s.uri}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    dir="ltr"
+                    className="inline-block rounded-full bg-white px-3 py-1 text-sm font-bold text-blue hover:underline"
+                  >
+                    {s.domain}
+                  </a>
+                </li>
+              ))}
+            </ul>
+            <p className="text-sm">{t("webNote")}</p>
+            {suggestionsHtml && (
+              // Google's grounding terms require showing these search suggestions. The HTML comes
+              // from Google; it's sandboxed (no scripts) and its links open in a new tab.
+              <iframe
+                title={t("searchSuggestionsLabel")}
+                sandbox="allow-popups allow-popups-to-escape-sandbox"
+                srcDoc={`<base target="_blank">${suggestionsHtml}`}
+                className="h-16 w-full rounded-xl border-0 bg-white"
+              />
+            )}
+          </aside>
         )}
 
         {source && (status === "streaming" || status === "done") && (

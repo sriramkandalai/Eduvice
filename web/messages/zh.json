@@ -1,0 +1,216 @@
+{
+  "Brand": {
+    "name": "EduVice",
+    "tagline": "为移民家庭量身打造的美国学校指南。"
+  },
+  "Metadata": {
+    "title": "EduVice — 读懂美国学校",
+    "description": "为移民家长清晰解答关于美国学校体系的疑问。",
+    "guideTitle": "学校指南",
+    "chatTitle": "在线提问",
+    "aboutTitle": "关于我们",
+    "contactTitle": "联系我们",
+    "privacyTitle": "隐私政策",
+    "termsTitle": "使用条款",
+    "notFoundTitle": "页面未找到"
+  },
+  "Navbar": {
+    "homeLink": "EduVice 首页",
+    "guide": "学校指南",
+    "chat": "在线提问",
+    "mainNav": "主导航"
+  },
+  "LanguageSwitcher": {
+    "label": "语言",
+    "names": {
+      "en": "English",
+      "es": "Español",
+      "zh": "中文",
+      "vi": "Tiếng Việt",
+      "ar": "العربية"
+    }
+  },
+  "Footer": {
+    "nav": "页脚",
+    "guide": "学校指南",
+    "chat": "在线提问",
+    "about": "关于我们",
+    "contact": "联系我们",
+    "privacy": "隐私",
+    "terms": "条款",
+    "disclaimer": "EduVice 仅提供常规信息，不构成法律建议。各州和各学区的规定可能有所不同，请务必向您孩子所在的学校核实。",
+    "copyright": "© {year} EduVice"
+  },
+  "Home": {
+    "eyebrow": "专为刚来美国的家长准备",
+    "title": "读懂美国学校。",
+    "valueProp": "无论是关于入学、成绩、特殊教育还是学校供餐，欢迎随时提问——您将获得清楚明白的解答和信息来源。",
+    "cta": "在线提问",
+    "browse": "浏览学校指南",
+    "howTitle": "使用方法",
+    "step1Title": "用您的母语提问",
+    "step1Body": "就像向朋友请教一样输入您的问题。",
+    "step2Title": "我们为您查找指南",
+    "step2Body": "EduVice 会在专为家长编写的 {count} 个主题中帮您查找。",
+    "step3Title": "获得清晰解答",
+    "step3Body": "简明易懂的回答，并清楚标明信息来源。",
+    "topicsTitle": "按主题浏览"
+  },
+  "Categories": {
+    "getting-started": {
+      "title": "新手入门",
+      "description": "报名入学、选择学校以及所需材料。"
+    },
+    "how-school-works": {
+      "title": "学校如何运转",
+      "description": "成绩、校历、考试和家庭作业。"
+    },
+    "learning-support": {
+      "title": "学习辅导与支持",
+      "description": "英语学习者、特殊教育和额外辅导帮助。"
+    },
+    "family-rights": {
+      "title": "家庭与家长权利",
+      "description": "翻译服务、隐私保护、校纪惩戒与参与学校活动。"
+    },
+    "daily-life": {
+      "title": "日常生活",
+      "description": "学校餐食、校车、出勤和课后项目。"
+    },
+    "health-safety": {
+      "title": "健康与安全",
+      "description": "疫苗接种、校医、防范欺凌以及身心健康。"
+    },
+    "high-school-college": {
+      "title": "高中及未来发展",
+      "description": "高中毕业、申请大学以及为家长开设的课程。"
+    }
+  },
+  "Guide": {
+    "title": "学校指南",
+    "intro": "简明通俗地解答家长最关心的美国学校常见问题。您可以挑选感兴趣的主题，也可以直接提问。",
+    "topicCount": "{count, plural, other {# 个主题}}",
+    "backToGuide": "学校指南",
+    "breadcrumb": "导航路径",
+    "related": "相关主题",
+    "askTitle": "还有疑问吗？",
+    "askBody": "用您习惯的语言向 EduVice 提问，几秒钟内即可获得解答。",
+    "askCta": "我要提问",
+    "translationNote": "该主题暂无中文版本，目前以英文显示。您依然可以用中文向我们提问。"
+  },
+  "Chat": {
+    "title": "咨询美国学校相关问题",
+    "intro": "请用您平时说话的方式输入问题，解答均来自我们的学校系统指南。",
+    "inputLabel": "您的问题",
+    "placeholder": "例如：孩子没有社会安全号码可以入学吗？",
+    "submit": "提问",
+    "thinking": "正在寻找答案…",
+    "thinkingLong": "还在查找中……搜索官方网站可能需要多花几秒钟，请稍候。",
+    "answerLabel": "回答",
+    "sourceLabel": "来源",
+    "readMore": "阅读完整主题",
+    "webSourcesLabel": "信息来源（官方网站）",
+    "webNote": "此回答来自对 College Board 和大学官方网站的实时搜索。各校规定每年可能会有变化，请务必与大学核实确认。",
+    "webNoResult": "未能从 College Board 或大学官方网站上找到此内容。您可以前往 apstudents.collegeboard.org 使用 College Board 的 AP 学分政策查询工具查找，或者查看大学的招生办（admissions）或教务处（registrar）网站。",
+    "searchSuggestionsLabel": "Google 搜索建议",
+    "errorEmpty": "请先输入您的问题。",
+    "errorGeneric": "系统出错了，请再试一次。",
+    "errorRateLimit": "您在短时间内提问过于频繁，请稍等一分钟后再试。",
+    "disclaimer": "EduVice 提供常规参考信息，不构成法律建议。各州和各学区的规定可能有所不同，请向所在学校进一步核实。",
+    "privacyNote": "提问时请不要包含姓名、地址或其他个人隐私信息。"
+  },
+  "About": {
+    "title": "关于 EduVice",
+    "lead": "EduVice 致力于用通俗易懂的语言以及家长熟悉的母语，帮助移民家长了解美国学校的运作方式。",
+    "whyTitle": "为什么创建这个平台",
+    "whyBody": "美国的学校体制可能让人感到困惑，即使是在这里长大的家庭也不例外。像 IEP（个别化教育计划）、GPA（平均绩点）和学区等词汇常常让人摸不着头脑；许多家长也不清楚家庭所享有的权利，例如没有社会安全号码也可以入学，或者有权要求学校提供免费口译员。EduVice 将清晰明了的解答汇集于此，方便家长随时查阅。",
+    "principlesTitle": "我们的理念",
+    "principle1Title": "免费",
+    "principle1Body": "EduVice 完全免费，无需注册账号。",
+    "principle2Title": "保护隐私",
+    "principle2Body": "我们绝不会询问您的姓名或移民身份，也不会保存您的对话内容。",
+    "principle3Title": "严谨可靠",
+    "principle3Body": "所有回答均来自我们的学校指南，并且每个回答都会标明出处。",
+    "principle4Title": "尊重包容",
+    "principle4Body": "无论用哪种语言，您提出的每一个问题都值得被认真对待。",
+    "limitsTitle": "EduVice 不能提供的内容",
+    "limitsBody": "EduVice 只提供常规参考信息，不提供法律建议。各州和各学区的规定可能有所不同，因此重要事项请向孩子所在的学校核实。如果您对自己个人的移民身份有疑问，请咨询合格的移民律师或非营利法律援助机构。"
+  },
+  "Contact": {
+    "title": "联系我们",
+    "lead": "如果您有任何反馈、发现了错误，或者希望参与翻译或与我们合作，我们非常期待听到您的声音。",
+    "emailLabel": "电子邮件",
+    "note": "请不要发送个人详细信息或与您移民身份相关的内容。关于您孩子的具体问题，请直接联系学校。如遇紧急情况，请拨打 911。"
+  },
+  "Privacy": {
+    "title": "隐私政策",
+    "updated": "最近更新：{date}",
+    "intro": "EduVice 是一家为家长提供信息的免费网站。本政策旨在说明您在使用本网站时，相关信息将如何被处理。",
+    "sections": [
+      {
+        "heading": "我们收集的信息",
+        "body": "使用 EduVice 无需注册账号，我们绝不会询问您的姓名、联系方式或移民身份。当您提问时，我们会收到您输入的问题文字。为防止恶意滥用，我们会保存经过加密混淆（哈希处理）的网络地址，以及提问次数的统计。这些统计记录会在 24 小时内自动删除。"
+      },
+      {
+        "heading": "我们如何为您解答问题",
+        "body": "为了回答您的问题，我们会把您提问的内容发送给 Google 的 Gemini 服务，由它来协助找到合适的主题并组织回答。对于哪些大学认可 AP 考试学分的问题，Gemini 还会通过 Google 搜索在 College Board 和大学官方网站上查找。Google 会依据其自身的服务条款处理这些内容，并可能保存这些信息以改进其服务。请不要在问题中包含姓名、家庭住址、案件号码或其他个人隐私信息。"
+      },
+      {
+        "heading": "我们绝不会做的事",
+        "body": "我们不会保存您的对话、不会出售您的信息、不会展示广告，也不会使用追踪 cookies。"
+      },
+      {
+        "heading": "Cookies",
+        "body": "我们仅使用一个 cookie 来记住您选择的语言。它无法识别您的个人身份。"
+      },
+      {
+        "heading": "网站托管",
+        "body": "与大多数网站一样，我们的网站托管服务商可能会保留基本的系统技术日志（例如网络地址和浏览器类型），以确保网站安全并保持正常运行。"
+      },
+      {
+        "heading": "儿童隐私",
+        "body": "EduVice 是专为家长和监护人设计的，不适合 13 岁以下的儿童单独使用。"
+      },
+      {
+        "heading": "政策变更与疑问",
+        "body": "如果我们修改本政策，将更新本页面顶部的日期。如果您有任何疑问，请随时联系我们。"
+      }
+    ]
+  },
+  "Terms": {
+    "title": "使用条款",
+    "updated": "最近更新：{date}",
+    "intro": "使用 EduVice 即表示您同意这些条款。",
+    "sections": [
+      {
+        "heading": "仅供参考",
+        "body": "EduVice 仅提供有关美国学校的常规参考信息，不构成法律、医疗或移民方面的专业建议。不同州和不同学区的规定各不相同，因此重要信息请务必向孩子所在的学校或专业人士核实。"
+      },
+      {
+        "heading": "回答可能存在误差",
+        "body": "所有回答均是在人工智能的协助下、依据我们的学校指南生成的。我们竭力确保内容的准确性，但回答仍可能不完整、过时或存在错误。请不要仅凭 EduVice 的回答做出重大决定。"
+      },
+      {
+        "heading": "合理使用",
+        "body": "请友善、合规地使用 EduVice。请勿尝试破坏、使其过载或滥用本网站，也不要使用自动化工具抓取网站内容。我们对短时间内的提问次数设有上限。"
+      },
+      {
+        "heading": "不作任何担保",
+        "body": "EduVice 按“现状”提供，不包含任何形式的保证。在法律允许的范围内，因使用本网站而产生的任何损失，我们概不负责。"
+      },
+      {
+        "heading": "其他网站",
+        "body": "EduVice 可能会提到其他网站或机构。我们无法管理它们，也不对其内容负责。"
+      },
+      {
+        "heading": "条款更新",
+        "body": "我们可能会更新这些条款。如果有修改，我们会更改本页顶部的日期。"
+      }
+    ]
+  },
+  "NotFound": {
+    "title": "找不到该页面",
+    "body": "我们找不到您想打开的页面。它可能已被移动，或者网址链接有误。",
+    "home": "返回首页"
+  }
+}

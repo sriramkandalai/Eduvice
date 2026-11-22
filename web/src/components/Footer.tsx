@@ -18,7 +18,9 @@ export function Footer() {
     <footer className="mt-16 bg-blue-dark text-cream">
       <div className="mx-auto flex max-w-5xl flex-col gap-6 px-4 py-10">
         <div className="flex flex-col gap-1">
-          <span className="font-display text-2xl text-yellow">{brand("name")}</span>
+          <span className="brand text-2xl text-yellow" lang="en">
+            {brand("name")}
+          </span>
           <p className="text-sm">{brand("tagline")}</p>
         </div>
 
