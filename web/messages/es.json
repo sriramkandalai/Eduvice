@@ -1,0 +1,40 @@
+{
+  "Brand": {
+    "name": "EduVice"
+  },
+  "Metadata": {
+    "title": "EduVice — Las escuelas de EE. UU., explicadas",
+    "description": "Respuestas claras para padres inmigrantes sobre el sistema escolar de EE. UU."
+  },
+  "Navbar": {
+    "homeLink": "Inicio de EduVice",
+    "chat": "Hacer una pregunta",
+    "mainNav": "Navegación principal"
+  },
+  "LanguageSwitcher": {
+    "label": "Idioma",
+    "en": "EN",
+    "es": "ES",
+    "enFull": "English",
+    "esFull": "Español"
+  },
+  "Home": {
+    "eyebrow": "Para padres recién llegados a EE. UU.",
+    "title": "Las escuelas de EE. UU., explicadas.",
+    "valueProp": "Pregunte lo que quiera sobre inscripción, grados, educación especial o comidas escolares, y reciba una respuesta clara con su fuente.",
+    "cta": "Hacer una pregunta"
+  },
+  "Chat": {
+    "title": "Pregunte sobre las escuelas de EE. UU.",
+    "intro": "Escriba su pregunta con sus propias palabras. Las respuestas vienen de nuestra guía del sistema escolar.",
+    "inputLabel": "Su pregunta",
+    "placeholder": "Ejemplo: ¿Puede mi hijo inscribirse sin número de Seguro Social?",
+    "submit": "Preguntar",
+    "thinking": "Buscando una respuesta…",
+    "answerLabel": "Respuesta",
+    "sourceLabel": "Fuente",
+    "errorEmpty": "Por favor, escriba una pregunta primero.",
+    "errorGeneric": "Algo salió mal. Por favor, inténtelo de nuevo.",
+    "disclaimer": "EduVice ofrece información general, no asesoría legal. Las reglas pueden variar según el estado y el distrito; consulte con su escuela."
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "Brand": {
+    "name": "EduVice"
+  },
+  "Metadata": {
+    "title": "EduVice — US schools, explained",
+    "description": "Clear answers for immigrant parents about the US school system."
+  },
+  "Navbar": {
+    "homeLink": "EduVice home",
+    "chat": "Ask a question",
+    "mainNav": "Main navigation"
+  },
+  "LanguageSwitcher": {
+    "label": "Language",
+    "en": "EN",
+    "es": "ES",
+    "enFull": "English",
+    "esFull": "Español"
+  },
+  "Home": {
+    "eyebrow": "For parents new to the US",
+    "title": "US schools, explained.",
+    "valueProp": "Ask anything about enrollment, grades, special education, or school meals — and get a clear answer with its source.",
+    "cta": "Ask a question"
+  },
+  "Chat": {
+    "title": "Ask about US schools",
+    "intro": "Type your question in your own words. Answers come from our school-system guide.",
+    "inputLabel": "Your question",
+    "placeholder": "Example: Can my child enroll without a Social Security number?",
+    "submit": "Ask",
+    "thinking": "Finding an answer…",
+    "answerLabel": "Answer",
+    "sourceLabel": "Source",
+    "errorEmpty": "Please type a question first.",
+    "errorGeneric": "Something went wrong. Please try again.",
+    "disclaimer": "EduVice gives general information, not legal advice. Rules can differ by state and district — check with your school."
+  }
+}
