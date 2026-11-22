@@ -11,7 +11,9 @@ import {
 } from "@/lib/chat-protocol";
 
 type Status = "idle" | "loading" | "streaming" | "done" | "error";
-type ErrorKey = "errorEmpty" | "errorGeneric";
+type ErrorKey = "errorEmpty" | "errorGeneric" | "errorRateLimit";
+
+class RateLimitedError extends Error {}
 
 export function ChatBox() {
   const t = useTranslations("Chat");
@@ -54,6 +56,7 @@ export function ChatBox() {
         body: JSON.stringify(body),
         signal: controller.signal,
       });
+      if (res.status === 429) throw new RateLimitedError();
       if (!res.ok || !res.body) throw new Error(`HTTP ${res.status}`);
 
       setSource(decodeSource(res.headers.get(SOURCE_HEADER)));
@@ -70,8 +73,12 @@ export function ChatBox() {
       setStatus("done");
     } catch (err) {
       if (controller.signal.aborted) return;
-      console.error(err);
-      setError("errorGeneric");
+      if (err instanceof RateLimitedError) {
+        setError("errorRateLimit");
+      } else {
+        console.error(err);
+        setError("errorGeneric");
+      }
       setStatus("error");
     }
   }

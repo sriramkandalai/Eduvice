@@ -8,6 +8,14 @@ export interface RetrievedChunk {
   score: number;
 }
 
+/**
+ * Matches below this score are never shown to the model.
+ * Measured with gemini-embedding-001: on-topic questions score ~0.82–0.87 and
+ * unrelated ones ~0.74–0.80, so this floor only drops clearly unrelated matches.
+ * The model makes the final "did I use the source?" call (see lib/prompt.ts).
+ */
+export const MIN_SOURCE_SCORE = 0.75;
+
 /** Embed the question and return the single closest FAQ chunk from Atlas Vector Search. */
 export async function retrieveTopChunk(question: string): Promise<RetrievedChunk | null> {
   const [queryVector] = await embed([question], "RETRIEVAL_QUERY");
@@ -37,5 +45,6 @@ export async function retrieveTopChunk(question: string): Promise<RetrievedChunk
     ])
     .toArray();
 
-  return results[0] ?? null;
+  const top = results[0];
+  return top && top.score >= MIN_SOURCE_SCORE ? top : null;
 }

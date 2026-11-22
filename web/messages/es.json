@@ -35,6 +35,7 @@
     "sourceLabel": "Fuente",
     "errorEmpty": "Por favor, escriba una pregunta primero.",
     "errorGeneric": "Algo salió mal. Por favor, inténtelo de nuevo.",
+    "errorRateLimit": "Ha hecho muchas preguntas en poco tiempo. Por favor, espere un minuto e inténtelo de nuevo.",
     "disclaimer": "EduVice ofrece información general, no asesoría legal. Las reglas pueden variar según el estado y el distrito; consulte con su escuela."
   }
 }

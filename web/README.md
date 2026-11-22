@@ -53,4 +53,6 @@ Import the repo into Vercel, set **Root Directory** to `web`, and add the variab
 
 - UI strings live in `messages/{en,es}.json`. Add a locale by adding a messages file and listing the locale in `src/i18n/routing.ts`; for a right-to-left language, also add it to `RTL_LOCALES`.
 - The colors are defined only in `src/app/globals.css` (`@theme`) and come from the brand palette. Tailwind's default colors are switched off.
+- **How the bot answers** (tone, length, what to do with off-topic questions, safety rules) is set in `src/lib/prompt.ts`. Edit the rules there. Keep the `[SOURCE]` / `[NO_SOURCE]` format line: the model starts each reply with one of these tags, and the API uses it to decide whether to show the source card, then removes it.
+- **Rate limit:** each visitor (identified by a hash of their IP) can ask 8 questions per minute and 100 per day. Counters are stored in the `rate_limits` collection and expire on their own. To change the limits, edit `LIMITS` in `src/lib/rate-limit.ts`.
 - `/api/chat` streams `text/plain`. The cited source is returned in the `X-Source` response header as URI-encoded JSON.
