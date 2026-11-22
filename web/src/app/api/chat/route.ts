@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { ThinkingLevel } from "@google/genai";
 import { retrieveTopChunk, type RetrievedChunk } from "@/lib/rag";
 import { chatModel, getGemini } from "@/lib/gemini";
 import { MAX_QUESTION_LENGTH, SOURCE_HEADER, encodeSource } from "@/lib/chat-protocol";
@@ -59,9 +60,9 @@ export async function POST(req: Request) {
         systemInstruction: systemPrompt(source, locale),
         temperature: 0.2,
         maxOutputTokens: 600,
-        // Short factual answers don't need "thinking"; this keeps replies fast and cheap.
-        // (Supported by gemini-2.5-flash. Remove if you switch to a model that requires thinking.)
-        thinkingConfig: { thinkingBudget: 0 },
+        // Short factual answers need little "thinking"; LOW keeps replies fast and cheap.
+        // (gemini-3.8-flash rejects MINIMAL.)
+        thinkingConfig: { thinkingLevel: ThinkingLevel.LOW },
         abortSignal: abort.signal,
       },
     });
