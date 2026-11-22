@@ -15,7 +15,7 @@ export function Footer() {
   const brand = useTranslations("Brand");
 
   return (
-    <footer className="bg-blue-dark text-white">
+    <footer className="bg-charcoal text-paper">
       <div className="mx-auto flex max-w-6xl flex-col gap-8 px-4 py-12">
         <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
           <div className="flex flex-col gap-2">

@@ -1,4 +1,4 @@
-@import "tailwindcss";
+﻿@import "tailwindcss";
 
 /*
  * EduVice design system — "education product" style (reference: Khan Academy / Quizlet).
@@ -23,6 +23,12 @@
   --color-muted: #5a6478; /* secondary text */
   --color-line: #e2e6ee; /* borders */
   --color-mist: #f6f8fb; /* light section background */
+  /* home "rooms" (inspired by human-md.ai, user request 2026-11-23) */
+  --color-sand: #d9ccb9; /* floor */
+  --color-paper: #f4efe8; /* paper / light wall */
+  --color-charcoal: #201e1f; /* dark room, footer */
+  --color-wood: #d8b07c;
+  --color-wood-dark: #b5874f;
 
   --shadow-card: 0 1px 2px rgb(27 36 64 / 0.04), 0 2px 8px rgb(27 36 64 / 0.05);
   --shadow-card-lg: 0 4px 12px rgb(27 36 64 / 0.06), 0 12px 32px rgb(27 36 64 / 0.08);
@@ -36,11 +42,20 @@
 @theme inline {
   --font-sans: var(--font-body);
   --font-display: var(--font-heading);
+  --font-serif: var(--font-accent);
+  --font-mono: var(--font-type);
 }
 
 :root {
   --font-body: var(--font-inter), system-ui, sans-serif;
-  --font-heading: var(--font-jakarta), var(--font-inter), system-ui, sans-serif;
+  --font-heading: var(--font-bricolage), var(--font-inter), system-ui, sans-serif;
+  --font-accent: var(--font-serif), Georgia, serif;
+  --font-type: var(--font-typewriter), "Courier New", monospace;
+}
+/* Instrument Serif and Cutive Mono have no Vietnamese glyphs. */
+:root:lang(vi) {
+  --font-accent: Georgia, "Times New Roman", serif;
+  --font-type: "Courier New", monospace;
 }
 :root:lang(ar) {
   --font-body: var(--font-arabic), system-ui, sans-serif;
@@ -48,7 +63,7 @@
 }
 :root:lang(zh) {
   --font-body: var(--font-inter), "PingFang SC", "Microsoft YaHei", "Noto Sans SC", system-ui, sans-serif;
-  --font-heading: var(--font-jakarta), "PingFang SC", "Microsoft YaHei", "Noto Sans SC", system-ui, sans-serif;
+  --font-heading: var(--font-bricolage), "PingFang SC", "Microsoft YaHei", "Noto Sans SC", system-ui, sans-serif;
 }
 
 @layer base {
@@ -92,7 +107,7 @@
 
   /* The "EduVice" logotype. */
   .brand {
-    font-family: var(--font-jakarta), var(--font-inter), sans-serif;
+    font-family: var(--font-bricolage), var(--font-inter), sans-serif;
     font-weight: 800;
     letter-spacing: -0.03em;
     color: var(--color-blue);
@@ -389,7 +404,7 @@
     will-change: transform;
   }
   .uni-row span {
-    font-family: var(--font-jakarta), var(--font-inter), sans-serif;
+    font-family: var(--font-bricolage), var(--font-inter), sans-serif;
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 0.01em;
@@ -493,6 +508,229 @@
   .reveal-ready [data-reveal] {
     opacity: 1 !important;
     transform: none !important;
+    transition: none !important;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   Home "rooms" — inspired by human-md.ai: each scene is a full-screen room with a colored
+   wall and a sand floor, props standing on the floor, typewriter captions, paper grain.
+   ════════════════════════════════════════════════════════════════════════════ */
+@layer components {
+  /* Paper grain over the whole site (tactile, not flat-digital). */
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    pointer-events: none;
+    opacity: 0.07;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .scene {
+    --floor: 30%;
+    position: relative;
+    min-height: 100svh;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  @media (min-width: 640px) {
+    .scene {
+      --floor: 24%;
+    }
+  }
+  .scene-floor {
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0;
+    height: var(--floor);
+    background: var(--color-sand);
+    box-shadow: inset 0 14px 24px -14px rgb(32 30 31 / 0.25); /* where wall meets floor */
+    z-index: -1;
+  }
+  .scene .uni-bg-layer {
+    position: absolute;
+    inset: 0 0 var(--floor) 0;
+    z-index: -2;
+  }
+  .scene .uni-glow {
+    display: none;
+  }
+  /* Soft contact shadow under props and Marg. */
+  .prop-shadow {
+    filter: drop-shadow(0 18px 14px rgb(32 30 31 / 0.22));
+  }
+
+  /* Typewriter captions: "> a line of text" */
+  .typewriter {
+    font-family: var(--font-type);
+    font-size: 0.9rem;
+    letter-spacing: 0.08em;
+    line-height: 1.9;
+  }
+  .typewriter li::before {
+    content: ">";
+    margin-inline-end: 1rem;
+    color: var(--color-blue);
+  }
+  :root[dir="rtl"] .typewriter li::before {
+    content: "<";
+  }
+  .corner-label {
+    font-family: var(--font-type);
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  :lang(ar) .corner-label,
+  :lang(zh) .corner-label {
+    letter-spacing: 0;
+  }
+
+  /* Pills (nav, "scroll", CTAs) */
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-radius: 9999px;
+    padding: 0.55rem 1.1rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition:
+      transform 0.15s ease,
+      background 0.15s ease;
+  }
+  .pill:hover {
+    transform: translateY(-1px);
+  }
+  .pill-paper {
+    background: rgb(244 239 232 / 0.92);
+    color: var(--color-charcoal);
+    backdrop-filter: blur(6px);
+  }
+  .pill-yellow {
+    background: var(--color-yellow);
+    color: var(--color-charcoal);
+  }
+  .pill-dark {
+    background: var(--color-charcoal);
+    color: var(--color-paper);
+  }
+
+  /* Giant wordmark */
+  .mega {
+    font-family: var(--font-heading);
+    font-weight: 800;
+    letter-spacing: -0.06em;
+    line-height: 0.85;
+  }
+  .serif-accent {
+    font-family: var(--font-accent);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+  }
+
+  /* Polaroid topic cards */
+  .polaroid {
+    background: var(--color-white);
+    padding: 0.7rem 0.7rem 0.9rem;
+    border-radius: 0.25rem;
+    box-shadow:
+      0 1px 2px rgb(32 30 31 / 0.12),
+      0 14px 28px -12px rgb(32 30 31 / 0.35);
+    transform: rotate(var(--tilt, 0deg));
+    transition:
+      transform 0.25s ease,
+      box-shadow 0.25s ease;
+  }
+  .polaroid:hover {
+    transform: rotate(0deg) translateY(-4px) scale(1.03);
+    box-shadow:
+      0 2px 4px rgb(32 30 31 / 0.12),
+      0 24px 40px -14px rgb(32 30 31 / 0.45);
+  }
+
+  /* Pinned paper notes */
+  .note {
+    background: var(--color-paper);
+    color: var(--color-charcoal);
+    border-radius: 0.2rem;
+    box-shadow: 0 16px 30px -14px rgb(0 0 0 / 0.6);
+    transform: rotate(var(--tilt, 0deg));
+  }
+  .note::before {
+    /* pin */
+    content: "";
+    position: absolute;
+    top: -0.45rem;
+    inset-inline-start: 50%;
+    width: 0.9rem;
+    height: 0.9rem;
+    border-radius: 9999px;
+    background: var(--color-yellow);
+    box-shadow: 0 2px 3px rgb(0 0 0 / 0.35);
+    transform: translateX(-50%);
+  }
+
+  /* ── Scroll-driven motion (Chrome/Edge/Safari; elsewhere elements simply sit still) ── */
+  @supports (animation-timeline: view()) {
+    .parallax-slow,
+    .parallax-fast {
+      animation: parallax linear both;
+      animation-timeline: view();
+      animation-range: cover;
+    }
+    .parallax-slow {
+      --px: 40px;
+    }
+    .parallax-fast {
+      --px: 110px;
+    }
+    @keyframes parallax {
+      from {
+        transform: translateY(var(--px));
+      }
+      to {
+        transform: translateY(calc(var(--px) * -1));
+      }
+    }
+    /* Hero wordmark lifts and fades as you scroll away. */
+    .hero-lift {
+      animation: hero-lift linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0 90vh;
+    }
+    @keyframes hero-lift {
+      to {
+        transform: translateY(-18vh) scale(0.92);
+        opacity: 0;
+      }
+    }
+  }
+
+  /* "scroll" pill tick */
+  .scroll-tick {
+    display: inline-block;
+    width: 2px;
+    height: 0.8rem;
+    background: currentColor;
+    animation: scroll-tick 1.6s ease-in-out infinite;
+  }
+  @keyframes scroll-tick {
+    0%, 100% { transform: translateY(-2px); opacity: 0.3; }
+    50% { transform: translateY(3px); opacity: 1; }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .parallax-slow,
+  .parallax-fast,
+  .hero-lift,
+  .scroll-tick,
+  .polaroid {
+    animation: none !important;
     transition: none !important;
   }
 }

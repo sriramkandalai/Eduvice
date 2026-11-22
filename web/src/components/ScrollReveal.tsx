@@ -29,7 +29,8 @@ export function ScrollReveal() {
           }
         }
       },
-      { rootMargin: "0px 0px -8% 0px", threshold: 0.12 },
+      // A small margin so items near the bottom edge of the first screen still appear.
+      { rootMargin: "0px 0px -2% 0px", threshold: 0.05 },
     );
     elements.forEach((el) => observer.observe(el));
     return () => observer.disconnect();

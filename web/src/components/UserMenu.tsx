@@ -30,7 +30,7 @@ export function UserMenu() {
 
   if (!session?.user) {
     return (
-      <Link href="/signin" className="btn-secondary whitespace-nowrap px-4 py-2 text-sm">
+      <Link href="/signin" className="pill pill-paper whitespace-nowrap shadow-sm">
         {t("signIn")}
       </Link>
     );

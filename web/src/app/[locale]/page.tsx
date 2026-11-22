@@ -1,176 +1,186 @@
-import type { ReactNode } from "react";
+import type { CSSProperties } from "react";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { Marg } from "@/components/Marg";
 import { CategoryIcon } from "@/components/CategoryIcon";
 import { UniversityNamesBackground } from "@/components/UniversityNamesBackground";
+import { BookStool, Chalkboard, FloorLamp, SchoolDesk } from "@/components/SceneProps";
 import { CATEGORIES, FAQS_EN } from "@/lib/faqs";
-import { routing } from "@/i18n/routing";
 import { initLocale, type LocaleParams } from "@/lib/page";
 
-const STEPS = [1, 2, 3] as const;
+// The home page is a sequence of full-screen "rooms" (inspired by human-md.ai): a colored wall,
+// a sand floor, props standing on it, typewriter captions, and scroll-driven motion.
 
-// The whole home page is one royal-blue canvas (like the coming-soon page is one yellow canvas),
-// with college names scrolling faintly behind everything. Content sits on white cards; yellow is
-// the accent.
+const NOTE_TILTS = ["-3deg", "2deg", "-1.5deg"];
+const POLAROID_TILTS = ["-3deg", "2deg", "-1deg", "3deg", "-2deg", "1.5deg", "-2.5deg"];
+
 export default async function HomePage({ params }: LocaleParams) {
   initLocale(params.locale);
   const t = await getTranslations("Home");
   const tc = await getTranslations("Categories");
-  const highlight = (chunks: ReactNode) => <span className="marker">{chunks}</span>;
+  const tb = await getTranslations("Brand");
+
+  const words = (text: string, from: number, className?: string) =>
+    text.split(" ").map((w, i) => (
+      <span key={`${w}-${i}`} className={`inline-block ${className ?? ""}`} data-reveal data-reveal-delay={String(from + i * 60)}>
+        {w}&nbsp;
+      </span>
+    ));
 
   return (
-    <div className="band-blue relative isolate bg-blue text-white">
-      <UniversityNamesBackground />
+    <div className="scenes">
+      {/* ── Room 1: blue wall, the wordmark, Marg between a stool of books and a lamp ── */}
+      <section className="scene bg-blue text-paper" aria-labelledby="hero-title">
+        <UniversityNamesBackground />
+        <div className="scene-floor" />
 
-      {/* Hero */}
-      <section className="mx-auto grid max-w-6xl items-center gap-12 px-4 pt-16 pb-20 sm:pt-24 sm:pb-28 lg:grid-cols-[1.15fr_0.85fr]">
-        <div className="flex flex-col items-start gap-6">
-          <p className="eyebrow" data-reveal>
-            {t("eyebrow")}
-          </p>
-          <h1 className="wordmark text-5xl sm:text-6xl lg:text-7xl" data-reveal data-reveal-delay="80">
-            {t.rich("title", { hl: highlight })}
-          </h1>
-          <p className="max-w-xl text-lg leading-relaxed text-white/85 sm:text-xl" data-reveal data-reveal-delay="160">
-            {t("valueProp")}
-          </p>
-          <div className="flex flex-wrap items-center gap-3" data-reveal data-reveal-delay="240">
-            <Link href="/chat" className="btn-accent px-6 py-3 text-base">
-              {t("cta")}
-              <span aria-hidden="true" className="rtl:rotate-180">→</span>
+        <h1 id="hero-title" className="sr-only">
+          {tb("name")} — {t("heroLine1")}
+        </h1>
+        <p
+          aria-hidden="true"
+          className="hero-lift mega absolute inset-x-0 top-[24vh] text-center text-[clamp(4.2rem,16vw,15rem)] text-paper sm:top-[12vh]"
+          lang="en"
+        >
+          EduVice<span className="text-yellow">.</span>
+          <span className="serif-accent text-[0.82em] italic">org</span>
+        </p>
+
+        <BookStool className="prop-shadow parallax-slow absolute bottom-[calc(var(--floor)*0.42)] start-[3vw] hidden h-[34vh] w-auto sm:block" />
+        <FloorLamp className="prop-shadow absolute bottom-[calc(var(--floor)*0.34)] end-[4vw] hidden h-[64vh] w-auto sm:block" />
+        <Marg
+          state="wave"
+          className="prop-shadow absolute bottom-[calc(var(--floor)*0.92)] end-[50%] h-[24vh] w-auto translate-x-1/2 rtl:-translate-x-1/2 sm:bottom-[calc(var(--floor)*0.32)] sm:end-[24vw] sm:h-[40vh] sm:translate-x-0 sm:rtl:translate-x-0"
+        />
+
+        {/* captions on the floor */}
+        <div className="absolute inset-x-0 bottom-0 flex h-[var(--floor)] flex-col justify-center px-6 text-charcoal sm:px-[22vw]">
+          <ul className="typewriter text-xs sm:text-sm">
+            <li data-reveal>{t("heroLine1")}</li>
+            <li data-reveal data-reveal-delay="120">{t("heroLine2")}</li>
+            <li data-reveal data-reveal-delay="240">{t("heroLine3")}</li>
+          </ul>
+          <div className="mt-3 flex flex-wrap gap-2" data-reveal data-reveal-delay="360">
+            <Link href="/chat" className="pill pill-dark">
+              {t("cta")} <span aria-hidden="true" className="rtl:rotate-180">→</span>
             </Link>
-            <Link href="/guide" className="btn-ghost px-6 py-3 text-base">
+            <Link href="/guide" className="pill pill-paper">
               {t("browse")}
             </Link>
           </div>
-          <ul
-            className="flex flex-wrap items-center gap-x-5 gap-y-2 pt-2 text-sm font-medium text-white/85"
-            data-reveal
-            data-reveal-delay="320"
-          >
-            {[
-              t("statTopics", { count: FAQS_EN.length }),
-              t("statLanguages", { count: routing.locales.length }),
-              t("statFree"),
-            ].map((label) => (
-              <li key={label} className="flex items-center gap-2">
-                <Check />
-                {label}
+        </div>
+        <p className="corner-label absolute bottom-4 start-6 hidden text-charcoal/70 sm:block">{t("cornerLeft")}</p>
+        <p className="corner-label absolute bottom-4 end-6 hidden text-charcoal/70 sm:block">{t("cornerRight")}</p>
+      </section>
+
+      {/* ── Room 2: yellow wall, the story ── */}
+      <section className="scene bg-yellow text-charcoal">
+        <div className="scene-floor" />
+        <div className="mx-auto max-w-6xl px-6 pt-28 sm:pt-32">
+          <h2 className="font-display text-[clamp(2.4rem,6vw,5rem)] font-semibold leading-[1.02] tracking-tight lg:max-w-[62%]">
+            <span className="block">{words(t("storyLead"), 0)}</span>
+            <span className="block text-charcoal/45">{words(t("storyFollow"), 300)}</span>
+          </h2>
+          <p className="mt-6 max-w-lg text-lg leading-relaxed text-charcoal/80" data-reveal data-reveal-delay="500">
+            {t("storyBody")}
+          </p>
+        </div>
+        <Chalkboard className="parallax-slow absolute end-[6vw] top-[26%] hidden h-[28vh] w-auto lg:block" />
+        <SchoolDesk className="prop-shadow absolute bottom-[calc(var(--floor)*0.36)] end-[8vw] hidden h-[24vh] w-auto md:block" />
+        <Marg className="prop-shadow absolute bottom-[calc(var(--floor)*0.3)] start-[8vw] h-[26vh] w-auto sm:start-[14vw] md:start-auto md:end-[36vw]" />
+      </section>
+
+      {/* ── Room 3: dark room, three pinned notes ── */}
+      <section className="scene bg-charcoal text-paper" aria-labelledby="how-heading">
+        <div className="scene-floor !bg-paper/10" />
+        <div className="mx-auto flex max-w-6xl flex-col gap-12 px-6 pb-[calc(var(--floor)+3rem)] pt-28 sm:pt-32">
+          <h2 id="how-heading" className="mega text-[clamp(3rem,8vw,7rem)]" data-reveal>
+            {t("notesTitle")}
+            <span className="text-yellow">.</span>
+          </h2>
+          <ol className="grid gap-10 sm:grid-cols-3 sm:gap-8">
+            {[1, 2, 3].map((n, i) => (
+              <li
+                key={n}
+                className="note relative flex flex-col gap-3 p-6"
+                style={{ "--tilt": NOTE_TILTS[i] } as CSSProperties}
+                data-reveal
+                data-reveal-delay={String(i * 140)}
+              >
+                <span className="font-mono text-sm tracking-widest text-charcoal/60">0{n}</span>
+                <h3 className="font-display text-2xl font-bold tracking-tight">{t(`step${n}Title`)}</h3>
+                <p className="leading-relaxed text-charcoal/75">{t(`step${n}Body`, { count: FAQS_EN.length })}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+        <FloorLamp className="absolute bottom-[calc(var(--floor)*0.34)] start-[5vw] hidden h-[46vh] w-auto opacity-90 sm:block" />
+        <Marg state="thinking" className="prop-shadow absolute bottom-[calc(var(--floor)*0.3)] end-[10vw] h-[24vh] w-auto" />
+      </section>
+
+      {/* ── Room 4: paper wall, topics as polaroids ── */}
+      <section className="scene bg-paper text-charcoal" aria-labelledby="topics-heading">
+        <div className="scene-floor" />
+        <div className="mx-auto flex max-w-6xl flex-col gap-10 px-6 pb-[calc(var(--floor)*0.5)] pt-28 sm:pt-32">
+          <div data-reveal>
+            <h2 id="topics-heading" className="mega text-[clamp(3rem,8vw,7rem)]">
+              {t("topicsTitle")}
+              <span className="text-blue">.</span>
+            </h2>
+            <p className="serif-accent mt-2 text-2xl italic text-charcoal/70 sm:text-3xl">{t("topicsSub")}</p>
+          </div>
+          <ul className="grid grid-cols-2 gap-x-5 gap-y-8 sm:grid-cols-3 lg:grid-cols-4">
+            {CATEGORIES.map((c, i) => (
+              <li key={c} data-reveal="scale" data-reveal-delay={String((i % 4) * 90)}>
+                <Link
+                  href={`/guide#${c}`}
+                  className="polaroid flex h-full flex-col gap-3"
+                  style={{ "--tilt": POLAROID_TILTS[i % POLAROID_TILTS.length] } as CSSProperties}
+                >
+                  {/* a tiny room */}
+                  <span className={`relative flex h-28 items-center justify-center overflow-hidden rounded-[2px] sm:h-36 ${i % 2 ? "bg-yellow" : "bg-blue"}`}>
+                    <span className="absolute inset-x-0 bottom-0 h-[30%] bg-sand" />
+                    <CategoryIcon category={c} className="relative h-14 w-14 bg-paper shadow-lg" />
+                  </span>
+                  <span className="px-1">
+                    <span className="serif-accent block text-xl italic leading-tight">{tc(`${c}.title`)}</span>
+                    <span className="mt-1 block text-xs leading-snug text-charcoal/65">{tc(`${c}.description`)}</span>
+                  </span>
+                </Link>
               </li>
             ))}
           </ul>
         </div>
+      </section>
 
-        {/* Chat preview */}
-        <div data-reveal="scale" data-reveal-delay="200">
-          <div
-            className="float mx-auto w-full max-w-md overflow-hidden rounded-[1.25rem] bg-white text-ink shadow-[0_30px_60px_-20px_rgb(10_20_60_/_0.6)]"
-            aria-hidden="true"
-          >
-            <div className="flex items-center gap-3 border-b border-line bg-mist px-5 py-3">
-              <Marg state="wave" className="h-11 w-11" />
-              <div>
-                <p className="font-display font-bold">Marg</p>
-                <p className="flex items-center gap-1.5 text-xs text-muted">
-                  <span className="h-1.5 w-1.5 rounded-full bg-yellow" />
-                  {t("previewStatus")}
-                </p>
-              </div>
+      {/* ── Room 5: blue wall, ask Marg ── */}
+      <section className="scene bg-blue text-paper" aria-labelledby="ask-heading">
+        <div className="scene-floor" />
+        <div className="mx-auto grid max-w-6xl items-center gap-10 px-6 pb-[calc(var(--floor)+2rem)] pt-28 sm:pt-32 lg:grid-cols-2">
+          <div className="flex flex-col items-start gap-5">
+            <h2 id="ask-heading" className="mega text-[clamp(3.5rem,10vw,8.5rem)]" data-reveal>
+              {t("askTitle")}
+            </h2>
+            <p className="max-w-md text-xl text-paper/85" data-reveal data-reveal-delay="120">
+              {t("askBody")}
+            </p>
+            <Link href="/chat" className="pill pill-yellow px-7 py-3.5 text-base" data-reveal data-reveal-delay="240">
+              {t("cta")} <span aria-hidden="true" className="rtl:rotate-180">→</span>
+            </Link>
+          </div>
+          <div className="relative rotate-2 rounded-xl bg-white p-5 text-ink shadow-2xl" data-reveal="scale" data-reveal-delay="200" aria-hidden="true">
+            <p className="ms-auto max-w-[85%] rounded-2xl rounded-ee-md bg-blue px-4 py-2.5 text-sm text-white">
+              {t("previewQuestion")}
+            </p>
+            <div className="mt-3 max-w-[90%] rounded-2xl rounded-ss-md border border-line px-4 py-3 text-sm leading-relaxed">
+              {t("previewAnswer")}
             </div>
-            <div className="flex flex-col gap-3 p-5">
-              <p className="ms-auto max-w-[85%] rounded-2xl rounded-ee-md bg-blue px-4 py-2.5 text-sm text-white">
-                {t("previewQuestion")}
-              </p>
-              <div className="max-w-[90%] rounded-2xl rounded-ss-md border border-line bg-white px-4 py-3 text-sm leading-relaxed">
-                {t("previewAnswer")}
-              </div>
-              <p className="text-xs font-semibold text-muted">{t("previewSource")}</p>
-            </div>
+            <p className="corner-label mt-3 text-muted">{t("previewSource")}</p>
           </div>
         </div>
-      </section>
-
-      {/* How it works */}
-      <section aria-labelledby="how-heading" className="mx-auto flex max-w-6xl flex-col gap-8 px-4 pb-20">
-        <h2 id="how-heading" className="wordmark text-3xl sm:text-4xl" data-reveal>
-          {t("howTitle")}
-        </h2>
-        <ol className="grid gap-5 sm:grid-cols-3">
-          {STEPS.map((n, i) => (
-            <li
-              key={n}
-              className="flex flex-col gap-3 rounded-[1.25rem] bg-white p-6 text-ink shadow-card-lg"
-              data-reveal
-              data-reveal-delay={String(i * 120)}
-            >
-              <span
-                aria-hidden="true"
-                className="flex h-10 w-10 items-center justify-center rounded-full bg-yellow font-display text-lg font-bold text-blue-dark"
-              >
-                {n}
-              </span>
-              <h3 className="font-display text-lg font-bold">{t(`step${n}Title`)}</h3>
-              <p className="leading-relaxed text-muted">{t(`step${n}Body`, { count: FAQS_EN.length })}</p>
-            </li>
-          ))}
-        </ol>
-      </section>
-
-      {/* Topics */}
-      <section aria-labelledby="topics-heading" className="mx-auto flex max-w-6xl flex-col gap-8 px-4 pb-20">
-        <div className="flex flex-wrap items-end justify-between gap-4" data-reveal>
-          <h2 id="topics-heading" className="wordmark text-3xl sm:text-4xl">
-            {t("topicsTitle")}
-          </h2>
-          <Link href="/guide" className="text-sm font-bold text-yellow hover:underline">
-            {t("browse")} <span aria-hidden="true" className="inline-block rtl:rotate-180">→</span>
-          </Link>
-        </div>
-        <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {CATEGORIES.map((c, i) => (
-            <li key={c} data-reveal data-reveal-delay={String((i % 3) * 90)}>
-              <Link
-                href={`/guide#${c}`}
-                className="card-hover flex h-full items-start gap-4 rounded-[1.25rem] bg-white p-5 text-ink shadow-card-lg"
-              >
-                <CategoryIcon category={c} className="h-11 w-11 shrink-0" />
-                <span className="flex flex-col gap-1">
-                  <span className="font-display font-bold">{tc(`${c}.title`)}</span>
-                  <span className="text-sm leading-relaxed text-muted">{tc(`${c}.description`)}</span>
-                </span>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      {/* Closing call to action — yellow panel on the blue */}
-      <section className="mx-auto max-w-6xl px-4 pb-24">
-        <div
-          className="flex flex-col items-center gap-6 rounded-[1.75rem] bg-yellow px-6 py-10 text-center text-blue-dark shadow-card-lg sm:flex-row sm:px-10 sm:text-start"
-          data-reveal="scale"
-        >
-          <Marg state="wave" className="h-28 w-28 shrink-0 sm:h-32 sm:w-32" />
-          <div className="flex flex-1 flex-col gap-2">
-            <h2 className="font-display text-3xl font-extrabold tracking-tight sm:text-4xl">{t("finalTitle")}</h2>
-            <p className="text-lg text-blue-dark/80">{t("finalBody")}</p>
-          </div>
-          <Link href="/chat" className="btn-primary px-7 py-3.5 text-base">
-            {t("cta")}
-            <span aria-hidden="true" className="rtl:rotate-180">→</span>
-          </Link>
-        </div>
+        <Marg state="wave" className="prop-shadow absolute bottom-[calc(var(--floor)*0.3)] start-[6vw] h-[22vh] w-auto" />
+        <BookStool className="prop-shadow absolute bottom-[calc(var(--floor)*0.4)] end-[6vw] hidden h-[22vh] w-auto sm:block" />
       </section>
     </div>
-  );
-}
-
-function Check() {
-  return (
-    <svg viewBox="0 0 20 20" className="h-4 w-4 shrink-0" aria-hidden="true">
-      <circle cx="10" cy="10" r="9" fill="var(--color-yellow)" />
-      <path d="M6 10.5 8.5 13 14 7.5" fill="none" stroke="var(--color-blue-dark)" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
   );
 }

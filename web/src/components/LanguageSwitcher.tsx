@@ -31,7 +31,7 @@ export function LanguageSwitcher() {
         value={current}
         onChange={onChange}
         disabled={pending}
-        className="cursor-pointer rounded-lg border border-line bg-white py-2 ps-3 pe-8 text-sm font-semibold text-ink hover:border-blue disabled:opacity-60"
+        className="cursor-pointer rounded-full border-0 bg-paper/90 py-2 ps-4 pe-8 text-sm font-semibold text-charcoal shadow-sm backdrop-blur disabled:opacity-60"
       >
         {routing.locales.map((locale) => (
           <option key={locale} value={locale} lang={locale}>

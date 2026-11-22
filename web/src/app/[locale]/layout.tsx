@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { notFound } from "next/navigation";
-import { Inter, Noto_Sans_Arabic, Plus_Jakarta_Sans } from "next/font/google";
+import { Bricolage_Grotesque, Cutive_Mono, Inter, Instrument_Serif, Noto_Sans_Arabic } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import { Navbar } from "@/components/Navbar";
@@ -11,17 +11,34 @@ import { REVEAL_INIT_SCRIPT, ScrollReveal } from "@/components/ScrollReveal";
 import { getDirection, isLocale, routing } from "@/i18n/routing";
 import "../globals.css";
 
-// Inter (body) and Plus Jakarta Sans (headings) both cover Latin and Vietnamese.
-// Arabic gets Noto Sans Arabic (not preloaded); Chinese uses the system CJK font.
+// Bricolage Grotesque (display), Inter (body), Instrument Serif (accent) and Cutive Mono
+// (typewriter captions). Arabic gets Noto Sans Arabic (not preloaded); Chinese uses the system
+// CJK font. Instrument Serif and Cutive Mono have no Vietnamese glyphs, so globals.css falls back
+// for vi.
 const inter = Inter({
   subsets: ["latin", "latin-ext", "vietnamese"],
   variable: "--font-inter",
   display: "swap",
 });
 
-const jakarta = Plus_Jakarta_Sans({
+const bricolage = Bricolage_Grotesque({
   subsets: ["latin", "latin-ext", "vietnamese"],
-  variable: "--font-jakarta",
+  variable: "--font-bricolage",
+  display: "swap",
+});
+
+const serif = Instrument_Serif({
+  subsets: ["latin", "latin-ext"],
+  weight: "400",
+  style: ["normal", "italic"],
+  variable: "--font-serif",
+  display: "swap",
+});
+
+const mono = Cutive_Mono({
+  subsets: ["latin", "latin-ext"],
+  weight: "400",
+  variable: "--font-typewriter",
   display: "swap",
 });
 
@@ -60,7 +77,7 @@ export default async function LocaleLayout({ children, params: { locale } }: Pro
       suppressHydrationWarning // the reveal script adds a class before React hydrates
       lang={locale}
       dir={getDirection(locale)}
-      className={`${inter.variable} ${jakarta.variable} ${arabic.variable}`}
+      className={`${inter.variable} ${bricolage.variable} ${serif.variable} ${mono.variable} ${arabic.variable}`}
     >
       <head>
         {/* eslint-disable-next-line react/no-danger -- tiny static script, must run before paint */}
@@ -71,7 +88,7 @@ export default async function LocaleLayout({ children, params: { locale } }: Pro
           <Providers>
             <ScrollReveal />
             <Navbar />
-            <main className="flex-1 pb-20 has-[.band-blue.isolate]:pb-0">{children}</main>
+            <main className="flex-1 pt-20 pb-20 has-[.scenes]:pt-0 has-[.scenes]:pb-0">{children}</main>
             <Footer />
           </Providers>
         </NextIntlClientProvider>
