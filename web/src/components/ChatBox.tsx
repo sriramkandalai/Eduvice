@@ -394,6 +394,7 @@ export function ChatBox() {
           </Link>
         )}
       </p>
+      <p className="text-sm text-blue-dark/80">{t("disclaimer")}</p>
     </div>
     </div>
   );
