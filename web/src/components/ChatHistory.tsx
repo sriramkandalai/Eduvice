@@ -30,12 +30,12 @@ export function ChatHistory({
       <button
         type="button"
         onClick={onNew}
-        className="rounded-full bg-blue px-4 py-2 text-sm font-bold text-white shadow-pill hover:bg-blue-dark"
+        className="btn-primary px-4 py-2 text-sm"
       >
         + {t("newChat")}
       </button>
       {conversations.length === 0 ? (
-        <p className="px-1 text-sm text-blue-dark/80">{t("noSavedChats")}</p>
+        <p className="px-1 text-sm text-muted">{t("noSavedChats")}</p>
       ) : (
         <ul className="flex max-h-[60vh] flex-col gap-1 overflow-y-auto">
           {conversations.map((c) => (
@@ -44,10 +44,10 @@ export function ChatHistory({
                 type="button"
                 onClick={() => onOpen(c.id)}
                 aria-current={c.id === activeId ? "true" : undefined}
-                className="min-w-0 flex-1 rounded-xl px-3 py-2 text-start hover:bg-cream aria-[current=true]:bg-cream"
+                className="min-w-0 flex-1 rounded-xl px-3 py-2 text-start hover:bg-mist aria-[current=true]:bg-blue/8 aria-[current=true]:text-blue"
               >
                 <span className="block truncate text-sm font-bold">{c.title}</span>
-                <span className="block text-xs text-blue-dark/70">
+                <span className="block text-xs text-muted">
                   {format.relativeTime(new Date(c.updatedAt), new Date())}
                 </span>
               </button>
@@ -56,7 +56,7 @@ export function ChatHistory({
                 onClick={() => onDelete(c.id)}
                 aria-label={t("deleteChat", { title: c.title })}
                 title={t("deleteChat", { title: c.title })}
-                className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-blue-dark/60 hover:bg-cream hover:text-blue-dark"
+                className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-muted hover:bg-mist hover:text-ink"
               >
                 <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden="true">
                   <path
@@ -77,16 +77,16 @@ export function ChatHistory({
   );
 
   return (
-    <aside className="rounded-3xl bg-white/90 p-3 shadow-card lg:sticky lg:top-4">
+    <aside className="glass rounded-[var(--radius-card)] p-3 shadow-card lg:sticky lg:top-24">
       {/* Phones: collapsible. Large screens: always open. */}
       <details className="lg:hidden">
-        <summary className="cursor-pointer px-1 py-1 font-extrabold">
+        <summary className="cursor-pointer px-1 py-1 font-bold">
           {t("yourChats")} ({conversations.length})
         </summary>
         <div className="pt-3">{list}</div>
       </details>
       <div className="hidden lg:block">
-        <h2 className="mb-3 px-1 font-extrabold">{t("yourChats")}</h2>
+        <h2 className="mb-3 px-1 font-bold">{t("yourChats")}</h2>
         {list}
       </div>
     </aside>

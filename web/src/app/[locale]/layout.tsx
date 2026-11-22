@@ -1,38 +1,28 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { notFound } from "next/navigation";
-import { Be_Vietnam_Pro, Luckiest_Guy, Noto_Sans_Arabic, Poppins } from "next/font/google";
+import { Inter, Noto_Sans_Arabic, Plus_Jakarta_Sans } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Providers } from "@/components/Providers";
+import { REVEAL_INIT_SCRIPT, ScrollReveal } from "@/components/ScrollReveal";
 import { getDirection, isLocale, routing } from "@/i18n/routing";
 import "../globals.css";
 
-const poppins = Poppins({
-  subsets: ["latin", "latin-ext"],
-  weight: ["500", "700", "800"],
-  variable: "--font-poppins",
+// Inter (body) and Plus Jakarta Sans (headings) both cover Latin and Vietnamese.
+// Arabic gets Noto Sans Arabic (not preloaded); Chinese uses the system CJK font.
+const inter = Inter({
+  subsets: ["latin", "latin-ext", "vietnamese"],
+  variable: "--font-inter",
   display: "swap",
 });
 
-const luckiest = Luckiest_Guy({
-  subsets: ["latin"],
-  weight: "400",
-  variable: "--font-luckiest",
+const jakarta = Plus_Jakarta_Sans({
+  subsets: ["latin", "latin-ext", "vietnamese"],
+  variable: "--font-jakarta",
   display: "swap",
-});
-
-// Poppins and Luckiest Guy have no Vietnamese or Arabic glyphs, so those languages get
-// matching fonts (see globals.css). Not preloaded, so other languages don't download them.
-// Chinese uses the device's system font.
-const vietnamese = Be_Vietnam_Pro({
-  subsets: ["vietnamese", "latin"],
-  weight: ["500", "700", "800"],
-  variable: "--font-vietnamese",
-  display: "swap",
-  preload: false,
 });
 
 const arabic = Noto_Sans_Arabic({
@@ -66,12 +56,22 @@ export default async function LocaleLayout({ children, params: { locale } }: Pro
   const messages = await getMessages();
 
   return (
-    <html lang={locale} dir={getDirection(locale)} className={`${poppins.variable} ${luckiest.variable} ${vietnamese.variable} ${arabic.variable}`}>
-      <body className="flex min-h-dvh flex-col font-sans text-blue-dark antialiased">
+    <html
+      suppressHydrationWarning // the reveal script adds a class before React hydrates
+      lang={locale}
+      dir={getDirection(locale)}
+      className={`${inter.variable} ${jakarta.variable} ${arabic.variable}`}
+    >
+      <head>
+        {/* eslint-disable-next-line react/no-danger -- tiny static script, must run before paint */}
+        <script dangerouslySetInnerHTML={{ __html: REVEAL_INIT_SCRIPT }} />
+      </head>
+      <body className="flex min-h-dvh flex-col font-sans text-ink antialiased">
         <NextIntlClientProvider messages={messages}>
           <Providers>
+            <ScrollReveal />
             <Navbar />
-            <main className="flex-1">{children}</main>
+            <main className="flex-1 pb-20 has-[.band-blue.isolate]:pb-0">{children}</main>
             <Footer />
           </Providers>
         </NextIntlClientProvider>

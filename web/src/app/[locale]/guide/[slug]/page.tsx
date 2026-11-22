@@ -53,27 +53,26 @@ export default async function TopicPage({ params }: Props) {
       <article lang={faq.isFallback ? "en" : undefined} className="flex flex-col gap-5">
         <h1 className="wordmark text-4xl leading-tight sm:text-5xl">{faq.title}</h1>
         {faq.isFallback && (
-          <p lang={locale} className="rounded-xl bg-cream px-4 py-3 text-sm font-medium">
+          <p lang={locale} className="rounded-xl border border-yellow bg-cream px-4 py-3 text-sm font-medium">
             {t("translationNote")}
           </p>
         )}
-        <p className="rounded-2xl bg-white px-6 py-5 text-lg leading-relaxed shadow-card">{faq.text}</p>
+        <p className="glass rounded-[var(--radius-card)] px-6 py-6 text-lg leading-relaxed shadow-card">{faq.text}</p>
       </article>
 
-      <aside className="flex flex-col items-start gap-3 rounded-2xl bg-blue px-6 py-5 text-white">
-        <h2 className="text-xl font-extrabold">{t("askTitle")}</h2>
-        <p className="font-medium">{t("askBody")}</p>
-        <Link
-          href="/chat"
-          className="rounded-full bg-yellow px-5 py-2 font-bold text-blue-dark hover:bg-cream"
-        >
+      <aside
+        className="flex flex-col items-start gap-3 rounded-[var(--radius-card)] bg-blue px-6 py-6 text-white shadow-card"
+      >
+        <h2 className="text-xl font-bold">{t("askTitle")}</h2>
+        <p className="font-medium text-white/90">{t("askBody")}</p>
+        <Link href="/chat" className="btn-secondary px-5 py-2.5">
           {t("askCta")}
         </Link>
       </aside>
 
       {related.length > 0 && (
         <section aria-labelledby="related-heading" className="flex flex-col gap-3">
-          <h2 id="related-heading" className="text-xl font-extrabold">
+          <h2 id="related-heading" className="text-xl font-bold">
             {t("related")}
           </h2>
           <ul className="grid gap-3 sm:grid-cols-2">
@@ -82,7 +81,7 @@ export default async function TopicPage({ params }: Props) {
                 <Link
                   href={`/guide/${r.slug}`}
                   lang={r.isFallback ? "en" : undefined}
-                  className="flex h-full items-center rounded-2xl bg-cream px-5 py-3 font-bold hover:bg-white"
+                  className="glass card-hover flex h-full items-center rounded-2xl px-5 py-3 font-semibold"
                 >
                   {r.title}
                 </Link>

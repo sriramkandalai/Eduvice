@@ -18,13 +18,13 @@ export default async function ContactPage({ params }: LocaleParams) {
       </header>
 
       <div className="flex flex-col gap-1 rounded-2xl bg-white px-6 py-5 shadow-card">
-        <span className="text-sm font-bold uppercase tracking-wide text-blue">{t("emailLabel")}</span>
-        <a href={`mailto:${CONTACT_EMAIL}`} dir="ltr" className="text-start text-2xl font-extrabold break-all hover:underline">
+        <span className="text-xs font-bold uppercase tracking-wide text-blue">{t("emailLabel")}</span>
+        <a href={`mailto:${CONTACT_EMAIL}`} dir="ltr" className="text-start text-2xl font-bold break-all hover:underline">
           {CONTACT_EMAIL}
         </a>
       </div>
 
-      <p className="rounded-2xl border-s-4 border-blue bg-cream px-6 py-4 leading-relaxed">{t("note")}</p>
+      <p className="rounded-2xl border border-line border-s-4 border-s-blue bg-white px-6 py-4 leading-relaxed">{t("note")}</p>
     </div>
   );
 }

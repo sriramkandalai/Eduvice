@@ -100,9 +100,17 @@ function placeholders(msg: string): string {
   return [...new Set([...msg.matchAll(/\{\s*(\w+)/g)].map((m) => m[1]))].sort().join(",");
 }
 
+/** Rich-text tags like <hl>…</hl> used for styling. */
+function tags(msg: string): string {
+  return [...new Set([...msg.matchAll(/<(\w+)>/g)].map((m) => m[1]))].sort().join(",");
+}
+
 function checkMessage(key: string, en: string, translated: string, locale: Target) {
   if (placeholders(en) !== placeholders(translated)) {
     throw new Error(`${locale} ${key}: placeholders changed ("${en}" → "${translated}")`);
+  }
+  if (tags(en) !== tags(translated)) {
+    throw new Error(`${locale} ${key}: tags changed ("${en}" → "${translated}")`);
   }
   new IntlMessageFormat(translated, locale); // throws on broken ICU syntax
 }
@@ -146,6 +154,7 @@ async function translateMessages(locale: Target) {
       `Translate the values of this JSON object from English into ${LANGUAGE[locale]}. These are labels and text for a website's user interface.
 ${GUIDELINES}
 - Return a JSON object with exactly the same keys. Translate only the values.
+- Keep styling tags like <hl>…</hl> exactly as written (same tag names), wrapped around the matching translated words.
 - Keep ICU message syntax exactly: placeholders like {year} or {count} stay in English, and in plural forms like "{count, plural, one {# topic} other {# topics}}" keep "count", "plural", "one", "other", and "#", and translate only the words. Use only the plural categories your language needs (for example only "other" for Chinese and Vietnamese; Arabic may use zero, one, two, few, many, other).
 
 ${JSON.stringify(batch, null, 2)}`,

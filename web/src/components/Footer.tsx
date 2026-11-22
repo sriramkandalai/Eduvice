@@ -15,29 +15,31 @@ export function Footer() {
   const brand = useTranslations("Brand");
 
   return (
-    <footer className="mt-16 bg-blue-dark text-cream">
-      <div className="mx-auto flex max-w-5xl flex-col gap-6 px-4 py-10">
-        <div className="flex flex-col gap-1">
-          <span className="brand text-2xl text-yellow" lang="en">
-            {brand("name")}
-          </span>
-          <p className="text-sm">{brand("tagline")}</p>
+    <footer className="bg-blue-dark text-white">
+      <div className="mx-auto flex max-w-6xl flex-col gap-8 px-4 py-12">
+        <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
+          <div className="flex flex-col gap-2">
+            <span className="font-display text-2xl font-extrabold tracking-tight text-yellow" lang="en">
+              {brand("name")}
+            </span>
+            <p className="max-w-xs text-sm text-white/75">{brand("tagline")}</p>
+          </div>
+          <nav aria-label={t("nav")}>
+            <ul className="grid grid-cols-2 gap-x-10 gap-y-2 text-sm font-semibold sm:grid-cols-3">
+              {LINKS.map(({ href, key }) => (
+                <li key={key}>
+                  <Link href={href} className="text-white/90 hover:text-yellow">
+                    {t(key)}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
         </div>
-
-        <nav aria-label={t("nav")}>
-          <ul className="flex flex-wrap gap-x-6 gap-y-2 text-sm font-bold">
-            {LINKS.map(({ href, key }) => (
-              <li key={key}>
-                <Link href={href} className="hover:text-yellow hover:underline">
-                  {t(key)}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
-
-        <p className="max-w-3xl text-xs leading-relaxed text-cream/80">{t("disclaimer")}</p>
-        <p className="text-xs text-cream/80">{t("copyright", { year: new Date().getFullYear() })}</p>
+        <div className="flex flex-col gap-2 border-t border-white/15 pt-6">
+          <p className="max-w-3xl text-xs leading-relaxed text-white/65">{t("disclaimer")}</p>
+          <p className="text-xs text-white/55">{t("copyright", { year: new Date().getFullYear() })}</p>
+        </div>
       </div>
     </footer>
   );

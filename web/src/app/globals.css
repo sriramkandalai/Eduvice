@@ -1,91 +1,59 @@
 @import "tailwindcss";
 
 /*
- * EduVice palette — copied from the root index.html (coming-soon page).
- * `--color-*: initial` removes Tailwind's default colors, so ONLY these exist.
- * Do not add new colors here (see Claude.md).
+ * EduVice design system — "education product" style (reference: Khan Academy / Quizlet).
+ * Clean white surfaces, navy text, the logo's blue for actions, yellow as a sparing highlight,
+ * soft rounded cards with thin gray borders. No gradients, glass, glows or hard shadows.
+ *
+ * Brand colors come from the profile logo (social/eduvice-profile-logo.png). The neutrals
+ * (ink, muted, line, mist) were added for this style (user decision, 2026-11-23).
+ * `--color-*: initial` removes Tailwind's defaults, so ONLY these colors exist.
  */
 @theme {
   --color-*: initial;
+  /* brand (logo) */
   --color-yellow: #ffd010;
   --color-blue: #2350b5;
   --color-blue-dark: #1a3d8f;
   --color-blue-light: #3a68cf;
   --color-cream: #fff4dc;
   --color-white: #ffffff;
+  /* neutrals */
+  --color-ink: #1b2440; /* main text */
+  --color-muted: #5a6478; /* secondary text */
+  --color-line: #e2e6ee; /* borders */
+  --color-mist: #f6f8fb; /* light section background */
 
-  --shadow-card: 0 18px 40px -10px rgb(26 61 143 / 0.35);
-  --shadow-pill: 0 0 0 6px rgb(255 255 255 / 0.35), 0 18px 40px -10px rgb(26 61 143 / 0.55);
+  --shadow-card: 0 1px 2px rgb(27 36 64 / 0.04), 0 2px 8px rgb(27 36 64 / 0.05);
+  --shadow-card-lg: 0 4px 12px rgb(27 36 64 / 0.06), 0 12px 32px rgb(27 36 64 / 0.08);
+  --shadow-pill: none;
+  --shadow-glow: 0 0 0 4px rgb(35 80 181 / 0.15);
+
+  --radius-card: 1rem;
 }
 
-/* Fonts are loaded by next/font in [locale]/layout.tsx and exposed as CSS variables.
-   --font-body / --font-heading are switched per language below. */
+/* Fonts are loaded by next/font in [locale]/layout.tsx and exposed as CSS variables. */
 @theme inline {
   --font-sans: var(--font-body);
   --font-display: var(--font-heading);
 }
 
 :root {
-  --font-body: var(--font-poppins), system-ui, sans-serif;
-  --font-heading: var(--font-luckiest), var(--font-poppins), sans-serif;
-  --wordmark-stroke: 0.09em;
-  --wordmark-weight: 400; /* Luckiest Guy has a single weight */
-}
-:root:lang(vi),
-:root:lang(ar),
-:root:lang(zh) {
-  --wordmark-weight: 800;
-}
-:root:lang(vi) {
-  --font-body: var(--font-vietnamese), system-ui, sans-serif;
-  --font-heading: var(--font-vietnamese), system-ui, sans-serif;
-  --wordmark-stroke: 0.07em;
+  --font-body: var(--font-inter), system-ui, sans-serif;
+  --font-heading: var(--font-jakarta), var(--font-inter), system-ui, sans-serif;
 }
 :root:lang(ar) {
   --font-body: var(--font-arabic), system-ui, sans-serif;
   --font-heading: var(--font-arabic), system-ui, sans-serif;
-  --wordmark-stroke: 0.06em;
 }
 :root:lang(zh) {
-  --font-body: var(--font-poppins), "PingFang SC", "Microsoft YaHei", "Noto Sans SC", system-ui, sans-serif;
-  --font-heading: var(--font-body);
-  --wordmark-stroke: 0.06em;
+  --font-body: var(--font-inter), "PingFang SC", "Microsoft YaHei", "Noto Sans SC", system-ui, sans-serif;
+  --font-heading: var(--font-jakarta), "PingFang SC", "Microsoft YaHei", "Noto Sans SC", system-ui, sans-serif;
 }
 
 @layer base {
   html {
-    background-color: var(--color-yellow);
-  }
-
-  /* Page background: soft glows (::before) and a slowly drifting doodle path (::after).
-     Both sit behind all content. */
-  body::before,
-  body::after {
-    content: "";
-    position: fixed;
-    inset: 0;
-    z-index: -1;
-    pointer-events: none;
-  }
-  body::before {
-    background:
-      radial-gradient(circle at 12% 18%, rgb(255 244 220 / 0.75), transparent 38%),
-      radial-gradient(circle at 88% 12%, rgb(58 104 207 / 0.14), transparent 34%),
-      radial-gradient(circle at 80% 82%, rgb(255 244 220 / 0.6), transparent 40%),
-      radial-gradient(circle at 18% 88%, rgb(58 104 207 / 0.1), transparent 36%);
-  }
-  body::after {
-    background-image: url("/patterns/marg-path.svg");
-    background-size: 320px 320px;
-    animation: bg-drift 90s linear infinite;
-  }
-  @keyframes bg-drift {
-    from {
-      background-position: 0 0;
-    }
-    to {
-      background-position: 320px 320px;
-    }
+    background-color: var(--color-mist);
   }
 
   /* Letter-spacing breaks the joined letters of Arabic script. */
@@ -94,21 +62,196 @@
   }
 
   :focus-visible {
-    outline: 3px solid var(--color-blue-dark);
+    outline: 2px solid var(--color-blue);
     outline-offset: 2px;
+  }
+
+  ::selection {
+    background: rgb(255 208 16 / 0.45);
   }
 }
 
 @layer components {
-  /* Same treatment as the coming-soon wordmark: blue fill, cream outline. */
+  /* Page and section headings. (Class name kept from the first design.) */
   .wordmark {
     font-family: var(--font-heading);
-    font-weight: var(--wordmark-weight);
+    font-weight: 800;
+    color: var(--color-ink);
+    letter-spacing: -0.025em;
+    line-height: 1.08;
+  }
+
+  /* Yellow highlighter under a word, e.g. "US schools, <hl>explained.</hl>" */
+  .text-gradient,
+  .marker {
+    background: linear-gradient(transparent 68%, rgb(255 208 16 / 0.75) 68%, rgb(255 208 16 / 0.75) 94%, transparent 94%);
+    padding-inline: 0.06em;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+
+  /* The "EduVice" logotype. */
+  .brand {
+    font-family: var(--font-jakarta), var(--font-inter), sans-serif;
+    font-weight: 800;
+    letter-spacing: -0.03em;
     color: var(--color-blue);
-    -webkit-text-stroke: var(--wordmark-stroke) var(--color-cream);
-    paint-order: stroke fill;
-    text-shadow: 0.05em 0.06em 0 rgb(26 61 143 / 0.28);
-    line-height: 1;
+  }
+
+  /* Small label pill, e.g. FOR PARENTS NEW TO THE US. */
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-radius: 9999px;
+    background: rgb(35 80 181 / 0.08);
+    padding: 0.35rem 0.8rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--color-blue);
+  }
+  .eyebrow::before {
+    content: "";
+    width: 0.45rem;
+    height: 0.45rem;
+    border-radius: 9999px;
+    background: var(--color-yellow);
+  }
+
+  /* White card with a thin border and soft shadow. (.glass kept as an alias.) */
+  .glass,
+  .card {
+    background: var(--color-white);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card);
+  }
+  .card-hover {
+    transition:
+      border-color 0.15s ease,
+      box-shadow 0.15s ease,
+      transform 0.15s ease;
+  }
+  .card-hover:hover {
+    border-color: rgb(35 80 181 / 0.35);
+    box-shadow: var(--shadow-card-lg);
+    transform: translateY(-1px);
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 0.75rem;
+    font-weight: 700;
+    transition:
+      background 0.15s ease,
+      border-color 0.15s ease,
+      box-shadow 0.15s ease;
+  }
+  .btn-primary {
+    background: var(--color-blue);
+    color: var(--color-white);
+    border: 1px solid var(--color-blue);
+  }
+  .btn-primary:hover {
+    background: var(--color-blue-dark);
+    border-color: var(--color-blue-dark);
+  }
+  .btn-secondary {
+    background: var(--color-white);
+    color: var(--color-ink);
+    border: 1px solid #cfd5e1;
+  }
+  .btn-secondary:hover {
+    border-color: var(--color-blue);
+    color: var(--color-blue);
+  }
+  .btn-primary:focus-visible,
+  .btn-secondary:focus-visible {
+    outline: none;
+    box-shadow: var(--shadow-glow);
+  }
+  .btn-primary:disabled,
+  .btn-secondary:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+
+  /* Buttons for use on blue bands. */
+  .btn-accent,
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 0.75rem;
+    font-weight: 700;
+    transition:
+      background 0.15s ease,
+      transform 0.15s ease,
+      box-shadow 0.15s ease;
+  }
+  .btn-accent {
+    background: var(--color-yellow);
+    color: var(--color-blue-dark);
+    box-shadow: 0 6px 18px -6px rgb(255 208 16 / 0.7);
+  }
+  .btn-accent:hover {
+    transform: translateY(-1px);
+    background: #ffdb3d;
+  }
+  .btn-ghost {
+    color: var(--color-white);
+    border: 1px solid rgb(255 255 255 / 0.45);
+  }
+  .btn-ghost:hover {
+    background: rgb(255 255 255 / 0.12);
+    border-color: var(--color-white);
+  }
+
+  /* On blue bands: white headings, yellow highlighted word, light eyebrow. */
+  .band-blue .wordmark {
+    color: var(--color-white);
+  }
+  .band-blue .marker {
+    background: none;
+    color: var(--color-yellow);
+    padding: 0;
+  }
+  .band-blue .eyebrow {
+    background: rgb(255 255 255 / 0.14);
+    color: var(--color-white);
+  }
+
+  /* Tinted icon tile for categories (set --accent and --on-accent). */
+  .accent-chip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.75rem;
+    background: var(--accent);
+    color: var(--on-accent, var(--color-blue));
+  }
+
+  /* Text inputs */
+  .field {
+    width: 100%;
+    border: 1px solid #cfd5e1;
+    border-radius: 0.75rem;
+    background: var(--color-white);
+    padding: 0.65rem 0.9rem;
+    color: var(--color-ink);
+    outline: none;
+    transition:
+      border-color 0.15s ease,
+      box-shadow 0.15s ease;
+  }
+  .field:focus {
+    border-color: var(--color-blue);
+    box-shadow: var(--shadow-glow);
   }
 
   /* ── Marg, the mascot (components/Marg.tsx) ─────────────────────────────── */
@@ -124,24 +267,23 @@
     animation: marg-shadow 3.2s ease-in-out infinite;
   }
   .marg-eyes {
-    transform-origin: 60px 73px;
+    transform-origin: 60px 69px;
     animation: marg-blink 5s infinite;
   }
   .marg-pupils {
     transition: transform 0.3s ease;
   }
   .marg-tassel {
-    transform-origin: 89px 25px;
+    transform-origin: 89px 27px;
     animation: marg-sway 2.6s ease-in-out infinite;
   }
   .marg-arm {
-    transform-origin: 94px 84px;
+    transform-origin: 97px 82px;
   }
   .marg-talk,
   .marg-think {
     opacity: 0;
   }
-
   .marg[data-state="wave"] .marg-arm {
     animation: marg-wave 0.9s ease-in-out 3;
   }
@@ -149,7 +291,7 @@
     animation-duration: 1.6s;
   }
   .marg[data-state="thinking"] .marg-pupils {
-    transform: translate(2px, -3px);
+    transform: translate(2px, -2px);
   }
   .marg[data-state="thinking"] .marg-think {
     opacity: 1;
@@ -168,10 +310,9 @@
   }
   .marg[data-state="talking"] .marg-talk {
     opacity: 1;
-    transform-origin: 60px 89px;
+    transform-origin: 60px 80px;
     animation: marg-talk 0.26s ease-in-out infinite alternate;
   }
-
   @keyframes marg-bob {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-4px); }
@@ -201,13 +342,27 @@
     from { transform: scaleY(0.35); }
     to { transform: scaleY(1); }
   }
-
-  /* ── Home page background: scrolling college names (same look as the coming-soon page) ── */
-  /* The home page replaces the site-wide doodle background with this one. */
-  body:has(.uni-bg-layer)::before,
-  body:has(.uni-bg-layer)::after {
-    display: none;
+  .marg-still * {
+    animation: none !important;
   }
+
+  .typing-dot {
+    display: inline-block;
+    width: 0.45rem;
+    height: 0.45rem;
+    border-radius: 9999px;
+    background: var(--color-blue);
+    animation: marg-dot 1.2s ease-in-out infinite;
+  }
+  .typing-dot:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+  .typing-dot:nth-child(3) {
+    animation-delay: 0.4s;
+  }
+
+  /* ── Home hero: faint scrolling college names (from the coming-soon page), kept subtle ── */
+  /* Fixed behind the whole home page (the page wrapper is `isolate`, so this sits above its blue). */
   .uni-bg-layer {
     position: fixed;
     inset: 0;
@@ -234,22 +389,24 @@
     will-change: transform;
   }
   .uni-row span {
-    font-family: var(--font-poppins), sans-serif;
+    font-family: var(--font-jakarta), var(--font-inter), sans-serif;
     font-weight: 800;
     text-transform: uppercase;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.01em;
     padding-inline: 1.4rem;
     font-size: var(--size, 2.4rem);
-    color: rgb(35 80 181 / 0.13);
+    color: rgb(255 255 255 / 0.06);
   }
   .uni-row--outline span {
     color: transparent;
-    -webkit-text-stroke: 1.5px rgb(35 80 181 / 0.22);
+    -webkit-text-stroke: 1px rgb(255 255 255 / 0.14);
   }
   .uni-row span::after {
     content: "•";
     margin-inline-start: 2.8rem;
-    color: rgb(255 255 255 / 0.55);
+    font-size: 0.5em;
+    vertical-align: middle;
+    color: rgb(255 255 255 / 0.18);
     -webkit-text-stroke: 0;
   }
   @keyframes uni-scroll {
@@ -260,54 +417,82 @@
       transform: translateX(-50%);
     }
   }
-  /* Soft glow behind the hero so it reads cleanly over the names. */
+  /* Soft depth: slightly darker edges so the center reads cleanly. */
   .uni-glow {
     position: absolute;
     inset: 0;
-    background: radial-gradient(
-      ellipse 55% 50% at 50% 38%,
-      rgb(255 208 16 / 0.97) 0%,
-      rgb(255 208 16 / 0.85) 40%,
-      rgb(255 208 16 / 0) 75%
-    );
+    background: radial-gradient(ellipse 80% 70% at 50% 40%, rgb(35 80 181 / 0) 40%, rgb(26 61 143 / 0.45) 100%);
   }
 
-  /* Small avatars on older messages stay still. */
-  .marg-still * {
-    animation: none !important;
+  /* ── Scroll animations ─────────────────────────────────────────────────────
+     Elements with data-reveal fade and slide up when scrolled into view (ScrollReveal.tsx adds
+     .is-visible). Hidden only once JS has marked <html class="reveal-ready">, so content is never
+     lost without JavaScript. data-reveal-delay staggers items (ms). */
+  .reveal-ready [data-reveal] {
+    opacity: 0;
+    transform: translateY(28px);
+    transition:
+      opacity 0.7s cubic-bezier(0.2, 0.7, 0.2, 1),
+      transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+  .reveal-ready [data-reveal="scale"] {
+    transform: translateY(20px) scale(0.96);
+  }
+  .reveal-ready [data-reveal].is-visible {
+    opacity: 1;
+    transform: none;
   }
 
-  .typing-dot {
-    display: inline-block;
-    width: 0.5rem;
-    height: 0.5rem;
-    border-radius: 9999px;
-    background: var(--color-blue);
-    animation: marg-dot 1.2s ease-in-out infinite;
+  /* Reading progress bar under the navbar (scroll-driven animation where supported). */
+  .scroll-progress {
+    position: absolute;
+    inset-inline: 0;
+    bottom: -1px;
+    height: 3px;
+    background: var(--color-yellow);
+    transform-origin: 0 50%;
+    transform: scaleX(0);
   }
-  .typing-dot:nth-child(2) {
-    animation-delay: 0.2s;
+  :root[dir="rtl"] .scroll-progress {
+    transform-origin: 100% 50%;
   }
-  .typing-dot:nth-child(3) {
-    animation-delay: 0.4s;
+  @supports (animation-timeline: scroll()) {
+    .scroll-progress {
+      animation: scroll-progress linear both;
+      animation-timeline: scroll(root);
+    }
+  }
+  @keyframes scroll-progress {
+    to {
+      transform: scaleX(1);
+    }
   }
 
-  /* The "EduVice" logotype keeps its brand font in every language. */
-  .brand {
-    --font-heading: var(--font-luckiest), var(--font-poppins), sans-serif;
-    --wordmark-stroke: 0.09em;
-    --wordmark-weight: 400;
-    font-family: var(--font-heading);
-    font-weight: 400;
+  /* Gentle float for the hero chat card. */
+  .float {
+    animation: float 6s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  body::after,
   .marg *,
   .marg[data-state] *,
   .uni-row,
-  .typing-dot {
+  .typing-dot,
+  .card-hover,
+  .float,
+  .scroll-progress {
     animation: none !important;
+    transition: none !important;
+  }
+  .reveal-ready [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
   }
 }

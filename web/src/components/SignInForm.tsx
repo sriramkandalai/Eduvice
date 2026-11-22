@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useId, useState, type FormEvent } from "react";
 import { signIn } from "next-auth/react";
@@ -90,12 +90,12 @@ export function SignInForm({
 
   if (sentTo) {
     return (
-      <section className="flex flex-col gap-3 rounded-3xl bg-white px-6 py-6 text-center shadow-card" aria-live="polite">
-        <h2 className="text-xl font-extrabold">{t("checkEmailTitle")}</h2>
+      <section className="flex flex-col gap-3 glass rounded-[var(--radius-card)] px-6 py-6 text-center shadow-card" aria-live="polite">
+        <h2 className="text-xl font-bold">{t("checkEmailTitle")}</h2>
         <p>
           {t(sentTo.kind === "link" ? "checkEmailLink" : "checkEmailConfirm", { email: sentTo.email })}
         </p>
-        <p className="text-sm text-blue-dark/80">{t("checkEmailSpam")}</p>
+        <p className="text-sm text-muted">{t("checkEmailSpam")}</p>
         <button type="button" onClick={() => setSentTo(null)} className="mx-auto text-sm font-bold text-blue hover:underline">
           {t("back")}
         </button>
@@ -104,16 +104,15 @@ export function SignInForm({
   }
 
   const input =
-    "w-full rounded-2xl border-2 border-blue-dark/20 bg-white px-4 py-2.5 text-start outline-none focus:border-blue";
-  const primary =
-    "w-full rounded-full bg-blue px-5 py-3 font-bold text-white shadow-pill hover:bg-blue-dark disabled:opacity-60";
+    "w-full field text-start";
+  const primary = "btn-primary w-full px-5 py-3";
 
   return (
     <div className="flex flex-col gap-5">
       {notice && (
         <p
           role={notice.kind === "error" ? "alert" : "status"}
-          className={`rounded-2xl px-4 py-3 text-sm font-medium ${notice.kind === "error" ? "border-2 border-blue-dark bg-cream" : "bg-blue text-white"}`}
+          className={`rounded-2xl px-4 py-3 text-sm font-medium ${notice.kind === "error" ? "border border-yellow bg-cream" : "border border-blue/30 bg-blue/5"}`}
         >
           {t(notice.key)}
         </p>
@@ -124,7 +123,7 @@ export function SignInForm({
         <button
           type="button"
           onClick={() => void signIn("google", { redirectTo: afterSignIn })}
-          className="flex w-full items-center justify-center gap-3 rounded-full border-2 border-blue-dark/20 bg-white px-5 py-3 font-bold shadow-card hover:bg-cream"
+          className="btn-secondary w-full gap-3 px-5 py-3 shadow-card"
         >
           <svg viewBox="0 0 24 24" className="h-5 w-5" aria-hidden="true">
             <path fill="var(--color-blue)" d="M21.6 12.2c0-.7-.1-1.4-.2-2H12v3.8h5.4a4.6 4.6 0 0 1-2 3v2.5h3.2c1.9-1.7 3-4.3 3-7.3Z" />
@@ -137,8 +136,8 @@ export function SignInForm({
       )}
 
       {/* Email link */}
-      <form onSubmit={emailLink} className="flex flex-col gap-3 rounded-3xl bg-white/90 px-5 py-5 shadow-card">
-        <h2 className="font-extrabold">{t("linkTitle")}</h2>
+      <form onSubmit={emailLink} className="flex flex-col gap-3 glass rounded-[var(--radius-card)] px-5 py-5 shadow-card">
+        <h2 className="font-bold">{t("linkTitle")}</h2>
         <p className="text-sm">{t("linkBody")}</p>
         <label htmlFor={ids.linkEmail} className="sr-only">
           {t("email")}
@@ -160,8 +159,8 @@ export function SignInForm({
       </form>
 
       {/* Email + password */}
-      <form onSubmit={passwordSubmit} className="flex flex-col gap-3 rounded-3xl bg-white/90 px-5 py-5 shadow-card">
-        <h2 className="font-extrabold">{t(mode === "signin" ? "passwordTitle" : "registerTitle")}</h2>
+      <form onSubmit={passwordSubmit} className="flex flex-col gap-3 glass rounded-[var(--radius-card)] px-5 py-5 shadow-card">
+        <h2 className="font-bold">{t(mode === "signin" ? "passwordTitle" : "registerTitle")}</h2>
         {mode === "register" && (
           <>
             <label htmlFor={ids.name} className="text-sm font-bold">
@@ -221,7 +220,7 @@ export function SignInForm({
         {mode === "signin" && <p className="text-center text-xs">{t("forgotPassword")}</p>}
       </form>
 
-      <p className="text-center text-xs text-blue-dark/80">{t("guestNote")}</p>
+      <p className="text-center text-xs text-muted">{t("guestNote")}</p>
     </div>
   );
 }

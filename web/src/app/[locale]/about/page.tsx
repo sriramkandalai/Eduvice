@@ -19,24 +19,24 @@ export default async function AboutPage({ params }: LocaleParams) {
       </header>
 
       <section className="flex flex-col gap-3">
-        <h2 className="text-2xl font-extrabold">{t("whyTitle")}</h2>
+        <h2 className="text-2xl font-bold">{t("whyTitle")}</h2>
         <p className="text-lg leading-relaxed">{t("whyBody")}</p>
       </section>
 
       <section className="flex flex-col gap-4">
-        <h2 className="text-2xl font-extrabold">{t("principlesTitle")}</h2>
+        <h2 className="text-2xl font-bold">{t("principlesTitle")}</h2>
         <ul className="grid gap-3 sm:grid-cols-2">
           {PRINCIPLES.map((n) => (
             <li key={n} className="rounded-2xl bg-white px-5 py-4 shadow-card">
-              <h3 className="text-lg font-extrabold text-blue">{t(`principle${n}Title`)}</h3>
+              <h3 className="text-lg font-bold text-blue">{t(`principle${n}Title`)}</h3>
               <p className="mt-1">{t(`principle${n}Body`)}</p>
             </li>
           ))}
         </ul>
       </section>
 
-      <section className="flex flex-col gap-3 rounded-2xl border-s-4 border-blue bg-cream px-6 py-5">
-        <h2 className="text-xl font-extrabold">{t("limitsTitle")}</h2>
+      <section className="flex flex-col gap-3 rounded-2xl border border-line border-s-4 border-s-blue bg-white px-6 py-5">
+        <h2 className="text-xl font-bold">{t("limitsTitle")}</h2>
         <p className="leading-relaxed">{t("limitsBody")}</p>
       </section>
     </div>
