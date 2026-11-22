@@ -3,6 +3,7 @@ import { envOr, requireEnv } from "./env";
 
 export interface FaqChunk {
   slug: string;
+  category: string;
   title: string;
   text: string;
   embedding: number[];

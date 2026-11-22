@@ -16,10 +16,13 @@ export interface RetrievedChunk {
  */
 export const MIN_SOURCE_SCORE = 0.75;
 
-/** Embed the question and return the single closest FAQ chunk from Atlas Vector Search. */
-export async function retrieveTopChunk(question: string): Promise<RetrievedChunk | null> {
+/** How many candidate chunks the model sees; it picks the one it relied on most. */
+export const TOP_K = 3;
+
+/** Embed the question and return the closest FAQ chunks (best first) from Atlas Vector Search. */
+export async function retrieveTopChunks(question: string, k = TOP_K): Promise<RetrievedChunk[]> {
   const [queryVector] = await embed([question], "RETRIEVAL_QUERY");
-  if (!queryVector) return null;
+  if (!queryVector) return [];
 
   const collection = await getFaqCollection();
   const results = await collection
@@ -29,8 +32,8 @@ export async function retrieveTopChunk(question: string): Promise<RetrievedChunk
           index: vectorIndexName(),
           path: "embedding",
           queryVector,
-          numCandidates: 50,
-          limit: 1,
+          numCandidates: 100,
+          limit: k,
         },
       },
       {
@@ -45,6 +48,5 @@ export async function retrieveTopChunk(question: string): Promise<RetrievedChunk
     ])
     .toArray();
 
-  const top = results[0];
-  return top && top.score >= MIN_SOURCE_SCORE ? top : null;
+  return results.filter((r) => r.score >= MIN_SOURCE_SCORE);
 }

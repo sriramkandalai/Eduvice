@@ -3,22 +3,16 @@
  * Run from web/:  npm run seed   (reads .env.local)
  * Safe to re-run: chunks are upserted by slug, and the index is only created if missing.
  */
-import { readFile } from "node:fs/promises";
-import path from "node:path";
 import { EMBEDDING_DIMENSIONS, embed } from "../src/lib/gemini";
 import { getFaqCollection, getMongoClient, vectorIndexName } from "../src/lib/mongo";
-
-interface SeedFaq {
-  slug: string;
-  title: string;
-  text: string;
-}
+import { FAQS_EN } from "../src/lib/faqs";
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 async function main() {
-  const file = path.join(process.cwd(), "data", "seed-faqs.json");
-  const faqs = JSON.parse(await readFile(file, "utf8")) as SeedFaq[];
+  const faqs = FAQS_EN;
+  const slugs = new Set(faqs.map((f) => f.slug));
+  if (slugs.size !== faqs.length) throw new Error("Duplicate slugs in data/faqs/en.json");
   console.log(`Embedding ${faqs.length} FAQ chunks…`);
 
   const embeddings = await embed(

@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import { ThinkingLevel, type GenerateContentResponse } from "@google/genai";
-import { retrieveTopChunk } from "@/lib/rag";
+import { retrieveTopChunks } from "@/lib/rag";
 import { chatModel, getGemini } from "@/lib/gemini";
-import { buildSystemPrompt, TAG_UNUSED, TAG_USED } from "@/lib/prompt";
+import { buildSystemPrompt, MAX_TAG_LENGTH, TAG_UNUSED, TAG_USED_PATTERN } from "@/lib/prompt";
 import { checkRateLimit, visitorKey } from "@/lib/rate-limit";
 import { MAX_QUESTION_LENGTH, SOURCE_HEADER, encodeSource } from "@/lib/chat-protocol";
 import { isLocale, routing, type Locale } from "@/i18n/routing";
@@ -15,17 +15,21 @@ function jsonError(status: number, error: string, headers?: HeadersInit) {
 }
 
 /**
- * The model starts its reply with TAG_USED or TAG_UNUSED (see lib/prompt.ts).
- * Returns whether the source was used (null if no tag was found) and the text after the tag.
+ * The model starts its reply with "[SOURCE:n]" or "[NO_SOURCE]" (see lib/prompt.ts).
+ * `sourceIndex`: 0-based index of the source used, -1 for none, or null if no valid tag was found.
  */
-function parseTag(text: string): { used: boolean | null; rest: string } {
+function parseTag(text: string, sourceCount: number): { sourceIndex: number | null; rest: string } {
   const trimmed = text.trimStart();
-  for (const [tag, used] of [[TAG_USED, true], [TAG_UNUSED, false]] as const) {
-    if (trimmed.startsWith(tag)) {
-      return { used, rest: trimmed.slice(tag.length).replace(/^\s+/, "") };
-    }
+  const strip = (tagLength: number) => trimmed.slice(tagLength).replace(/^\s+/, "");
+
+  if (trimmed.startsWith(TAG_UNUSED)) return { sourceIndex: -1, rest: strip(TAG_UNUSED.length) };
+
+  const match = TAG_USED_PATTERN.exec(trimmed);
+  if (match?.[1]) {
+    const n = Number(match[1]);
+    return { sourceIndex: n >= 1 && n <= sourceCount ? n - 1 : null, rest: strip(match[0].length) };
   }
-  return { used: null, rest: text };
+  return { sourceIndex: null, rest: text };
 }
 
 export async function POST(req: Request) {
@@ -52,14 +56,14 @@ export async function POST(req: Request) {
       });
     }
 
-    const source = await retrieveTopChunk(question);
+    const sources = await retrieveTopChunks(question);
 
     const abort = new AbortController();
     const generator = await getGemini().models.generateContentStream({
       model: chatModel(),
       contents: question,
       config: {
-        systemInstruction: buildSystemPrompt(source, locale),
+        systemInstruction: buildSystemPrompt(sources, locale),
         temperature: 0.2,
         maxOutputTokens: 600,
         // Short factual answers need little "thinking"; LOW keeps replies fast and cheap.
@@ -74,7 +78,7 @@ export async function POST(req: Request) {
     // before the response headers are sent.
     let head = "";
     let finished = false;
-    while (head.trimStart().length <= TAG_UNUSED.length && !head.includes("\n")) {
+    while (head.trimStart().length <= MAX_TAG_LENGTH && !head.includes("\n")) {
       const next = await chunks.next();
       if (next.done) {
         finished = true;
@@ -82,9 +86,9 @@ export async function POST(req: Request) {
       }
       head += next.value.text ?? "";
     }
-    const { used, rest } = parseTag(head);
-    // If the model forgot the tag, fall back to showing whatever source passed the score floor.
-    const showSource = source !== null && (used ?? true);
+    const { sourceIndex, rest } = parseTag(head, sources.length);
+    // If the model forgot the tag (or gave a bad number), fall back to the best search match.
+    const source = sourceIndex === null ? sources[0] : sourceIndex >= 0 ? sources[sourceIndex] : undefined;
 
     const encoder = new TextEncoder();
     const stream = new ReadableStream<Uint8Array>({
@@ -111,7 +115,7 @@ export async function POST(req: Request) {
       "Content-Type": "text/plain; charset=utf-8",
       "Cache-Control": "no-store",
     });
-    if (showSource && source) {
+    if (source) {
       headers.set(SOURCE_HEADER, encodeSource({ slug: source.slug, title: source.title, text: source.text }));
     }
 
