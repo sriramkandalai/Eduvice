@@ -7,7 +7,7 @@
     "title": "EduVice — Las escuelas de EE. UU., explicadas",
     "description": "Respuestas claras para padres inmigrantes sobre el sistema escolar de EE. UU.",
     "guideTitle": "Guía escolar",
-    "chatTitle": "Hacer una pregunta",
+    "chatTitle": "Pregúntele a Marg",
     "aboutTitle": "Quiénes somos",
     "contactTitle": "Contacto",
     "privacyTitle": "Política de privacidad",
@@ -17,7 +17,7 @@
   "Navbar": {
     "homeLink": "Inicio de EduVice",
     "guide": "Guía escolar",
-    "chat": "Hacer una pregunta",
+    "chat": "Pregúntele a Marg",
     "mainNav": "Navegación principal"
   },
   "LanguageSwitcher": {
@@ -33,7 +33,7 @@
   "Footer": {
     "nav": "Pie de página",
     "guide": "Guía escolar",
-    "chat": "Hacer una pregunta",
+    "chat": "Pregúntele a Marg",
     "about": "Quiénes somos",
     "contact": "Contacto",
     "privacy": "Privacidad",
@@ -45,7 +45,7 @@
     "eyebrow": "Para padres recién llegados a EE. UU.",
     "title": "Las escuelas de EE. UU., explicadas.",
     "valueProp": "Pregunte lo que quiera sobre inscripción, calificaciones, educación especial o comidas escolares, y reciba una respuesta clara con su fuente.",
-    "cta": "Hacer una pregunta",
+    "cta": "Pregúntele a Marg",
     "browse": "Ver la guía escolar",
     "howTitle": "Cómo funciona",
     "step1Title": "Pregunte en su idioma",
@@ -94,20 +94,31 @@
     "breadcrumb": "Ruta de navegación",
     "related": "Temas relacionados",
     "askTitle": "¿Todavía tiene una pregunta?",
-    "askBody": "Pregúntele a EduVice con sus propias palabras y reciba una respuesta en segundos.",
-    "askCta": "Hacer una pregunta",
+    "askBody": "Pregúntele a Marg, la guía de EduVice, con sus propias palabras y reciba una respuesta en segundos.",
+    "askCta": "Pregúntele a Marg",
     "translationNote": "Este tema todavía no está disponible en su idioma, por eso se muestra en inglés. Puede hacer preguntas en su idioma."
   },
   "Chat": {
-    "title": "Pregunte sobre las escuelas de EE. UU.",
-    "intro": "Haga cualquier pregunta, con sus propias palabras y en su propio idioma. Cuando nuestra guía escolar incluya información sobre su pregunta, la respuesta le mostrará de dónde proviene.",
+    "title": "Marg",
+    "tagline": "Su guía para las escuelas de EE. UU. y cualquier otra pregunta que tenga.",
+    "greetingTitle": "¡Hola! Soy Marg.",
+    "greetingBody": "\"Marg\" significa \"camino\". Estoy aquí para ayudar a su familia a encontrar el camino correcto. Pregúnteme lo que sea, en cualquier idioma: sobre la escuela, las tareas, la vida diaria o cualquier otra duda.",
+    "starters": [
+      "¿Puedo inscribir a mi hijo sin un número de Seguro Social?",
+      "¿Qué es un IEP?",
+      "¿Cómo puedo conseguir almuerzo escolar gratis?",
+      "¿Qué universidades aceptan créditos de AP Computer Science A?"
+    ],
+    "newChat": "Nueva conversación",
+    "followUpsLabel": "También puede preguntar",
+    "searchToggle": "Mostrar sugerencias de búsqueda de Google",
+    "memoryNote": "Su conversación solo se guarda en este dispositivo. Toque \"Nueva conversación\" para borrarla.",
     "inputLabel": "Su pregunta",
-    "placeholder": "Ejemplo: ¿Puede mi hijo inscribirse sin número de Seguro Social?",
-    "submit": "Preguntar",
-    "thinking": "Buscando una respuesta…",
+    "placeholder": "Pregúntele lo que sea a Marg…",
+    "submit": "Enviar",
+    "thinking": "Marg está pensando…",
     "thinkingLong": "Seguimos trabajando… buscar en internet puede tomar unos segundos más.",
-    "answerLabel": "Respuesta",
-    "sourceLabel": "Fuente",
+    "sourceLabel": "De la Guía Escolar de EduVice",
     "readMore": "Leer el tema completo",
     "webSourcesLabel": "Fuentes (sitios web oficiales)",
     "webNote": "Esta respuesta viene de una búsqueda en vivo en College Board y en sitios web oficiales de universidades. Las políticas pueden cambiar cada año, así que confírmelo con la universidad.",
@@ -115,7 +126,6 @@
     "searchSuggestionsLabel": "Sugerencias de búsqueda de Google",
     "webSourcesLabelGeneral": "Fuentes de internet",
     "webNoteGeneral": "Esta respuesta utilizó una búsqueda de Google. Por favor, revise los detalles importantes en los sitios web originales.",
-    "errorEmpty": "Por favor, escriba una pregunta primero.",
     "errorGeneric": "Algo salió mal. Por favor, inténtelo de nuevo.",
     "errorRateLimit": "Ha hecho muchas preguntas en poco tiempo. Por favor, espere un minuto e inténtelo de nuevo.",
     "disclaimer": "EduVice ofrece información general, no asesoría legal. Las reglas pueden variar según el estado y el distrito; consulte con su escuela.",
@@ -130,7 +140,7 @@
     "principle1Title": "Gratis",
     "principle1Body": "EduVice es gratis y no necesita crear una cuenta.",
     "principle2Title": "Privado",
-    "principle2Body": "Nunca pedimos su nombre ni su estatus migratorio, y no guardamos sus conversaciones.",
+    "principle2Body": "Nunca le pedimos su nombre ni su estatus migratorio. Sus conversaciones con Marg se guardan únicamente en su propio dispositivo, nunca en nuestros servidores.",
     "principle3Title": "Cuidadoso",
     "principle3Body": "Cuando nuestra guía escolar revisada tenga información sobre una pregunta, las respuestas la utilizan y muestran de dónde se obtuvo.",
     "principle4Title": "Respetuoso",
@@ -159,7 +169,7 @@
       },
       {
         "heading": "Lo que no hacemos",
-        "body": "No guardamos sus conversaciones, no vendemos su información, no mostramos anuncios y no usamos cookies de rastreo."
+        "body": "No guardamos sus conversaciones en nuestros servidores, no vendemos su información, no mostramos anuncios ni usamos cookies de rastreo. Para que Marg recuerde su conversación, el historial solo se guarda en el navegador de su propio dispositivo. Toque \"Nueva conversación\" para borrarlo cuando usted quiera."
       },
       {
         "heading": "Cookies",

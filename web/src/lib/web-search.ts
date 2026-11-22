@@ -5,7 +5,7 @@
 //  2. After answering, every sentence Gemini attributes ONLY to other domains is removed, and the
 //     answer is rejected entirely if no allowed source supports it.
 
-import type { GroundingMetadata } from "@google/genai";
+import type { Content, GroundingMetadata } from "@google/genai";
 import type { Locale } from "@/i18n/routing";
 import type { WebSource } from "./chat-protocol";
 import { chatModel, getGemini } from "./gemini";
@@ -20,7 +20,7 @@ export function isAllowedDomain(raw: string | undefined): boolean {
 }
 
 const RULES = `
-You are EduVice, a warm and patient guide for immigrant parents learning how US schools work.
+You are Marg, the warm and patient guide on EduVice, a website for immigrant parents learning how US schools work.
 Use Google Search to answer the parent's question about college credit or placement for AP (Advanced Placement) exams.
 
 WHERE TO SEARCH
@@ -120,10 +120,10 @@ export function citedWebSources(gm: GroundingMetadata | undefined): WebSource[] 
 }
 
 /** Returns null when no answer could be backed by College Board or an official .edu site. */
-export async function answerWithWebSearch(question: string, locale: Locale): Promise<WebAnswer | null> {
+export async function answerWithWebSearch(contents: Content[], locale: Locale): Promise<WebAnswer | null> {
   const res = await getGemini().models.generateContent({
     model: chatModel(),
-    contents: question,
+    contents,
     config: {
       systemInstruction: RULES.replace("{{LANGUAGE}}", LANGUAGE_NAMES[locale]),
       tools: [{ googleSearch: {} }],

@@ -7,7 +7,7 @@
     "title": "EduVice — Trường học tại Mỹ, giải thích dễ hiểu",
     "description": "Câu trả lời rõ ràng dành cho phụ huynh nhập cư về hệ thống trường học tại Mỹ.",
     "guideTitle": "Cẩm nang trường học",
-    "chatTitle": "Đặt câu hỏi",
+    "chatTitle": "Hỏi Marg",
     "aboutTitle": "Giới thiệu",
     "contactTitle": "Liên hệ",
     "privacyTitle": "Chính sách bảo mật",
@@ -17,7 +17,7 @@
   "Navbar": {
     "homeLink": "Trang chủ EduVice",
     "guide": "Cẩm nang trường học",
-    "chat": "Đặt câu hỏi",
+    "chat": "Hỏi Marg",
     "mainNav": "Điều hướng chính"
   },
   "LanguageSwitcher": {
@@ -33,7 +33,7 @@
   "Footer": {
     "nav": "Chân trang",
     "guide": "Cẩm nang trường học",
-    "chat": "Đặt câu hỏi",
+    "chat": "Hỏi Marg",
     "about": "Giới thiệu",
     "contact": "Liên hệ",
     "privacy": "Quyền riêng tư",
@@ -45,7 +45,7 @@
     "eyebrow": "Dành cho phụ huynh mới đến Mỹ",
     "title": "Trường học tại Mỹ, giải thích dễ hiểu.",
     "valueProp": "Quý vị có thể hỏi bất cứ điều gì về việc ghi danh nhập học, điểm số, giáo dục đặc biệt, hay bữa ăn tại trường — và nhận câu trả lời rõ ràng kèm theo nguồn thông tin.",
-    "cta": "Đặt câu hỏi",
+    "cta": "Hỏi Marg",
     "browse": "Xem Cẩm nang trường học",
     "howTitle": "Cách hoạt động",
     "step1Title": "Hỏi bằng ngôn ngữ của quý vị",
@@ -94,20 +94,31 @@
     "breadcrumb": "Đường dẫn trang",
     "related": "Các chủ đề liên quan",
     "askTitle": "Quý vị vẫn còn thắc mắc?",
-    "askBody": "Hãy hỏi EduVice bằng từ ngữ tự nhiên của quý vị để nhận câu trả lời chỉ sau vài giây.",
-    "askCta": "Đặt câu hỏi",
+    "askBody": "Hãy đặt câu hỏi cho Marg, người hướng dẫn của EduVice, bằng lời của quý vị và nhận câu trả lời chỉ trong vài giây.",
+    "askCta": "Hỏi Marg",
     "translationNote": "Chủ đề này hiện chưa có bản tiếng Việt nên được hiển thị bằng tiếng Anh. Quý vị vẫn có thể đặt câu hỏi bằng tiếng Việt."
   },
   "Chat": {
-    "title": "Hỏi về trường học tại Mỹ",
-    "intro": "Xin quý phụ huynh cứ thoải mái hỏi bất cứ điều gì, bằng lời văn và ngôn ngữ quen thuộc của mình. Khi cẩm nang học đường của chúng tôi có thông tin về câu hỏi của quý vị, câu trả lời sẽ hiển thị rõ nguồn.",
+    "title": "Marg",
+    "tagline": "Người bạn đồng hành về trường học tại Mỹ — và mọi thắc mắc khác của quý vị.",
+    "greetingTitle": "Xin chào, tôi là Marg!",
+    "greetingBody": "\"Marg\" có nghĩa là \"con đường\". Tôi ở đây để hỗ trợ gia đình mình tìm đúng hướng đi. Quý vị có thể hỏi tôi bất cứ điều gì, bằng bất kỳ ngôn ngữ nào: về trường lớp, bài tập về nhà, cuộc sống hàng ngày hay bất kỳ điều gì khác.",
+    "starters": [
+      "Con tôi có thể nhập học mà không có số An sinh Xã hội (Social Security number) được không?",
+      "IEP (chương trình giáo dục cá nhân) là gì?",
+      "Làm thế nào để xin bữa trưa miễn phí ở trường?",
+      "Những trường đại học nào chấp nhận tín chỉ môn AP Computer Science A?"
+    ],
+    "newChat": "Cuộc trò chuyện mới",
+    "followUpsLabel": "Quý vị cũng có thể hỏi",
+    "searchToggle": "Hiện gợi ý tìm kiếm của Google",
+    "memoryNote": "Tin nhắn của quý vị chỉ được lưu trên thiết bị này. Bấm \"Cuộc trò chuyện mới\" để xóa.",
     "inputLabel": "Câu hỏi của quý vị",
-    "placeholder": "Ví dụ: Con tôi có thể nhập học mà không cần số An sinh Xã hội không?",
-    "submit": "Gửi câu hỏi",
-    "thinking": "Đang tìm câu trả lời…",
+    "placeholder": "Hỏi Marg bất cứ điều gì…",
+    "submit": "Gửi",
+    "thinking": "Marg đang suy nghĩ…",
     "thinkingLong": "Hệ thống vẫn đang xử lý… việc tìm kiếm trên mạng có thể mất thêm vài giây nữa ạ.",
-    "answerLabel": "Câu trả lời",
-    "sourceLabel": "Nguồn thông tin",
+    "sourceLabel": "Từ Sổ tay Trường học EduVice",
     "readMore": "Đọc toàn bộ chủ đề",
     "webSourcesLabel": "Nguồn tham khảo (các trang web chính thức)",
     "webNote": "Câu trả lời này được tra cứu trực tiếp từ College Board và trang web chính thức của các trường đại học. Các quy định có thể thay đổi mỗi năm, vì vậy xin quý phụ huynh vui lòng kiểm tra lại với trường.",
@@ -115,7 +126,6 @@
     "searchSuggestionsLabel": "Gợi ý tìm kiếm của Google",
     "webSourcesLabelGeneral": "Nguồn từ trang mạng",
     "webNoteGeneral": "Câu trả lời này có sử dụng tìm kiếm từ Google. Quý phụ huynh vui lòng kiểm tra lại các chi tiết quan trọng trên các trang mạng gốc.",
-    "errorEmpty": "Xin vui lòng nhập câu hỏi trước.",
     "errorGeneric": "Đã xảy ra lỗi. Xin quý vị vui lòng thử lại.",
     "errorRateLimit": "Quý vị đã đặt nhiều câu hỏi trong thời gian ngắn. Xin vui lòng đợi một phút rồi thử lại.",
     "disclaimer": "EduVice chỉ cung cấp thông tin chung, không phải là lời khuyên pháp lý. Các quy định có thể khác nhau tùy theo từng tiểu bang và học khu — xin quý vị hỏi lại trường của con để biết rõ.",
@@ -130,7 +140,7 @@
     "principle1Title": "Miễn phí",
     "principle1Body": "Quý vị có thể sử dụng EduVice hoàn toàn miễn phí mà không cần tạo tài khoản.",
     "principle2Title": "Riêng tư",
-    "principle2Body": "Chúng tôi không bao giờ hỏi tên hay tình trạng di trú của quý vị, và chúng tôi cũng không lưu lại nội dung trò chuyện.",
+    "principle2Body": "Chúng tôi không bao giờ hỏi tên hay tình trạng cư trú của quý vị. Cuộc trò chuyện của quý vị với Marg chỉ được lưu trên chính thiết bị của quý vị, không bao giờ lưu trên máy chủ của chúng tôi.",
     "principle3Title": "Cẩn trọng",
     "principle3Body": "Khi cẩm nang học đường đã được kiểm duyệt của chúng tôi có thông tin về câu hỏi, câu trả lời sẽ sử dụng thông tin đó và ghi rõ nguồn gốc.",
     "principle4Title": "Tôn trọng",
@@ -159,7 +169,7 @@
       },
       {
         "heading": "Những điều chúng tôi không làm",
-        "body": "Chúng tôi không lưu lại nội dung trò chuyện, không bán thông tin của quý vị, không đặt quảng cáo và không dùng cookie theo dõi."
+        "body": "Chúng tôi không lưu các cuộc trò chuyện của quý vị trên máy chủ, không bán thông tin, không hiển thị quảng cáo và không dùng cookie theo dõi. Để Marg có thể nhớ cuộc trò chuyện, lịch sử chat chỉ được lưu trong trình duyệt trên máy của quý vị. Quý vị có thể bấm \"Cuộc trò chuyện mới\" bất cứ lúc nào để xóa."
       },
       {
         "heading": "Tập tin cookie",

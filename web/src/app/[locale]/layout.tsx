@@ -66,7 +66,7 @@ export default async function LocaleLayout({ children, params: { locale } }: Pro
 
   return (
     <html lang={locale} dir={getDirection(locale)} className={`${poppins.variable} ${luckiest.variable} ${vietnamese.variable} ${arabic.variable}`}>
-      <body className="flex min-h-dvh flex-col bg-yellow font-sans text-blue-dark antialiased">
+      <body className="flex min-h-dvh flex-col font-sans text-blue-dark antialiased">
         <NextIntlClientProvider messages={messages}>
           <Navbar />
           <main className="flex-1">{children}</main>

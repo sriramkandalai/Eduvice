@@ -1,14 +1,22 @@
 import { NextResponse } from "next/server";
-import { ThinkingLevel, type GenerateContentResponse, type GroundingMetadata } from "@google/genai";
+import { ThinkingLevel, type Content, type GenerateContentResponse, type GroundingMetadata } from "@google/genai";
 import { getTranslations } from "next-intl/server";
 import { retrieveTopChunks } from "@/lib/rag";
 import { getFaq } from "@/lib/faqs";
 import { chatModel, getGemini } from "@/lib/gemini";
 import { buildSystemPrompt, MAX_TAG_LENGTH, TAG_UNUSED, TAG_USED_PATTERN } from "@/lib/prompt";
 import { checkRateLimit, visitorKey } from "@/lib/rate-limit";
-import { MAX_QUESTION_LENGTH, SOURCE_HEADER, encodeMeta, encodeSource } from "@/lib/chat-protocol";
+import {
+  MAX_QUESTION_LENGTH,
+  SOURCE_HEADER,
+  encodeMeta,
+  encodeSource,
+  sanitizeHistory,
+  type HistoryTurn,
+} from "@/lib/chat-protocol";
 import { needsWebSearch } from "@/lib/router";
 import { answerWithWebSearch, citedWebSources } from "@/lib/web-search";
+import { suggestFollowUps } from "@/lib/followups";
 import { isLocale, routing, type Locale } from "@/i18n/routing";
 
 export const runtime = "nodejs"; // the MongoDB driver needs Node, not Edge
@@ -57,16 +65,35 @@ function groundingFrom(chunk: GenerateContentResponse, previous: GroundingMetada
   return gm && (gm.groundingChunks?.length || gm.searchEntryPoint) ? gm : previous;
 }
 
+function toContents(history: HistoryTurn[], question: string): Content[] {
+  return [
+    ...history.map((t) => ({ role: t.role, parts: [{ text: t.text }] })),
+    { role: "user", parts: [{ text: question }] },
+  ];
+}
+
+/**
+ * Text used for guide search and the AP check. Short follow-ups ("what about UCLA?") make sense
+ * only with the previous question, so it's included.
+ */
+function searchText(history: HistoryTurn[], question: string): string {
+  const previous = [...history].reverse().find((t) => t.role === "user")?.text;
+  return previous ? `${previous.slice(0, 500)}\n${question}` : question;
+}
+
 /** AP-credit answer from a live search of College Board / official .edu sites (not streamed: sources are checked first). */
-async function officialAnswerResponse(question: string, locale: Locale): Promise<Response> {
-  const answer = await answerWithWebSearch(question, locale);
-  if (!answer) {
-    const t = await getTranslations({ locale, namespace: "Chat" });
-    return new Response(t("webNoResult"), { headers: TEXT_HEADERS });
-  }
+async function officialAnswerResponse(contents: Content[], question: string, locale: Locale): Promise<Response> {
+  const answer = await answerWithWebSearch(contents, locale);
+  const text = answer?.text ?? (await getTranslations({ locale, namespace: "Chat" }))("webNoResult");
+  const followUps = await suggestFollowUps(question, text, locale);
   const body =
-    answer.text +
-    encodeMeta({ kind: "official", webSources: answer.sources, suggestionsHtml: answer.suggestionsHtml });
+    text +
+    encodeMeta({
+      webKind: answer ? "official" : undefined,
+      webSources: answer?.sources ?? [],
+      suggestionsHtml: answer?.suggestionsHtml,
+      followUps,
+    });
   return new Response(body, { headers: TEXT_HEADERS });
 }
 
@@ -82,6 +109,7 @@ export async function POST(req: Request) {
   const question = typeof raw.question === "string" ? raw.question.trim() : "";
   const locale: Locale =
     typeof raw.locale === "string" && isLocale(raw.locale) ? raw.locale : routing.defaultLocale;
+  const history = sanitizeHistory(raw.history);
 
   if (!question) return jsonError(400, "Question is required.");
   if (question.length > MAX_QUESTION_LENGTH) return jsonError(400, "Question is too long.");
@@ -94,12 +122,15 @@ export async function POST(req: Request) {
       });
     }
 
+    const contents = toContents(history, question);
+    const lookup = searchText(history, question);
+
     // Guide search and the "is this an AP-credit question?" check run in parallel.
-    const [sources, apCredit] = await Promise.all([retrieveTopChunks(question), needsWebSearch(question)]);
+    const [sources, apCredit] = await Promise.all([retrieveTopChunks(lookup), needsWebSearch(lookup)]);
 
     if (apCredit) {
       try {
-        return await officialAnswerResponse(question, locale);
+        return await officialAnswerResponse(contents, question, locale);
       } catch (err) {
         // e.g. search quota reached: fall back to the general answer below.
         console.error("[api/chat] official search failed, using general answer:", err);
@@ -111,7 +142,7 @@ export async function POST(req: Request) {
     const abort = new AbortController();
     const generator = await getGemini().models.generateContentStream({
       model: chatModel(),
-      contents: question,
+      contents,
       config: {
         systemInstruction: buildSystemPrompt(sources, locale),
         tools: [{ googleSearch: {} }],
@@ -146,23 +177,32 @@ export async function POST(req: Request) {
     const stream = new ReadableStream<Uint8Array>({
       async start(controller) {
         try {
+          let answer = rest;
           if (rest) controller.enqueue(encoder.encode(rest));
           while (!finished) {
             const next = await chunks.next();
             if (next.done) break;
             const text = next.value.text;
-            if (text) controller.enqueue(encoder.encode(text));
+            if (text) {
+              answer += text;
+              controller.enqueue(encoder.encode(text));
+            }
             grounding = groundingFrom(next.value, grounding);
           }
-          // If Gemini searched the web, send its sources after the answer.
+
+          // After the answer: follow-up suggestions and, if Gemini searched the web, its sources.
           const webSources = citedWebSources(grounding);
-          if (webSources.length > 0) {
-            controller.enqueue(
-              encoder.encode(
-                encodeMeta({ kind: "web", webSources, suggestionsHtml: grounding?.searchEntryPoint?.renderedContent }),
-              ),
-            );
-          }
+          const followUps = await suggestFollowUps(question, answer, locale);
+          controller.enqueue(
+            encoder.encode(
+              encodeMeta({
+                webKind: webSources.length > 0 ? "web" : undefined,
+                webSources,
+                suggestionsHtml: webSources.length > 0 ? grounding?.searchEntryPoint?.renderedContent : undefined,
+                followUps,
+              }),
+            ),
+          );
           controller.close();
         } catch (err) {
           controller.error(err);

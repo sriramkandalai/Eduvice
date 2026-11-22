@@ -57,6 +57,37 @@
     background-color: var(--color-yellow);
   }
 
+  /* Page background: soft glows (::before) and a slowly drifting doodle path (::after).
+     Both sit behind all content. */
+  body::before,
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+  }
+  body::before {
+    background:
+      radial-gradient(circle at 12% 18%, rgb(255 244 220 / 0.75), transparent 38%),
+      radial-gradient(circle at 88% 12%, rgb(58 104 207 / 0.14), transparent 34%),
+      radial-gradient(circle at 80% 82%, rgb(255 244 220 / 0.6), transparent 40%),
+      radial-gradient(circle at 18% 88%, rgb(58 104 207 / 0.1), transparent 36%);
+  }
+  body::after {
+    background-image: url("/patterns/marg-path.svg");
+    background-size: 320px 320px;
+    animation: bg-drift 90s linear infinite;
+  }
+  @keyframes bg-drift {
+    from {
+      background-position: 0 0;
+    }
+    to {
+      background-position: 320px 320px;
+    }
+  }
+
   /* Letter-spacing breaks the joined letters of Arabic script. */
   :lang(ar) * {
     letter-spacing: normal !important;
@@ -80,6 +111,117 @@
     line-height: 1;
   }
 
+  /* ── Marg, the mascot (components/Marg.tsx) ─────────────────────────────── */
+  .marg * {
+    transform-box: view-box;
+  }
+  .marg-body {
+    transform-origin: 60px 112px;
+    animation: marg-bob 3.2s ease-in-out infinite;
+  }
+  .marg-shadow {
+    transform-origin: 60px 116px;
+    animation: marg-shadow 3.2s ease-in-out infinite;
+  }
+  .marg-eyes {
+    transform-origin: 60px 73px;
+    animation: marg-blink 5s infinite;
+  }
+  .marg-pupils {
+    transition: transform 0.3s ease;
+  }
+  .marg-tassel {
+    transform-origin: 89px 25px;
+    animation: marg-sway 2.6s ease-in-out infinite;
+  }
+  .marg-arm {
+    transform-origin: 94px 84px;
+  }
+  .marg-talk,
+  .marg-think {
+    opacity: 0;
+  }
+
+  .marg[data-state="wave"] .marg-arm {
+    animation: marg-wave 0.9s ease-in-out 3;
+  }
+  .marg[data-state="thinking"] .marg-body {
+    animation-duration: 1.6s;
+  }
+  .marg[data-state="thinking"] .marg-pupils {
+    transform: translate(2px, -3px);
+  }
+  .marg[data-state="thinking"] .marg-think {
+    opacity: 1;
+  }
+  .marg[data-state="thinking"] .marg-think circle {
+    animation: marg-dot 1.2s ease-in-out infinite;
+  }
+  .marg[data-state="thinking"] .marg-think circle:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+  .marg[data-state="thinking"] .marg-think circle:nth-child(3) {
+    animation-delay: 0.4s;
+  }
+  .marg[data-state="talking"] .marg-smile {
+    opacity: 0;
+  }
+  .marg[data-state="talking"] .marg-talk {
+    opacity: 1;
+    transform-origin: 60px 89px;
+    animation: marg-talk 0.26s ease-in-out infinite alternate;
+  }
+
+  @keyframes marg-bob {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+  }
+  @keyframes marg-shadow {
+    0%, 100% { transform: scaleX(1); }
+    50% { transform: scaleX(0.85); }
+  }
+  @keyframes marg-blink {
+    0%, 92%, 100% { transform: scaleY(1); }
+    95% { transform: scaleY(0.1); }
+  }
+  @keyframes marg-sway {
+    0%, 100% { transform: rotate(-6deg); }
+    50% { transform: rotate(6deg); }
+  }
+  @keyframes marg-wave {
+    0%, 100% { transform: rotate(0); }
+    25% { transform: rotate(-35deg); }
+    75% { transform: rotate(10deg); }
+  }
+  @keyframes marg-dot {
+    0%, 100% { opacity: 0.25; }
+    50% { opacity: 1; }
+  }
+  @keyframes marg-talk {
+    from { transform: scaleY(0.35); }
+    to { transform: scaleY(1); }
+  }
+
+  /* Small avatars on older messages stay still. */
+  .marg-still * {
+    animation: none !important;
+  }
+
+  .typing-dot {
+    display: inline-block;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 9999px;
+    background: var(--color-blue);
+    animation: marg-dot 1.2s ease-in-out infinite;
+  }
+  .typing-dot:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+  .typing-dot:nth-child(3) {
+    animation-delay: 0.4s;
+  }
+
   /* The "EduVice" logotype keeps its brand font in every language. */
   .brand {
     --font-heading: var(--font-luckiest), var(--font-poppins), sans-serif;
@@ -87,5 +229,14 @@
     --wordmark-weight: 400;
     font-family: var(--font-heading);
     font-weight: 400;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::after,
+  .marg *,
+  .marg[data-state] *,
+  .typing-dot {
+    animation: none !important;
   }
 }

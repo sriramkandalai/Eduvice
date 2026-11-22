@@ -7,7 +7,7 @@
     "title": "EduVice — US schools, explained",
     "description": "Clear answers for immigrant parents about the US school system.",
     "guideTitle": "School Guide",
-    "chatTitle": "Ask a question",
+    "chatTitle": "Ask Marg",
     "aboutTitle": "About",
     "contactTitle": "Contact",
     "privacyTitle": "Privacy Policy",
@@ -17,7 +17,7 @@
   "Navbar": {
     "homeLink": "EduVice home",
     "guide": "School Guide",
-    "chat": "Ask a question",
+    "chat": "Ask Marg",
     "mainNav": "Main navigation"
   },
   "LanguageSwitcher": {
@@ -33,7 +33,7 @@
   "Footer": {
     "nav": "Footer",
     "guide": "School Guide",
-    "chat": "Ask a question",
+    "chat": "Ask Marg",
     "about": "About",
     "contact": "Contact",
     "privacy": "Privacy",
@@ -45,7 +45,7 @@
     "eyebrow": "For parents new to the US",
     "title": "US schools, explained.",
     "valueProp": "Ask anything about enrollment, grades, special education, or school meals — and get a clear answer with its source.",
-    "cta": "Ask a question",
+    "cta": "Ask Marg",
     "browse": "Browse the School Guide",
     "howTitle": "How it works",
     "step1Title": "Ask in your language",
@@ -94,20 +94,31 @@
     "breadcrumb": "Breadcrumb",
     "related": "Related topics",
     "askTitle": "Still have a question?",
-    "askBody": "Ask EduVice in your own words and get an answer in seconds.",
-    "askCta": "Ask a question",
+    "askBody": "Ask Marg, EduVice's guide, in your own words and get an answer in seconds.",
+    "askCta": "Ask Marg",
     "translationNote": "This topic is not yet available in your language, so it is shown in English. You can still ask questions in your language."
   },
   "Chat": {
-    "title": "Ask about US schools",
-    "intro": "Ask anything, in your own words and your own language. When our school guide covers your question, the answer shows its source.",
+    "title": "Marg",
+    "tagline": "Your guide to US schools — and anything else you want to ask.",
+    "greetingTitle": "Hi, I'm Marg!",
+    "greetingBody": "\"Marg\" means \"path.\" I'm here to help your family find its way. Ask me anything, in any language: school, homework, everyday life, or something else.",
+    "starters": [
+      "Can my child enroll without a Social Security number?",
+      "What is an IEP?",
+      "How do I get free school lunch?",
+      "Which colleges accept AP Computer Science A credit?"
+    ],
+    "newChat": "New chat",
+    "followUpsLabel": "You could also ask",
+    "searchToggle": "Show Google search suggestions",
+    "memoryNote": "Your chat is saved only on this device. Tap \"New chat\" to erase it.",
     "inputLabel": "Your question",
-    "placeholder": "Example: Can my child enroll without a Social Security number?",
-    "submit": "Ask",
-    "thinking": "Finding an answer…",
+    "placeholder": "Ask Marg anything…",
+    "submit": "Send",
+    "thinking": "Marg is thinking…",
     "thinkingLong": "Still working… searching the web can take a few more seconds.",
-    "answerLabel": "Answer",
-    "sourceLabel": "Source",
+    "sourceLabel": "From the EduVice School Guide",
     "readMore": "Read the full topic",
     "webSourcesLabel": "Sources (official websites)",
     "webNote": "This answer comes from a live search of College Board and official college websites. Policies can change each year, so confirm with the college.",
@@ -115,7 +126,6 @@
     "searchSuggestionsLabel": "Google Search suggestions",
     "webSourcesLabelGeneral": "Web sources",
     "webNoteGeneral": "This answer used a Google search. Check important details on the original websites.",
-    "errorEmpty": "Please type a question first.",
     "errorGeneric": "Something went wrong. Please try again.",
     "errorRateLimit": "You've asked a lot of questions in a short time. Please wait a minute and try again.",
     "disclaimer": "EduVice gives general information, not legal advice. Rules can differ by state and district — check with your school.",
@@ -130,7 +140,7 @@
     "principle1Title": "Free",
     "principle1Body": "EduVice is free to use, with no account needed.",
     "principle2Title": "Private",
-    "principle2Body": "We never ask for your name or immigration status, and we don't save your conversations.",
+    "principle2Body": "We never ask for your name or immigration status. Your chats with Marg are saved only on your own device, never on our servers.",
     "principle3Title": "Careful",
     "principle3Body": "When our reviewed school guide covers a question, answers use it and show the source.",
     "principle4Title": "Respectful",
@@ -159,7 +169,7 @@
       },
       {
         "heading": "What we don't do",
-        "body": "We don't save your conversations, sell your information, show ads, or use tracking cookies."
+        "body": "We don't save your conversations on our servers, sell your information, show ads, or use tracking cookies. So that Marg can remember your conversation, your chat history is stored only in your own browser on your device. Tap \"New chat\" to delete it at any time."
       },
       {
         "heading": "Cookies",
