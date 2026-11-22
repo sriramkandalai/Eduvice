@@ -1,27 +1,25 @@
 import { NextResponse } from "next/server";
-import { ThinkingLevel, type GenerateContentResponse } from "@google/genai";
+import { ThinkingLevel, type GenerateContentResponse, type GroundingMetadata } from "@google/genai";
+import { getTranslations } from "next-intl/server";
 import { retrieveTopChunks } from "@/lib/rag";
 import { getFaq } from "@/lib/faqs";
 import { chatModel, getGemini } from "@/lib/gemini";
 import { buildSystemPrompt, MAX_TAG_LENGTH, TAG_UNUSED, TAG_USED_PATTERN } from "@/lib/prompt";
 import { checkRateLimit, visitorKey } from "@/lib/rate-limit";
-import {
-  MAX_QUESTION_LENGTH,
-  SOURCE_HEADER,
-  SUGGESTIONS_HEADER,
-  WEB_SOURCES_HEADER,
-  encodeJsonHeader,
-  encodeSource,
-} from "@/lib/chat-protocol";
+import { MAX_QUESTION_LENGTH, SOURCE_HEADER, encodeMeta, encodeSource } from "@/lib/chat-protocol";
 import { needsWebSearch } from "@/lib/router";
-import { answerWithWebSearch } from "@/lib/web-search";
-import { getTranslations } from "next-intl/server";
+import { answerWithWebSearch, citedWebSources } from "@/lib/web-search";
 import { isLocale, routing, type Locale } from "@/i18n/routing";
 
 export const runtime = "nodejs"; // the MongoDB driver needs Node, not Edge
 export const dynamic = "force-dynamic";
 
 const SOURCE_EXCERPT_CHARS = 280;
+
+const TEXT_HEADERS = {
+  "Content-Type": "text/plain; charset=utf-8",
+  "Cache-Control": "no-store",
+} as const;
 
 /** Cut text to roughly `max` characters at a word boundary (CJK text has no spaces, so fall back to a hard cut). */
 function excerpt(text: string, max: number): string {
@@ -53,22 +51,23 @@ function parseTag(text: string, sourceCount: number): { sourceIndex: number | nu
   return { sourceIndex: null, rest: text };
 }
 
-/** Answer from a live search of College Board / official .edu sites (not streamed: sources are checked first). */
-async function webAnswerResponse(question: string, locale: Locale): Promise<Response> {
-  const answer = await answerWithWebSearch(question, locale);
-  const headers = new Headers({
-    "Content-Type": "text/plain; charset=utf-8",
-    "Cache-Control": "no-store",
-  });
+/** Keep the most recent grounding metadata that actually contains search results. */
+function groundingFrom(chunk: GenerateContentResponse, previous: GroundingMetadata | undefined) {
+  const gm = chunk.candidates?.[0]?.groundingMetadata;
+  return gm && (gm.groundingChunks?.length || gm.searchEntryPoint) ? gm : previous;
+}
 
+/** AP-credit answer from a live search of College Board / official .edu sites (not streamed: sources are checked first). */
+async function officialAnswerResponse(question: string, locale: Locale): Promise<Response> {
+  const answer = await answerWithWebSearch(question, locale);
   if (!answer) {
     const t = await getTranslations({ locale, namespace: "Chat" });
-    return new Response(t("webNoResult"), { headers });
+    return new Response(t("webNoResult"), { headers: TEXT_HEADERS });
   }
-
-  headers.set(WEB_SOURCES_HEADER, encodeJsonHeader(answer.sources));
-  if (answer.suggestionsHtml) headers.set(SUGGESTIONS_HEADER, encodeURIComponent(answer.suggestionsHtml));
-  return new Response(answer.text, { headers });
+  const body =
+    answer.text +
+    encodeMeta({ kind: "official", webSources: answer.sources, suggestionsHtml: answer.suggestionsHtml });
+  return new Response(body, { headers: TEXT_HEADERS });
 }
 
 export async function POST(req: Request) {
@@ -95,36 +94,39 @@ export async function POST(req: Request) {
       });
     }
 
-    // Guide search and the "does this need a live web search?" check run in parallel.
-    const [sources, webSearch] = await Promise.all([retrieveTopChunks(question), needsWebSearch(question)]);
+    // Guide search and the "is this an AP-credit question?" check run in parallel.
+    const [sources, apCredit] = await Promise.all([retrieveTopChunks(question), needsWebSearch(question)]);
 
-    if (webSearch) {
+    if (apCredit) {
       try {
-        return await webAnswerResponse(question, locale);
+        return await officialAnswerResponse(question, locale);
       } catch (err) {
-        // e.g. search quota reached: fall back to the guide-based answer below.
-        console.error("[api/chat] web search failed, using guide answer:", err);
+        // e.g. search quota reached: fall back to the general answer below.
+        console.error("[api/chat] official search failed, using general answer:", err);
       }
     }
 
+    // General answer: guide sources in the prompt, plus Google Search that Gemini uses only when
+    // it needs current or specific facts.
     const abort = new AbortController();
     const generator = await getGemini().models.generateContentStream({
       model: chatModel(),
       contents: question,
       config: {
         systemInstruction: buildSystemPrompt(sources, locale),
+        tools: [{ googleSearch: {} }],
         temperature: 0.2,
         maxOutputTokens: 2048,
-        // Short factual answers need little "thinking"; LOW keeps replies fast and cheap.
-        // (gemini-3.8-flash rejects MINIMAL.)
+        // LOW keeps replies fast and cheap. (gemini-3.8-flash rejects MINIMAL.)
         thinkingConfig: { thinkingLevel: ThinkingLevel.LOW },
         abortSignal: abort.signal,
       },
     });
     const chunks: AsyncIterator<GenerateContentResponse> = generator[Symbol.asyncIterator]();
+    let grounding: GroundingMetadata | undefined;
 
-    // Read just enough of the reply to see the tag, so we know whether to attach the source
-    // before the response headers are sent.
+    // Read just enough of the reply to see the tag, so we know whether to attach the guide
+    // source before the response headers are sent.
     let head = "";
     let finished = false;
     while (head.trimStart().length <= MAX_TAG_LENGTH && !head.includes("\n")) {
@@ -134,6 +136,7 @@ export async function POST(req: Request) {
         break;
       }
       head += next.value.text ?? "";
+      grounding = groundingFrom(next.value, grounding);
     }
     const { sourceIndex, rest } = parseTag(head, sources.length);
     // If the model forgot the tag (or gave a bad number), fall back to the best search match.
@@ -149,6 +152,16 @@ export async function POST(req: Request) {
             if (next.done) break;
             const text = next.value.text;
             if (text) controller.enqueue(encoder.encode(text));
+            grounding = groundingFrom(next.value, grounding);
+          }
+          // If Gemini searched the web, send its sources after the answer.
+          const webSources = citedWebSources(grounding);
+          if (webSources.length > 0) {
+            controller.enqueue(
+              encoder.encode(
+                encodeMeta({ kind: "web", webSources, suggestionsHtml: grounding?.searchEntryPoint?.renderedContent }),
+              ),
+            );
           }
           controller.close();
         } catch (err) {
@@ -160,10 +173,7 @@ export async function POST(req: Request) {
       },
     });
 
-    const headers = new Headers({
-      "Content-Type": "text/plain; charset=utf-8",
-      "Cache-Control": "no-store",
-    });
+    const headers = new Headers(TEXT_HEADERS);
     if (source) {
       // Show the citation in the reader's language when a translation exists. Only an excerpt is
       // sent (non-Latin text grows ~6x when percent-encoded); the card links to the full topic.

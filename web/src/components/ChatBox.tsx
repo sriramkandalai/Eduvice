@@ -6,14 +6,10 @@ import { Link } from "@/i18n/navigation";
 import {
   MAX_QUESTION_LENGTH,
   SOURCE_HEADER,
-  SUGGESTIONS_HEADER,
-  WEB_SOURCES_HEADER,
   decodeSource,
-  decodeTextHeader,
-  decodeWebSources,
+  splitResponse,
   type ChatRequestBody,
   type ChatSource,
-  type WebSource,
 } from "@/lib/chat-protocol";
 
 type Status = "idle" | "loading" | "streaming" | "done" | "error";
@@ -27,10 +23,9 @@ export function ChatBox() {
   const inputId = useId();
 
   const [question, setQuestion] = useState("");
-  const [answer, setAnswer] = useState("");
+  // Raw response body: the answer text, then (for web answers) the sources metadata.
+  const [raw, setRaw] = useState("");
   const [source, setSource] = useState<ChatSource | null>(null);
-  const [webSources, setWebSources] = useState<WebSource[]>([]);
-  const [suggestionsHtml, setSuggestionsHtml] = useState<string | null>(null);
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState<ErrorKey | null>(null);
   const abortRef = useRef<AbortController | null>(null);
@@ -38,7 +33,7 @@ export function ChatBox() {
 
   useEffect(() => () => abortRef.current?.abort(), []);
 
-  // Live web answers (AP credit questions) can take 10+ seconds; reassure the parent.
+  // Answers that search the web can take 10+ seconds; reassure the parent.
   useEffect(() => {
     if (status !== "loading") {
       setSlow(false);
@@ -49,6 +44,10 @@ export function ChatBox() {
   }, [status]);
 
   const busy = status === "loading" || status === "streaming";
+  const { text: answer, meta } = splitResponse(raw);
+  const webSources = meta?.webSources ?? [];
+  const suggestionsHtml = meta?.suggestionsHtml ?? null;
+  const official = meta?.kind === "official";
 
   async function ask() {
     const trimmed = question.trim();
@@ -62,10 +61,8 @@ export function ChatBox() {
     const controller = new AbortController();
     abortRef.current = controller;
 
-    setAnswer("");
+    setRaw("");
     setSource(null);
-    setWebSources([]);
-    setSuggestionsHtml(null);
     setError(null);
     setStatus("loading");
 
@@ -81,8 +78,6 @@ export function ChatBox() {
       if (!res.ok || !res.body) throw new Error(`HTTP ${res.status}`);
 
       setSource(decodeSource(res.headers.get(SOURCE_HEADER)));
-      setWebSources(decodeWebSources(res.headers.get(WEB_SOURCES_HEADER)));
-      setSuggestionsHtml(decodeTextHeader(res.headers.get(SUGGESTIONS_HEADER)));
       setStatus("streaming");
 
       const reader = res.body.getReader();
@@ -91,7 +86,7 @@ export function ChatBox() {
         const { done, value } = await reader.read();
         if (done) break;
         const text = decoder.decode(value, { stream: true });
-        setAnswer((prev) => prev + text);
+        setRaw((prev) => prev + text);
       }
       setStatus("done");
     } catch (err) {
@@ -165,7 +160,9 @@ export function ChatBox() {
 
         {webSources.length > 0 && (status === "streaming" || status === "done") && (
           <aside className="flex flex-col gap-3 rounded-2xl border-s-4 border-blue bg-cream px-5 py-4">
-            <h2 className="text-sm font-bold uppercase tracking-wide text-blue">{t("webSourcesLabel")}</h2>
+            <h2 className="text-sm font-bold uppercase tracking-wide text-blue">
+              {t(official ? "webSourcesLabel" : "webSourcesLabelGeneral")}
+            </h2>
             <ul className="flex flex-wrap gap-2">
               {webSources.map((s) => (
                 <li key={s.domain}>
@@ -181,7 +178,7 @@ export function ChatBox() {
                 </li>
               ))}
             </ul>
-            <p className="text-sm">{t("webNote")}</p>
+            <p className="text-sm">{t(official ? "webNote" : "webNoteGeneral")}</p>
             {suggestionsHtml && (
               // Google's grounding terms require showing these search suggestions. The HTML comes
               // from Google; it's sandboxed (no scripts) and its links open in a new tab.

@@ -105,7 +105,7 @@
     "placeholder": "例如：孩子没有社会安全号码可以入学吗？",
     "submit": "提问",
     "thinking": "正在寻找答案…",
-    "thinkingLong": "还在查找中……搜索官方网站可能需要多花几秒钟，请稍候。",
+    "thinkingLong": "还在努力查找中… 网上搜索可能需要多等几秒钟。",
     "answerLabel": "回答",
     "sourceLabel": "来源",
     "readMore": "阅读完整主题",
@@ -113,6 +113,8 @@
     "webNote": "此回答来自对 College Board 和大学官方网站的实时搜索。各校规定每年可能会有变化，请务必与大学核实确认。",
     "webNoResult": "未能从 College Board 或大学官方网站上找到此内容。您可以前往 apstudents.collegeboard.org 使用 College Board 的 AP 学分政策查询工具查找，或者查看大学的招生办（admissions）或教务处（registrar）网站。",
     "searchSuggestionsLabel": "Google 搜索建议",
+    "webSourcesLabelGeneral": "网站来源",
+    "webNoteGeneral": "此回答参考了 Google 搜索。重要细节请前往原始网站核对。",
     "errorEmpty": "请先输入您的问题。",
     "errorGeneric": "系统出错了，请再试一次。",
     "errorRateLimit": "您在短时间内提问过于频繁，请稍等一分钟后再试。",
@@ -153,7 +155,7 @@
       },
       {
         "heading": "我们如何为您解答问题",
-        "body": "为了回答您的问题，我们会把您提问的内容发送给 Google 的 Gemini 服务，由它来协助找到合适的主题并组织回答。对于哪些大学认可 AP 考试学分的问题，Gemini 还会通过 Google 搜索在 College Board 和大学官方网站上查找。Google 会依据其自身的服务条款处理这些内容，并可能保存这些信息以改进其服务。请不要在问题中包含姓名、家庭住址、案件号码或其他个人隐私信息。"
+        "body": "为了回答您的问题，我们会把您输入的文字发送给 Google 的 Gemini 服务，由它帮我们找到相关主题并写出答案。当问题需要最新或具体的信息时，Gemini 也可能会使用 Google 搜索；针对哪些大学接受 AP 考试学分的问题，它只会在 College Board 和大学官方网站上进行搜索。Google 会根据其自身条款处理这些内容，并可能予以保存来改进其服务。提问时，请不要包含姓名、住址、案件编号或其他个人隐私信息。"
       },
       {
         "heading": "我们绝不会做的事",

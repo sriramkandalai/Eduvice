@@ -1,46 +1,61 @@
 // Shared between /api/chat and the client. Must not import server-only modules.
 
+// Response format of POST /api/chat (text/plain, streamed):
+//
+//   <answer text…>[META_SEPARATOR<JSON AnswerMeta>]
+//
+// The answer streams first. If Google Search was used, a single record-separator character
+// and a JSON object with the web sources follow at the very end (they're only known once the
+// answer is complete). The guide citation, known up front, is sent in the X-Source header.
+
 export const SOURCE_HEADER = "X-Source";
-/** Present on live web answers: JSON list of the official sites used. */
-export const WEB_SOURCES_HEADER = "X-Web-Sources";
-/** Present on live web answers: Google Search suggestions HTML (required by Google's grounding terms). */
-export const SUGGESTIONS_HEADER = "X-Search-Suggestions";
+
+/** ASCII "record separator": never appears in answer text. */
+export const META_SEPARATOR = "\u001E";
 
 export interface WebSource {
   domain: string;
   uri: string;
 }
 
-export function encodeJsonHeader(value: unknown): string {
-  return encodeURIComponent(JSON.stringify(value));
+export interface AnswerMeta {
+  /** "official" = AP-credit answer limited to College Board / .edu; "web" = open Google Search. */
+  kind: "official" | "web";
+  webSources: WebSource[];
+  /** Google Search suggestions widget HTML (required by Google's grounding terms). */
+  suggestionsHtml?: string;
 }
 
-export function decodeWebSources(header: string | null): WebSource[] {
-  if (!header) return [];
+export function encodeMeta(meta: AnswerMeta): string {
+  return META_SEPARATOR + JSON.stringify(meta);
+}
+
+/** Split a (possibly partial) response body into the answer text and, once complete, its metadata. */
+export function splitResponse(raw: string): { text: string; meta: AnswerMeta | null } {
+  const at = raw.indexOf(META_SEPARATOR);
+  if (at === -1) return { text: raw, meta: null };
+  const text = raw.slice(0, at);
   try {
-    const parsed: unknown = JSON.parse(decodeURIComponent(header));
-    if (!Array.isArray(parsed)) return [];
-    return parsed.filter(
-      (s): s is WebSource =>
-        typeof s === "object" &&
-        s !== null &&
-        typeof (s as WebSource).domain === "string" &&
-        typeof (s as WebSource).uri === "string" &&
-        /^https:\/\//.test((s as WebSource).uri),
-    );
+    const parsed = JSON.parse(raw.slice(at + 1)) as Partial<AnswerMeta>;
+    const webSources = Array.isArray(parsed.webSources)
+      ? parsed.webSources.filter(
+          (s): s is WebSource =>
+            typeof s?.domain === "string" && typeof s?.uri === "string" && /^https:\/\//.test(s.uri),
+        )
+      : [];
+    return {
+      text,
+      meta: {
+        kind: parsed.kind === "official" ? "official" : "web",
+        webSources,
+        suggestionsHtml: typeof parsed.suggestionsHtml === "string" ? parsed.suggestionsHtml : undefined,
+      },
+    };
   } catch {
-    return [];
+    return { text, meta: null }; // metadata still arriving
   }
 }
 
-export function decodeTextHeader(header: string | null): string | null {
-  if (!header) return null;
-  try {
-    return decodeURIComponent(header);
-  } catch {
-    return null;
-  }
-}
 export const MAX_QUESTION_LENGTH = 4000;
 
 export interface ChatRequestBody {

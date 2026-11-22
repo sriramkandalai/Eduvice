@@ -105,7 +105,7 @@
     "placeholder": "Example: Can my child enroll without a Social Security number?",
     "submit": "Ask",
     "thinking": "Finding an answer…",
-    "thinkingLong": "Still working… searching official websites can take a few more seconds.",
+    "thinkingLong": "Still working… searching the web can take a few more seconds.",
     "answerLabel": "Answer",
     "sourceLabel": "Source",
     "readMore": "Read the full topic",
@@ -113,6 +113,8 @@
     "webNote": "This answer comes from a live search of College Board and official college websites. Policies can change each year, so confirm with the college.",
     "webNoResult": "I couldn't find this on College Board or official college websites. You can look it up with College Board's AP Credit Policy Search at apstudents.collegeboard.org, or check the college's admissions or registrar website.",
     "searchSuggestionsLabel": "Google Search suggestions",
+    "webSourcesLabelGeneral": "Web sources",
+    "webNoteGeneral": "This answer used a Google search. Check important details on the original websites.",
     "errorEmpty": "Please type a question first.",
     "errorGeneric": "Something went wrong. Please try again.",
     "errorRateLimit": "You've asked a lot of questions in a short time. Please wait a minute and try again.",
@@ -153,7 +155,7 @@
       },
       {
         "heading": "How your questions are answered",
-        "body": "To answer your question, we send its text to Google's Gemini service, which helps find the right topic and write the answer. For questions about which colleges give credit for AP exams, Gemini also uses Google Search to look up College Board and official college websites. Google processes this text under its own terms and may store it and use it to improve its services. Please don't include names, addresses, case numbers, or other personal details in your questions."
+        "body": "To answer your question, we send its text to Google's Gemini service, which helps find the right topic and write the answer. When a question needs current or specific information, Gemini may also use Google Search; for questions about which colleges give credit for AP exams, it searches only College Board and official college websites. Google processes this text under its own terms and may store it and use it to improve its services. Please don't include names, addresses, case numbers, or other personal details in your questions."
       },
       {
         "heading": "What we don't do",

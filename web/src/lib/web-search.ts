@@ -97,6 +97,28 @@ function filterToAllowed(text: string, gm: GroundingMetadata | undefined) {
   return { text: Buffer.concat(kept).toString("utf8"), sources, droppedSegments: drop.length };
 }
 
+/**
+ * For open web answers: the sites Gemini cited (or, if it reported no per-sentence citations,
+ * every site it retrieved), one entry per domain.
+ */
+export function citedWebSources(gm: GroundingMetadata | undefined): WebSource[] {
+  const chunks = gm?.groundingChunks ?? [];
+  const cited = new Set<number>();
+  for (const s of gm?.groundingSupports ?? []) for (const i of s.groundingChunkIndices ?? []) cited.add(i);
+  const indices = cited.size > 0 ? [...cited].sort((a, b) => a - b) : chunks.map((_, i) => i);
+
+  const sources: WebSource[] = [];
+  const seen = new Set<string>();
+  for (const i of indices) {
+    const web = chunks[i]?.web;
+    const domain = web?.title?.trim().toLowerCase().replace(/^www\./, "");
+    if (!domain || !web?.uri || seen.has(domain)) continue;
+    seen.add(domain);
+    sources.push({ domain, uri: web.uri });
+  }
+  return sources;
+}
+
 /** Returns null when no answer could be backed by College Board or an official .edu site. */
 export async function answerWithWebSearch(question: string, locale: Locale): Promise<WebAnswer | null> {
   const res = await getGemini().models.generateContent({

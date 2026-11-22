@@ -105,7 +105,7 @@
     "placeholder": "Ví dụ: Con tôi có thể nhập học mà không cần số An sinh Xã hội không?",
     "submit": "Gửi câu hỏi",
     "thinking": "Đang tìm câu trả lời…",
-    "thinkingLong": "Hệ thống vẫn đang tìm kiếm… việc tra cứu trên các trang web chính thức có thể mất thêm vài giây nữa.",
+    "thinkingLong": "Hệ thống vẫn đang xử lý… việc tìm kiếm trên mạng có thể mất thêm vài giây nữa ạ.",
     "answerLabel": "Câu trả lời",
     "sourceLabel": "Nguồn thông tin",
     "readMore": "Đọc toàn bộ chủ đề",
@@ -113,6 +113,8 @@
     "webNote": "Câu trả lời này được tra cứu trực tiếp từ College Board và trang web chính thức của các trường đại học. Các quy định có thể thay đổi mỗi năm, vì vậy xin quý phụ huynh vui lòng kiểm tra lại với trường.",
     "webNoResult": "Hệ thống không tìm thấy thông tin này trên College Board hay trang web chính thức của các trường đại học. Quý phụ huynh có thể tự tra cứu qua công cụ AP Credit Policy Search của College Board tại apstudents.collegeboard.org, hoặc xem tại trang web tuyển sinh hay văn phòng phụ trách học vụ của trường đại học.",
     "searchSuggestionsLabel": "Gợi ý tìm kiếm của Google",
+    "webSourcesLabelGeneral": "Nguồn từ trang mạng",
+    "webNoteGeneral": "Câu trả lời này có sử dụng tìm kiếm từ Google. Quý phụ huynh vui lòng kiểm tra lại các chi tiết quan trọng trên các trang mạng gốc.",
     "errorEmpty": "Xin vui lòng nhập câu hỏi trước.",
     "errorGeneric": "Đã xảy ra lỗi. Xin quý vị vui lòng thử lại.",
     "errorRateLimit": "Quý vị đã đặt nhiều câu hỏi trong thời gian ngắn. Xin vui lòng đợi một phút rồi thử lại.",
@@ -153,7 +155,7 @@
       },
       {
         "heading": "Cách các câu hỏi được giải đáp",
-        "body": "Để trả lời câu hỏi của quý phụ huynh, chúng tôi gửi nội dung câu hỏi đến dịch vụ Gemini của Google để giúp tìm đúng chủ đề và soạn câu trả lời. Đối với những câu hỏi về việc trường đại học nào công nhận tín chỉ cho các kỳ thi AP, Gemini cũng sẽ dùng Google Search để tra cứu thông tin trên College Board và các trang web chính thức của trường. Google sẽ xử lý nội dung này theo các điều khoản riêng của họ, đồng thời có thể lưu giữ và sử dụng dữ liệu để cải thiện dịch vụ. Xin quý phụ huynh vui lòng không ghi họ tên, địa chỉ, số hồ sơ hoặc các thông tin cá nhân khác vào câu hỏi."
+        "body": "Để giải đáp câu hỏi của quý phụ huynh, chúng tôi gửi nội dung câu hỏi đến dịch vụ Gemini của Google để tìm đúng chủ đề và soạn câu trả lời. Khi câu hỏi cần thông tin mới nhất hoặc cụ thể, Gemini cũng có thể dùng Google Search; đối với câu hỏi về việc trường đại học nào chấp nhận tính tín chỉ cho các kỳ thi AP, hệ thống chỉ tìm kiếm trên trang College Board và các trang mạng chính thức của trường đại học. Google xử lý nội dung này theo các điều khoản riêng của họ, có thể lưu trữ và sử dụng để cải thiện dịch vụ. Xin quý phụ huynh vui lòng không ghi họ tên, địa chỉ, số hồ sơ hoặc các thông tin cá nhân khác trong câu hỏi của mình."
       },
       {
         "heading": "Những điều chúng tôi không làm",
