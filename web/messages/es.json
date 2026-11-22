@@ -1,28 +1,99 @@
 {
   "Brand": {
-    "name": "EduVice"
+    "name": "EduVice",
+    "tagline": "Las escuelas de EE. UU., explicadas para familias inmigrantes."
   },
   "Metadata": {
     "title": "EduVice — Las escuelas de EE. UU., explicadas",
-    "description": "Respuestas claras para padres inmigrantes sobre el sistema escolar de EE. UU."
+    "description": "Respuestas claras para padres inmigrantes sobre el sistema escolar de EE. UU.",
+    "guideTitle": "Guía escolar",
+    "chatTitle": "Hacer una pregunta",
+    "aboutTitle": "Quiénes somos",
+    "contactTitle": "Contacto",
+    "privacyTitle": "Política de privacidad",
+    "termsTitle": "Términos de uso",
+    "notFoundTitle": "Página no encontrada"
   },
   "Navbar": {
     "homeLink": "Inicio de EduVice",
+    "guide": "Guía escolar",
     "chat": "Hacer una pregunta",
     "mainNav": "Navegación principal"
   },
   "LanguageSwitcher": {
     "label": "Idioma",
-    "en": "EN",
-    "es": "ES",
-    "enFull": "English",
-    "esFull": "Español"
+    "names": {
+      "en": "English",
+      "es": "Español"
+    }
+  },
+  "Footer": {
+    "nav": "Pie de página",
+    "guide": "Guía escolar",
+    "chat": "Hacer una pregunta",
+    "about": "Quiénes somos",
+    "contact": "Contacto",
+    "privacy": "Privacidad",
+    "terms": "Términos",
+    "disclaimer": "EduVice ofrece información general, no asesoría legal. Las reglas pueden variar según el estado y el distrito escolar; consulte siempre con su escuela.",
+    "copyright": "© {year} EduVice"
   },
   "Home": {
     "eyebrow": "Para padres recién llegados a EE. UU.",
     "title": "Las escuelas de EE. UU., explicadas.",
-    "valueProp": "Pregunte lo que quiera sobre inscripción, grados, educación especial o comidas escolares, y reciba una respuesta clara con su fuente.",
-    "cta": "Hacer una pregunta"
+    "valueProp": "Pregunte lo que quiera sobre inscripción, calificaciones, educación especial o comidas escolares, y reciba una respuesta clara con su fuente.",
+    "cta": "Hacer una pregunta",
+    "browse": "Ver la guía escolar",
+    "howTitle": "Cómo funciona",
+    "step1Title": "Pregunte en su idioma",
+    "step1Body": "Escriba su pregunta como se la haría a un amigo.",
+    "step2Title": "Buscamos en nuestra guía",
+    "step2Body": "EduVice revisa {count} temas escritos para padres.",
+    "step3Title": "Reciba una respuesta clara",
+    "step3Body": "Respuestas cortas y sencillas que muestran de dónde viene la información.",
+    "topicsTitle": "Explore por tema"
+  },
+  "Categories": {
+    "getting-started": {
+      "title": "Primeros pasos",
+      "description": "Inscripción, cómo elegir escuela y documentos."
+    },
+    "how-school-works": {
+      "title": "Cómo funciona la escuela",
+      "description": "Grados, calendario, exámenes y tareas."
+    },
+    "learning-support": {
+      "title": "Apoyo para aprender",
+      "description": "Estudiantes de inglés, educación especial y ayuda adicional."
+    },
+    "family-rights": {
+      "title": "Derechos de la familia",
+      "description": "Intérpretes, privacidad, disciplina y participación."
+    },
+    "daily-life": {
+      "title": "La vida diaria",
+      "description": "Comidas, autobuses, asistencia y programas escolares."
+    },
+    "health-safety": {
+      "title": "Salud y seguridad",
+      "description": "Vacunas, la enfermera escolar, acoso y bienestar."
+    },
+    "high-school-college": {
+      "title": "Preparatoria y más allá",
+      "description": "Graduación, universidad y clases para padres."
+    }
+  },
+  "Guide": {
+    "title": "Guía escolar",
+    "intro": "Respuestas cortas y claras a las preguntas que más hacen los padres sobre las escuelas de EE. UU. Elija un tema o haga su propia pregunta.",
+    "topicCount": "{count, plural, one {# tema} other {# temas}}",
+    "backToGuide": "Guía escolar",
+    "breadcrumb": "Ruta de navegación",
+    "related": "Temas relacionados",
+    "askTitle": "¿Todavía tiene una pregunta?",
+    "askBody": "Pregúntele a EduVice con sus propias palabras y reciba una respuesta en segundos.",
+    "askCta": "Hacer una pregunta",
+    "translationNote": "Este tema todavía no está disponible en su idioma, por eso se muestra en inglés. Puede hacer preguntas en su idioma."
   },
   "Chat": {
     "title": "Pregunte sobre las escuelas de EE. UU.",
@@ -33,9 +104,105 @@
     "thinking": "Buscando una respuesta…",
     "answerLabel": "Respuesta",
     "sourceLabel": "Fuente",
+    "readMore": "Leer el tema completo",
     "errorEmpty": "Por favor, escriba una pregunta primero.",
     "errorGeneric": "Algo salió mal. Por favor, inténtelo de nuevo.",
     "errorRateLimit": "Ha hecho muchas preguntas en poco tiempo. Por favor, espere un minuto e inténtelo de nuevo.",
-    "disclaimer": "EduVice ofrece información general, no asesoría legal. Las reglas pueden variar según el estado y el distrito; consulte con su escuela."
+    "disclaimer": "EduVice ofrece información general, no asesoría legal. Las reglas pueden variar según el estado y el distrito; consulte con su escuela.",
+    "privacyNote": "Por favor, no incluya nombres, direcciones ni otros datos personales en su pregunta."
+  },
+  "About": {
+    "title": "Quiénes somos",
+    "lead": "EduVice ayuda a los padres inmigrantes a entender cómo funcionan las escuelas en Estados Unidos, con palabras sencillas y en su propio idioma.",
+    "whyTitle": "Por qué lo creamos",
+    "whyBody": "El sistema escolar de EE. UU. puede ser confuso, incluso para familias que crecieron aquí. Palabras como IEP, GPA o distrito escolar pueden ser difíciles de entender, y muchos padres no conocen los derechos de su familia, como el derecho a inscribir a sus hijos sin número de Seguro Social o a tener un intérprete gratis. EduVice reúne respuestas claras en un solo lugar.",
+    "principlesTitle": "En qué creemos",
+    "principle1Title": "Gratis",
+    "principle1Body": "EduVice es gratis y no necesita crear una cuenta.",
+    "principle2Title": "Privado",
+    "principle2Body": "Nunca pedimos su nombre ni su estatus migratorio, y no guardamos sus conversaciones.",
+    "principle3Title": "Cuidadoso",
+    "principle3Body": "Las respuestas vienen solo de nuestra guía escolar, y cada respuesta muestra su fuente.",
+    "principle4Title": "Respetuoso",
+    "principle4Body": "Toda pregunta es una buena pregunta, en cualquier idioma.",
+    "limitsTitle": "Lo que EduVice no es",
+    "limitsBody": "EduVice ofrece información general, no asesoría legal. Las reglas pueden variar según el estado y el distrito escolar, así que confirme los detalles importantes con la escuela de su hijo. Para preguntas sobre su situación migratoria, hable con un abogado de inmigración calificado o con una organización sin fines de lucro de ayuda legal."
+  },
+  "Contact": {
+    "title": "Contáctenos",
+    "lead": "¿Tiene comentarios, encontró un error o quiere ayudarnos a traducir o colaborar con nosotros? Nos encantaría saber de usted.",
+    "emailLabel": "Correo electrónico",
+    "note": "Por favor, no envíe datos personales ni información sobre su situación migratoria. Para preguntas sobre su hijo, comuníquese directamente con su escuela. En una emergencia, llame al 911."
+  },
+  "Privacy": {
+    "title": "Política de privacidad",
+    "updated": "Última actualización: {date}",
+    "intro": "EduVice es un sitio web informativo y gratuito para padres. Esta política explica qué pasa con la información cuando usted lo usa.",
+    "sections": [
+      {
+        "heading": "Qué información recibimos",
+        "body": "No necesita una cuenta para usar EduVice, y nunca le pedimos su nombre, sus datos de contacto ni su estatus migratorio. Cuando hace una pregunta, recibimos el texto de su pregunta. Para evitar abusos, guardamos una versión codificada (hash) de su dirección de internet junto con el número de preguntas realizadas. Estos datos se borran automáticamente en un plazo de 24 horas."
+      },
+      {
+        "heading": "Cómo se responden sus preguntas",
+        "body": "Para responder, enviamos el texto de su pregunta al servicio Gemini de Google, que ayuda a encontrar el tema correcto y a escribir la respuesta. Google procesa este texto según sus propios términos y puede guardarlo y usarlo para mejorar sus servicios. Por favor, no incluya nombres, direcciones, números de caso ni otros datos personales en sus preguntas."
+      },
+      {
+        "heading": "Lo que no hacemos",
+        "body": "No guardamos sus conversaciones, no vendemos su información, no mostramos anuncios y no usamos cookies de rastreo."
+      },
+      {
+        "heading": "Cookies",
+        "body": "Usamos una cookie para recordar el idioma que eligió. No lo identifica a usted."
+      },
+      {
+        "heading": "Alojamiento",
+        "body": "Como la mayoría de los sitios web, nuestro proveedor de alojamiento puede guardar registros técnicos básicos, como la dirección de internet y el tipo de navegador, por seguridad y para mantener el sitio funcionando."
+      },
+      {
+        "heading": "Niños",
+        "body": "EduVice está hecho para padres y tutores. No está diseñado para que lo usen niños menores de 13 años por su cuenta."
+      },
+      {
+        "heading": "Cambios y preguntas",
+        "body": "Si cambiamos esta política, actualizaremos la fecha al principio de esta página. Si tiene preguntas, comuníquese con nosotros."
+      }
+    ]
+  },
+  "Terms": {
+    "title": "Términos de uso",
+    "updated": "Última actualización: {date}",
+    "intro": "Al usar EduVice, usted acepta estos términos.",
+    "sections": [
+      {
+        "heading": "Solo información",
+        "body": "EduVice ofrece información general sobre las escuelas de EE. UU. No es asesoría legal, médica ni migratoria. Las reglas varían según el estado y el distrito escolar, así que confirme los detalles importantes con la escuela de su hijo o con un profesional calificado."
+      },
+      {
+        "heading": "Las respuestas pueden tener errores",
+        "body": "Las respuestas se escriben con ayuda de inteligencia artificial a partir de nuestra guía escolar. Trabajamos para que sean correctas, pero pueden estar incompletas, desactualizadas o equivocadas. No dependa solo de EduVice para decisiones importantes."
+      },
+      {
+        "heading": "Uso justo",
+        "body": "Por favor, use EduVice con respeto. No intente dañar, sobrecargar ni usar mal el sitio web, ni copiar su contenido con herramientas automáticas. Limitamos cuántas preguntas se pueden hacer en poco tiempo."
+      },
+      {
+        "heading": "Sin garantía",
+        "body": "EduVice se ofrece \"tal cual\", sin garantías de ningún tipo. En la medida en que la ley lo permita, no somos responsables de pérdidas causadas por el uso del sitio web."
+      },
+      {
+        "heading": "Otros sitios web",
+        "body": "EduVice puede mencionar otros sitios web u organizaciones. No los controlamos y no somos responsables de su contenido."
+      },
+      {
+        "heading": "Cambios",
+        "body": "Podemos actualizar estos términos. Si lo hacemos, cambiaremos la fecha al principio de esta página."
+      }
+    ]
+  },
+  "NotFound": {
+    "title": "Página no encontrada",
+    "body": "No pudimos encontrar esa página. Puede que se haya movido o que el enlace no sea correcto.",
+    "home": "Ir a la página de inicio"
   }
 }

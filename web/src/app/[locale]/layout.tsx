@@ -5,6 +5,7 @@ import { Luckiest_Guy, Poppins } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import { Navbar } from "@/components/Navbar";
+import { Footer } from "@/components/Footer";
 import { getDirection, isLocale, routing } from "@/i18n/routing";
 import "../globals.css";
 
@@ -33,7 +34,10 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params: { locale } }: Omit<Props, "children">): Promise<Metadata> {
   const t = await getTranslations({ locale, namespace: "Metadata" });
-  return { title: t("title"), description: t("description") };
+  return {
+    title: { default: t("title"), template: "%s — EduVice" },
+    description: t("description"),
+  };
 }
 
 export default async function LocaleLayout({ children, params: { locale } }: Props) {
@@ -43,10 +47,11 @@ export default async function LocaleLayout({ children, params: { locale } }: Pro
 
   return (
     <html lang={locale} dir={getDirection(locale)} className={`${poppins.variable} ${luckiest.variable}`}>
-      <body className="min-h-dvh bg-yellow font-sans text-blue-dark antialiased">
+      <body className="flex min-h-dvh flex-col bg-yellow font-sans text-blue-dark antialiased">
         <NextIntlClientProvider messages={messages}>
           <Navbar />
-          <main>{children}</main>
+          <main className="flex-1">{children}</main>
+          <Footer />
         </NextIntlClientProvider>
       </body>
     </html>

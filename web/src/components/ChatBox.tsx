@@ -2,6 +2,7 @@
 
 import { useEffect, useId, useRef, useState, type FormEvent, type KeyboardEvent } from "react";
 import { useLocale, useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import {
   MAX_QUESTION_LENGTH,
   SOURCE_HEADER,
@@ -112,6 +113,7 @@ export function ChatBox() {
           rows={3}
           className="w-full resize-y rounded-2xl border-2 border-blue-dark/30 bg-white px-4 py-3 text-start shadow-card placeholder:text-blue-dark/50 focus:border-blue"
         />
+        <p className="text-sm text-blue-dark/80">{t("privacyNote")}</p>
         <button
           type="submit"
           disabled={busy}
@@ -146,6 +148,12 @@ export function ChatBox() {
             </h2>
             <p className="mb-2 font-bold">{source.title}</p>
             <blockquote className="text-sm leading-relaxed text-blue-dark/90">{source.text}</blockquote>
+            <Link
+              href={`/guide/${source.slug}`}
+              className="mt-3 inline-block text-sm font-bold text-blue hover:underline"
+            >
+              {t("readMore")} <span aria-hidden="true" className="inline-block rtl:rotate-180">→</span>
+            </Link>
           </aside>
         )}
       </div>

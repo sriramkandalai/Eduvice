@@ -1,10 +1,14 @@
-import { useTranslations } from "next-intl";
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations } from "next-intl/server";
 import { ChatBox } from "@/components/ChatBox";
+import { initLocale, pageMetadata, type LocaleParams } from "@/lib/page";
 
-export default function ChatPage({ params: { locale } }: { params: { locale: string } }) {
-  setRequestLocale(locale);
-  const t = useTranslations("Chat");
+export function generateMetadata({ params: { locale } }: LocaleParams) {
+  return pageMetadata(locale, "chatTitle");
+}
+
+export default async function ChatPage({ params }: LocaleParams) {
+  initLocale(params.locale);
+  const t = await getTranslations("Chat");
 
   return (
     <section className="mx-auto flex max-w-3xl flex-col gap-6 px-4 py-10 sm:py-14">
