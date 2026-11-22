@@ -6,6 +6,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { Providers } from "@/components/Providers";
 import { getDirection, isLocale, routing } from "@/i18n/routing";
 import "../globals.css";
 
@@ -68,9 +69,11 @@ export default async function LocaleLayout({ children, params: { locale } }: Pro
     <html lang={locale} dir={getDirection(locale)} className={`${poppins.variable} ${luckiest.variable} ${vietnamese.variable} ${arabic.variable}`}>
       <body className="flex min-h-dvh flex-col font-sans text-blue-dark antialiased">
         <NextIntlClientProvider messages={messages}>
-          <Navbar />
-          <main className="flex-1">{children}</main>
-          <Footer />
+          <Providers>
+            <Navbar />
+            <main className="flex-1">{children}</main>
+            <Footer />
+          </Providers>
         </NextIntlClientProvider>
       </body>
     </html>

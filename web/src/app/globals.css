@@ -202,6 +202,76 @@
     to { transform: scaleY(1); }
   }
 
+  /* ── Home page background: scrolling college names (same look as the coming-soon page) ── */
+  /* The home page replaces the site-wide doodle background with this one. */
+  body:has(.uni-bg-layer)::before,
+  body:has(.uni-bg-layer)::after {
+    display: none;
+  }
+  .uni-bg-layer {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .uni-bg {
+    position: absolute;
+    inset: -20%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1.1rem;
+    transform: rotate(-8deg);
+    transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .uni-row {
+    display: flex;
+    width: max-content;
+    white-space: nowrap;
+    animation: uni-scroll var(--speed, 60s) linear infinite;
+    animation-direction: var(--dir, normal);
+    will-change: transform;
+  }
+  .uni-row span {
+    font-family: var(--font-poppins), sans-serif;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding-inline: 1.4rem;
+    font-size: var(--size, 2.4rem);
+    color: rgb(35 80 181 / 0.13);
+  }
+  .uni-row--outline span {
+    color: transparent;
+    -webkit-text-stroke: 1.5px rgb(35 80 181 / 0.22);
+  }
+  .uni-row span::after {
+    content: "•";
+    margin-inline-start: 2.8rem;
+    color: rgb(255 255 255 / 0.55);
+    -webkit-text-stroke: 0;
+  }
+  @keyframes uni-scroll {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  /* Soft glow behind the hero so it reads cleanly over the names. */
+  .uni-glow {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      ellipse 55% 50% at 50% 38%,
+      rgb(255 208 16 / 0.97) 0%,
+      rgb(255 208 16 / 0.85) 40%,
+      rgb(255 208 16 / 0) 75%
+    );
+  }
+
   /* Small avatars on older messages stay still. */
   .marg-still * {
     animation: none !important;
@@ -236,6 +306,7 @@
   body::after,
   .marg *,
   .marg[data-state] *,
+  .uni-row,
   .typing-dot {
     animation: none !important;
   }

@@ -11,9 +11,9 @@ export default async function ChatPage({ params }: LocaleParams) {
   const t = await getTranslations("Chat");
 
   return (
-    <section className="mx-auto flex max-w-3xl flex-col gap-6 px-4 py-8 sm:py-12">
+    <section className="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-8 sm:py-12">
       <ChatBox />
-      <p className="text-sm text-blue-dark/80">{t("disclaimer")}</p>
+      <p className="mx-auto w-full max-w-3xl text-sm text-blue-dark/80">{t("disclaimer")}</p>
     </section>
   );
 }

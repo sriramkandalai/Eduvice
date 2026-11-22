@@ -2,6 +2,7 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { Logo } from "./Logo";
 import { LanguageSwitcher } from "./LanguageSwitcher";
+import { UserMenu } from "./UserMenu";
 
 export function Navbar() {
   const t = useTranslations("Navbar");
@@ -31,6 +32,7 @@ export function Navbar() {
             {t("chat")}
           </Link>
           <LanguageSwitcher />
+          <UserMenu />
         </div>
       </nav>
     </header>

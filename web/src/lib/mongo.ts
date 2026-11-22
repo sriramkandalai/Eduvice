@@ -27,6 +27,10 @@ export function getMongoClient(): Promise<MongoClient> {
   return globalForMongo._eduviceMongo;
 }
 
+export function dbName(): string {
+  return envOr("MONGODB_DB", "eduvice");
+}
+
 export function vectorIndexName(): string {
   return envOr("MONGODB_VECTOR_INDEX", "faq_vector_index");
 }
