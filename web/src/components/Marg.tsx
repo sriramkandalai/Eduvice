@@ -1,12 +1,10 @@
-// Marg, EduVice's guide ("marg" means "path"). A deep-navy body (stands out on the blue, yellow
-// and paper walls), a royal-blue visor with yellow eyes, and the logo's graduation cap in royal
-// blue. A thin paper outline keeps the shape clear in the charcoal rooms.
+// Marg, EduVice's guide ("marg" means "path"). Flat, in the logo's colors: royal-blue body,
+// a dark visor face with yellow eyes, and the logo's graduation cap.
 // Animations live in globals.css (.marg…) and switch with `state`; reduced motion turns them off.
 
 export type MargState = "idle" | "wave" | "thinking" | "talking";
 
-const BODY = "var(--color-ink)";
-const OUTLINE = { stroke: "var(--color-paper)", strokeWidth: 2.5, strokeOpacity: 0.9, strokeLinejoin: "round" as const };
+const OUTLINE = {};
 
 export function Marg({ state = "idle", className }: { state?: MargState; className?: string }) {
   return (
@@ -19,25 +17,23 @@ export function Marg({ state = "idle", className }: { state?: MargState; classNa
       data-state={state}
     >
       {/* ground shadow */}
-      <ellipse className="marg-shadow" cx="60" cy="116" rx="28" ry="4.5" fill="var(--color-charcoal)" opacity="0.22" />
+      <ellipse className="marg-shadow" cx="60" cy="116" rx="28" ry="4.5" fill="var(--color-blue-dark)" opacity="0.18" />
 
       <g className="marg-body">
         {/* left arm */}
-        <rect x="11" y="72" width="13" height="22" rx="6.5" transform="rotate(18 17 83)" fill={BODY} {...OUTLINE} />
+        <rect x="11" y="72" width="13" height="22" rx="6.5" transform="rotate(18 17 83)" fill="var(--color-blue)" {...OUTLINE} />
 
         {/* right arm (waves) */}
         <g className="marg-arm">
-          <rect x="96" y="68" width="13" height="24" rx="6.5" transform="rotate(-22 103 80)" fill={BODY} {...OUTLINE} />
+          <rect x="96" y="68" width="13" height="24" rx="6.5" transform="rotate(-22 103 80)" fill="var(--color-blue)" {...OUTLINE} />
         </g>
 
         {/* body */}
-        <rect x="20" y="34" width="80" height="76" rx="32" fill={BODY} {...OUTLINE} />
-        {/* soft sheen */}
-        <ellipse cx="41" cy="47" rx="12" ry="4.5" transform="rotate(-22 41 47)" fill="var(--color-blue-light)" opacity="0.45" />
+        <rect x="20" y="34" width="80" height="76" rx="32" fill="var(--color-blue)" {...OUTLINE} />
+        <ellipse cx="42" cy="47" rx="12" ry="4.5" transform="rotate(-22 42 47)" fill="var(--color-blue-light)" />
 
         {/* visor face */}
-        <rect x="29" y="52" width="62" height="36" rx="18" fill="var(--color-blue)" />
-        <rect x="34" y="55" width="52" height="4" rx="2" fill="var(--color-white)" opacity="0.15" />
+        <rect x="29" y="52" width="62" height="36" rx="18" fill="var(--color-blue-dark)" />
 
         <g className="marg-eyes">
           <g className="marg-pupils">
@@ -60,15 +56,15 @@ export function Marg({ state = "idle", className }: { state?: MargState; classNa
         <ellipse className="marg-talk" cx="60" cy="81" rx="5" ry="3" fill="var(--color-yellow)" />
 
         {/* cheeks */}
-        <circle cx="33" cy="97" r="3.5" fill="var(--color-yellow)" opacity="0.85" />
-        <circle cx="87" cy="97" r="3.5" fill="var(--color-yellow)" opacity="0.85" />
+        <circle cx="33" cy="97" r="3.5" fill="var(--color-cream)" opacity="0.8" />
+        <circle cx="87" cy="97" r="3.5" fill="var(--color-cream)" opacity="0.8" />
 
-        {/* graduation cap (from the logo), royal blue */}
+        {/* graduation cap (from the logo) */}
         <g className="marg-cap">
           <path d="M44 28 L44 38 Q60 44 76 38 L76 28 Z" fill="var(--color-blue-dark)" />
           <path d="M44 36 Q60 42 76 36" fill="none" stroke="var(--color-cream)" strokeWidth="1.8" strokeLinecap="round" />
-          <polygon points="60,11 94,24 60,37 26,24" fill="var(--color-blue)" stroke="var(--color-paper)" strokeWidth="1.5" strokeOpacity="0.9" strokeLinejoin="round" />
-          <polygon points="60,11 94,24 60,24 26,24" fill="var(--color-blue-light)" opacity="0.6" />
+          <polygon points="60,11 94,24 60,37 26,24" fill="var(--color-blue-dark)" />
+          <polygon points="60,11 94,24 60,24 26,24" fill="var(--color-blue-light)" opacity="0.55" />
           <ellipse cx="60" cy="24" rx="3" ry="1.8" fill="var(--color-blue-dark)" />
           <g className="marg-tassel">
             <path d="M60 24 Q78 23 89 27" fill="none" stroke="var(--color-yellow)" strokeWidth="2.5" strokeLinecap="round" />
@@ -80,8 +76,8 @@ export function Marg({ state = "idle", className }: { state?: MargState; classNa
 
       {/* thought dots (thinking) */}
       <g className="marg-think">
-        <circle cx="107" cy="40" r="3" fill="var(--color-yellow)" />
-        <circle cx="115" cy="30" r="4" fill="var(--color-yellow)" />
+        <circle cx="107" cy="40" r="3" fill="var(--color-blue)" />
+        <circle cx="115" cy="30" r="4" fill="var(--color-blue)" />
         <circle cx="124" cy="18" r="5" fill="var(--color-yellow)" />
       </g>
     </svg>
