@@ -660,6 +660,18 @@
     box-shadow: 0 16px 30px -14px rgb(0 0 0 / 0.6);
     transform: rotate(var(--tilt, 0deg));
   }
+  /* Clickable notes straighten and lift on hover. */
+  a.note,
+  .note-link {
+    transition:
+      transform 0.25s ease,
+      box-shadow 0.25s ease;
+  }
+  a.note:hover,
+  .note-link:hover {
+    transform: rotate(0deg) translateY(-4px);
+    box-shadow: 0 24px 40px -16px rgb(0 0 0 / 0.55);
+  }
   .note::before {
     /* pin */
     content: "";
