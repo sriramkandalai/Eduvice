@@ -5,7 +5,7 @@
  */
 import { readFile } from "node:fs/promises";
 import path from "node:path";
-import { EMBEDDING_DIMENSIONS, embed } from "../src/lib/openai";
+import { EMBEDDING_DIMENSIONS, embed } from "../src/lib/gemini";
 import { getFaqCollection, getMongoClient, vectorIndexName } from "../src/lib/mongo";
 
 interface SeedFaq {
@@ -21,7 +21,10 @@ async function main() {
   const faqs = JSON.parse(await readFile(file, "utf8")) as SeedFaq[];
   console.log(`Embedding ${faqs.length} FAQ chunks…`);
 
-  const embeddings = await embed(faqs.map((f) => `${f.title}\n\n${f.text}`));
+  const embeddings = await embed(
+    faqs.map((f) => `${f.title}\n\n${f.text}`),
+    "RETRIEVAL_DOCUMENT",
+  );
   const collection = await getFaqCollection();
 
   const result = await collection.bulkWrite(

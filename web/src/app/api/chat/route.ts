@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { retrieveTopChunk, type RetrievedChunk } from "@/lib/rag";
-import { chatModel, getOpenAI } from "@/lib/openai";
+import { chatModel, getGemini } from "@/lib/gemini";
 import { MAX_QUESTION_LENGTH, SOURCE_HEADER, encodeSource } from "@/lib/chat-protocol";
 import { isLocale, routing, type Locale } from "@/i18n/routing";
 
@@ -51,15 +51,19 @@ export async function POST(req: Request) {
   try {
     const source = await retrieveTopChunk(question);
 
-    const completion = await getOpenAI().chat.completions.create({
+    const abort = new AbortController();
+    const completion = await getGemini().models.generateContentStream({
       model: chatModel(),
-      stream: true,
-      temperature: 0.2,
-      max_tokens: 400,
-      messages: [
-        { role: "system", content: systemPrompt(source, locale) },
-        { role: "user", content: question },
-      ],
+      contents: question,
+      config: {
+        systemInstruction: systemPrompt(source, locale),
+        temperature: 0.2,
+        maxOutputTokens: 600,
+        // Short factual answers don't need "thinking"; this keeps replies fast and cheap.
+        // (Supported by gemini-2.5-flash. Remove if you switch to a model that requires thinking.)
+        thinkingConfig: { thinkingBudget: 0 },
+        abortSignal: abort.signal,
+      },
     });
 
     const encoder = new TextEncoder();
@@ -67,8 +71,8 @@ export async function POST(req: Request) {
       async start(controller) {
         try {
           for await (const chunk of completion) {
-            const delta = chunk.choices[0]?.delta?.content;
-            if (delta) controller.enqueue(encoder.encode(delta));
+            const text = chunk.text;
+            if (text) controller.enqueue(encoder.encode(text));
           }
           controller.close();
         } catch (err) {
@@ -76,7 +80,7 @@ export async function POST(req: Request) {
         }
       },
       cancel() {
-        completion.controller.abort();
+        abort.abort();
       },
     });
 

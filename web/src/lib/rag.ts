@@ -1,4 +1,4 @@
-import { embed } from "./openai";
+import { embed } from "./gemini";
 import { getFaqCollection, vectorIndexName } from "./mongo";
 
 export interface RetrievedChunk {
@@ -10,7 +10,7 @@ export interface RetrievedChunk {
 
 /** Embed the question and return the single closest FAQ chunk from Atlas Vector Search. */
 export async function retrieveTopChunk(question: string): Promise<RetrievedChunk | null> {
-  const [queryVector] = await embed([question]);
+  const [queryVector] = await embed([question], "RETRIEVAL_QUERY");
   if (!queryVector) return null;
 
   const collection = await getFaqCollection();
