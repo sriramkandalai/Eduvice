@@ -29,7 +29,15 @@
       "es": "Español",
       "zh": "中文",
       "vi": "Tiếng Việt",
-      "ar": "العربية"
+      "hi": "हिन्दी",
+      "bn": "বাংলা",
+      "te": "తెలుగు",
+      "mr": "मराठी",
+      "ta": "தமிழ்",
+      "gu": "ગુજરાતી",
+      "kn": "ಕನ್ನಡ",
+      "ml": "മലയാളം",
+      "pa": "ਪੰਜਾਬੀ"
     }
   },
   "Account": {
@@ -127,7 +135,10 @@
     "step2Body": "EduVice looks through {count} topics written for parents.",
     "step3Title": "Get a clear answer",
     "step3Body": "Short, simple answers that show where the information came from.",
-    "topicsTitle": "Explore by topic"
+    "topicsTitle": "Explore by topic",
+    "roomNav": "Room navigation",
+    "roomHome": "Back to start",
+    "roomPrev": "Previous"
   },
   "Categories": {
     "getting-started": {

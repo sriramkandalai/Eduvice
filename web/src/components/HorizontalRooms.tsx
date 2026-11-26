@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
+import { useTranslations } from "next-intl";
 import { Marg, type MargState } from "./Marg";
 
 export interface Room {
@@ -26,6 +27,16 @@ export function HorizontalRooms({ rooms }: { rooms: Room[] }) {
   const [walking, setWalking] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [look, setLook] = useState(-1);
+  const [roomIndex, setRoomIndex] = useState(0);
+  const t = useTranslations("Home");
+
+  /** Scroll so that room `i` is in view (rooms are one screen-height of scrolling apart). */
+  function goToRoom(i: number) {
+    const wrap = wrapRef.current;
+    if (!wrap) return;
+    const top = wrap.getBoundingClientRect().top + window.scrollY + i * window.innerHeight;
+    window.scrollTo({ top, behavior: "smooth" });
+  }
 
   useEffect(() => {
     const wrap = wrapRef.current;
@@ -63,6 +74,7 @@ export function HorizontalRooms({ rooms }: { rooms: Room[] }) {
         stopTimer = setTimeout(() => setWalking(false), 160);
       }
       lastProgress = progress;
+      setRoomIndex(index);
       setMood(rooms[index]?.mood ?? "idle");
       setHidden(rect.bottom < window.innerHeight * 0.6);
     };
@@ -127,6 +139,23 @@ export function HorizontalRooms({ rooms }: { rooms: Room[] }) {
             </div>
           ))}
         </div>
+        {/* Back controls (wide screens): rooms you've passed are on the end side, so the arrows
+            point that way. Shown once you've left the first room. */}
+        <nav aria-label={t("roomNav")} className={`h-room-nav ${roomIndex > 0 && !hidden ? "is-shown" : ""}`}>
+          <button type="button" onClick={() => goToRoom(0)} className="h-room-btn" title={t("roomHome")}>
+            <svg viewBox="0 0 24 24" className="h-5 w-5 rtl:-scale-x-100" aria-hidden="true">
+              <path d="M5 12h12m-5-5 5 5-5 5M20 5v14" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            <span className="h-room-label">{t("roomHome")}</span>
+          </button>
+          <button type="button" onClick={() => goToRoom(Math.max(0, roomIndex - 1))} className="h-room-btn" title={t("roomPrev")}>
+            <svg viewBox="0 0 24 24" className="h-5 w-5 rtl:-scale-x-100" aria-hidden="true">
+              <path d="M5 12h14m-6-6 6 6-6 6" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            <span className="h-room-label">{t("roomPrev")}</span>
+          </button>
+        </nav>
+
         <div
           aria-hidden="true"
           className={`h-marg ${hidden ? "is-hidden" : ""}`}

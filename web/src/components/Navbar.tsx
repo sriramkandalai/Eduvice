@@ -21,7 +21,7 @@ export function Navbar() {
           <Link href="/guide" className="pill pill-paper hidden shadow-sm sm:inline-flex">
             {t("guide")}
           </Link>
-          <Link href="/chat" className="pill pill-yellow shadow-sm ring-1 ring-charcoal/20">
+          <Link href="/chat" className="pill pill-yellow whitespace-nowrap shadow-sm ring-1 ring-charcoal/20">
             {t("chat")}
           </Link>
           <div className="hidden items-center gap-2 sm:flex">

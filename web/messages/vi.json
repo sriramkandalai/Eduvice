@@ -29,7 +29,15 @@
       "es": "Español",
       "zh": "中文",
       "vi": "Tiếng Việt",
-      "ar": "العربية"
+      "hi": "हिन्दी",
+      "bn": "বাংলা",
+      "te": "తెలుగు",
+      "mr": "मराठी",
+      "ta": "தமிழ்",
+      "gu": "ગુજરાતી",
+      "kn": "ಕನ್ನಡ",
+      "ml": "മലയാളം",
+      "pa": "ਪੰਜਾਬੀ"
     }
   },
   "Account": {
@@ -127,7 +135,10 @@
     "step2Body": "EduVice tìm kiếm qua {count} chủ đề được soạn riêng cho phụ huynh.",
     "step3Title": "Nhận câu trả lời rõ ràng",
     "step3Body": "Câu trả lời ngắn gọn, đơn giản và có nêu rõ nguồn thông tin.",
-    "topicsTitle": "Tìm hiểu theo chủ đề"
+    "topicsTitle": "Tìm hiểu theo chủ đề",
+    "roomNav": "Chuyển giữa các phòng",
+    "roomHome": "Quay lại từ đầu",
+    "roomPrev": "Trước"
   },
   "Categories": {
     "getting-started": {

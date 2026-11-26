@@ -47,19 +47,43 @@
 }
 
 :root {
-  --font-body: var(--font-inter), system-ui, sans-serif;
-  --font-heading: var(--font-bricolage), var(--font-inter), system-ui, sans-serif;
-  --font-accent: var(--font-serif), Georgia, serif;
-  --font-type: var(--font-typewriter), "Courier New", monospace;
+  /* --font-script is set per Indian language below; Latin text (EduVice, IEP…) keeps the
+     brand fonts and the script's characters fall through to its Noto Sans font. */
+  --font-body: var(--font-inter), var(--font-script, system-ui), system-ui, sans-serif;
+  --font-heading: var(--font-bricolage), var(--font-inter), var(--font-script, system-ui), system-ui, sans-serif;
+  --font-accent: var(--font-serif), var(--font-script, Georgia), Georgia, serif;
+  --font-type: var(--font-typewriter), var(--font-script, "Courier New"), "Courier New", monospace;
 }
 /* Instrument Serif and Cutive Mono have no Vietnamese glyphs. */
 :root:lang(vi) {
   --font-accent: Georgia, "Times New Roman", serif;
   --font-type: "Courier New", monospace;
 }
-:root:lang(ar) {
-  --font-body: var(--font-arabic), system-ui, sans-serif;
-  --font-heading: var(--font-arabic), system-ui, sans-serif;
+/* Indian scripts */
+:root:lang(hi),
+:root:lang(mr) {
+  --font-script: var(--font-devanagari);
+}
+:root:lang(bn) {
+  --font-script: var(--font-bengali);
+}
+:root:lang(te) {
+  --font-script: var(--font-telugu);
+}
+:root:lang(ta) {
+  --font-script: var(--font-tamil);
+}
+:root:lang(gu) {
+  --font-script: var(--font-gujarati);
+}
+:root:lang(kn) {
+  --font-script: var(--font-kannada);
+}
+:root:lang(ml) {
+  --font-script: var(--font-malayalam);
+}
+:root:lang(pa) {
+  --font-script: var(--font-gurmukhi);
 }
 :root:lang(zh) {
   --font-body: var(--font-inter), "PingFang SC", "Microsoft YaHei", "Noto Sans SC", system-ui, sans-serif;
@@ -71,9 +95,24 @@
     background-color: var(--color-mist);
   }
 
-  /* Letter-spacing breaks the joined letters of Arabic script. */
-  :lang(ar) * {
+  /* Indian scripts: tight letter-spacing breaks joined letters and vowel signs, and their
+     marks above and below the line need more line height than the Latin display styles use. */
+  :is(:lang(hi), :lang(mr), :lang(bn), :lang(te), :lang(ta), :lang(gu), :lang(kn), :lang(ml), :lang(pa)) * {
     letter-spacing: normal !important;
+  }
+  :is(:lang(hi), :lang(mr), :lang(bn), :lang(te), :lang(ta), :lang(gu), :lang(kn), :lang(ml), :lang(pa))
+    :is(.mega, .wordmark, h1, h2, h3) {
+    line-height: 1.25 !important;
+  }
+  /* Indian-language words are longer, so the giant Latin display sizes are capped
+     (the EduVice.org wordmark is Latin, marked lang="en", and keeps its size). */
+  :is(:lang(hi), :lang(mr), :lang(bn), :lang(te), :lang(ta), :lang(gu), :lang(kn), :lang(ml), :lang(pa))
+    .mega:not([lang="en"]) {
+    font-size: clamp(2.2rem, 5vw, 4.6rem) !important;
+  }
+  :is(:lang(hi), :lang(mr), :lang(bn), :lang(te), :lang(ta), :lang(gu), :lang(kn), :lang(ml), :lang(pa))
+    .story-head {
+    font-size: clamp(1.8rem, 2.9vw, 2.8rem) !important;
   }
 
   :focus-visible {
@@ -637,7 +676,6 @@
     letter-spacing: 0.18em;
     text-transform: uppercase;
   }
-  :lang(ar) .corner-label,
   :lang(zh) .corner-label {
     letter-spacing: 0;
   }
@@ -670,6 +708,14 @@
   .pill-dark {
     background: var(--color-charcoal);
     color: var(--color-paper);
+  }
+  /* Indian-language navbar labels are longer: tighter pills on phones so they fit one row. */
+  @media (max-width: 639px) {
+    :is(:lang(hi), :lang(mr), :lang(bn), :lang(te), :lang(ta), :lang(gu), :lang(kn), :lang(ml), :lang(pa))
+      header .pill {
+      padding-inline: 0.65rem;
+      font-size: 0.75rem;
+    }
   }
 
   /* Giant wordmark */
@@ -796,7 +842,72 @@
     transform: translateY(40px);
   }
 
+  /* Back controls for the sliding rooms (wide screens only) */
+  .h-room-nav {
+    display: none;
+  }
+  .h-room-btn {
+    pointer-events: auto;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    border-radius: 9999px;
+    background: rgb(244 239 232 / 0.94);
+    color: var(--color-charcoal);
+    padding: 0.7rem;
+    box-shadow: 0 8px 20px -8px rgb(32 30 31 / 0.45);
+    font-weight: 600;
+    font-size: 0.85rem;
+    transition:
+      transform 0.15s ease,
+      background 0.15s ease;
+  }
+  .h-room-btn:hover {
+    background: var(--color-yellow);
+    transform: translateX(3px);
+  }
+  :root[dir="rtl"] .h-room-btn:hover {
+    transform: translateX(-3px);
+  }
+  /* the label slides out on hover */
+  .h-room-label {
+    max-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    transition: max-width 0.25s ease;
+  }
+  .h-room-btn:hover .h-room-label,
+  .h-room-btn:focus-visible .h-room-label {
+    max-width: 10rem;
+  }
+
   @media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
+    .h-room-nav {
+      position: absolute;
+      z-index: 35;
+      inset-inline-end: 1.5rem;
+      top: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.6rem;
+      pointer-events: none;
+      opacity: 0;
+      transform: translateY(-50%) translateX(12px);
+      transition:
+        opacity 0.3s ease,
+        transform 0.3s ease;
+    }
+    :root[dir="rtl"] .h-room-nav {
+      transform: translateY(-50%) translateX(-12px);
+    }
+    .h-room-nav.is-shown {
+      opacity: 1;
+      transform: translateY(-50%);
+    }
+    .h-room-nav:not(.is-shown) .h-room-btn {
+      pointer-events: none;
+    }
     html:has(.h-rooms) {
       scroll-snap-type: y proximity;
     }

@@ -89,7 +89,7 @@ export default async function HomePage({ params }: LocaleParams) {
               <section className="scene bg-yellow text-charcoal">
                 <div className="scene-floor" />
                 <div className="px-6 pt-28 md:max-w-[40vw] md:ps-[6vw] md:pt-32">
-                  <h2 className="font-display text-[clamp(2.2rem,4.2vw,4rem)] font-semibold leading-[1.04] tracking-tight">
+                  <h2 className="story-head font-display text-[clamp(2.2rem,4.2vw,4rem)] font-semibold leading-[1.04] tracking-tight">
                     <span className="block">{words(t("storyLead"), 0)}</span>
                     <span className="block text-charcoal/45">{words(t("storyFollow"), 300)}</span>
                   </h2>
