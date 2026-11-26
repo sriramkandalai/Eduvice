@@ -722,6 +722,49 @@
     }
   }
 
+  /* ── Marg stays on screen while the home rooms scroll behind him (FloatingMarg.tsx) ── */
+  /* Rooms snap gently so each one lines up and Marg stands on its floor. */
+  html:has(.scenes-home) {
+    scroll-snap-type: y proximity;
+  }
+  .scenes-home > .scene {
+    scroll-snap-align: start;
+  }
+  .floating-marg {
+    position: fixed;
+    z-index: 30;
+    pointer-events: none;
+    /* phones: a small companion standing at the wall line, end side */
+    inset-inline-end: 4vw;
+    bottom: calc(30svh * 0.72);
+    height: 13vh;
+    transition:
+      opacity 0.45s ease,
+      transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  @media (min-width: 640px) {
+    /* larger screens: standing on the floor, about a fifth in from the end */
+    .floating-marg {
+      inset-inline-end: 20vw;
+      bottom: calc(24svh * 0.3);
+      height: 36vh;
+    }
+  }
+  .floating-marg .marg {
+    transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+    transform-origin: 50% 100%;
+  }
+  .floating-marg.is-moving .marg {
+    transform: rotate(-5deg) translateY(-8px);
+  }
+  :root[dir="rtl"] .floating-marg.is-moving .marg {
+    transform: rotate(5deg) translateY(-8px);
+  }
+  .floating-marg.is-hidden {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+
   /* "scroll" pill tick */
   .scroll-tick {
     display: inline-block;
@@ -741,7 +784,9 @@
   .parallax-fast,
   .hero-lift,
   .scroll-tick,
-  .polaroid {
+  .polaroid,
+  .floating-marg,
+  .floating-marg .marg {
     animation: none !important;
     transition: none !important;
   }
