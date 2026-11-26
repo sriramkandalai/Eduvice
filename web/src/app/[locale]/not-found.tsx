@@ -7,10 +7,10 @@ export default function NotFound() {
 
   return (
     <div className="mx-auto flex max-w-xl flex-col items-center gap-5 px-4 py-20 text-center">
-      <Logo className="h-24 w-auto" />
+      <Logo className="h-20 w-20" />
       <h1 className="wordmark text-4xl sm:text-5xl">{t("title")}</h1>
       <p className="text-lg font-medium">{t("body")}</p>
-      <Link href="/" className="rounded-full bg-blue px-6 py-2.5 font-bold text-white shadow-pill hover:bg-blue-dark">
+      <Link href="/" className="btn-primary px-6 py-3">
         {t("home")}
       </Link>
     </div>

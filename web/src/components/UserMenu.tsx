@@ -30,7 +30,7 @@ export function UserMenu() {
 
   if (!session?.user) {
     return (
-      <Link href="/signin" className="whitespace-nowrap text-sm font-bold hover:underline">
+      <Link href="/signin" className="pill pill-paper whitespace-nowrap shadow-sm">
         {t("signIn")}
       </Link>
     );
@@ -66,7 +66,7 @@ export function UserMenu() {
         aria-expanded={open}
         aria-haspopup="menu"
         aria-label={t("menuLabel")}
-        className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-full bg-blue-dark text-sm font-extrabold text-yellow ring-2 ring-cream"
+        className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-full bg-blue text-sm font-extrabold text-yellow"
       >
         {image ? (
           // eslint-disable-next-line @next/next/no-img-element -- small avatar from Google; no optimization needed
@@ -79,11 +79,11 @@ export function UserMenu() {
       {open && (
         <div
           role="menu"
-          className="absolute end-0 top-11 z-30 flex w-64 flex-col gap-1 rounded-2xl bg-white p-2 shadow-card"
+          className="glass absolute end-0 top-11 z-50 flex w-64 flex-col gap-1 rounded-2xl p-2 shadow-card"
         >
           <div className="px-3 py-2">
             {name && <p className="truncate font-bold">{name}</p>}
-            <p className="truncate text-sm text-blue-dark/80" dir="ltr">
+            <p className="truncate text-sm text-muted" dir="ltr">
               {email}
             </p>
           </div>
@@ -91,7 +91,7 @@ export function UserMenu() {
             href="/chat"
             role="menuitem"
             onClick={() => setOpen(false)}
-            className="rounded-xl px-3 py-2 text-start text-sm font-bold hover:bg-cream"
+            className="rounded-xl px-3 py-2 text-start text-sm font-bold hover:bg-mist"
           >
             {t("myChats")}
           </Link>
@@ -99,7 +99,7 @@ export function UserMenu() {
             type="button"
             role="menuitem"
             onClick={() => void signOut({ redirectTo: `/${locale}` })}
-            className="rounded-xl px-3 py-2 text-start text-sm font-bold hover:bg-cream"
+            className="rounded-xl px-3 py-2 text-start text-sm font-bold hover:bg-mist"
           >
             {t("signOut")}
           </button>
@@ -108,7 +108,7 @@ export function UserMenu() {
             role="menuitem"
             disabled={deleting}
             onClick={() => void deleteAccount()}
-            className="rounded-xl px-3 py-2 text-start text-xs font-bold text-blue-dark/70 hover:bg-cream disabled:opacity-50"
+            className="rounded-xl px-3 py-2 text-start text-xs font-bold text-muted hover:bg-mist disabled:opacity-50"
           >
             {t("deleteAccount")}
           </button>

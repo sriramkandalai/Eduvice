@@ -26,7 +26,17 @@ const LANGUAGE: Record<Target, string> = {
   es: "Spanish (as used by Latin American families in the US; use the respectful 'usted' form)",
   zh: "Simplified Chinese (Mandarin)",
   vi: "Vietnamese (polite, addressing parents respectfully)",
-  ar: "Modern Standard Arabic (simple and clear)",
+  // Indian languages: everyday spoken style, not formal/literary; common English school words
+  // that families actually use (school, bus, grade) may stay in English where that is natural.
+  hi: "Hindi (simple everyday Hindi in Devanagari script, as spoken by families; respectful 'aap' form)",
+  bn: "Bengali (simple everyday Bengali in Bengali script; respectful 'apni' form)",
+  te: "Telugu (simple everyday Telugu in Telugu script; respectful form)",
+  mr: "Marathi (simple everyday Marathi in Devanagari script; respectful 'tumhi/aapan' form)",
+  ta: "Tamil (simple everyday Tamil in Tamil script; respectful form)",
+  gu: "Gujarati (simple everyday Gujarati in Gujarati script; respectful 'tame/aap' form)",
+  kn: "Kannada (simple everyday Kannada in Kannada script; respectful form)",
+  ml: "Malayalam (simple everyday Malayalam in Malayalam script; respectful form)",
+  pa: "Punjabi (simple everyday Punjabi in Gurmukhi script; respectful 'tusi' form)",
 };
 
 const GUIDELINES = `
@@ -100,9 +110,17 @@ function placeholders(msg: string): string {
   return [...new Set([...msg.matchAll(/\{\s*(\w+)/g)].map((m) => m[1]))].sort().join(",");
 }
 
+/** Rich-text tags like <hl>…</hl> used for styling. */
+function tags(msg: string): string {
+  return [...new Set([...msg.matchAll(/<(\w+)>/g)].map((m) => m[1]))].sort().join(",");
+}
+
 function checkMessage(key: string, en: string, translated: string, locale: Target) {
   if (placeholders(en) !== placeholders(translated)) {
     throw new Error(`${locale} ${key}: placeholders changed ("${en}" → "${translated}")`);
+  }
+  if (tags(en) !== tags(translated)) {
+    throw new Error(`${locale} ${key}: tags changed ("${en}" → "${translated}")`);
   }
   new IntlMessageFormat(translated, locale); // throws on broken ICU syntax
 }
@@ -146,7 +164,8 @@ async function translateMessages(locale: Target) {
       `Translate the values of this JSON object from English into ${LANGUAGE[locale]}. These are labels and text for a website's user interface.
 ${GUIDELINES}
 - Return a JSON object with exactly the same keys. Translate only the values.
-- Keep ICU message syntax exactly: placeholders like {year} or {count} stay in English, and in plural forms like "{count, plural, one {# topic} other {# topics}}" keep "count", "plural", "one", "other", and "#", and translate only the words. Use only the plural categories your language needs (for example only "other" for Chinese and Vietnamese; Arabic may use zero, one, two, few, many, other).
+- Keep styling tags like <hl>…</hl> exactly as written (same tag names), wrapped around the matching translated words.
+- Keep ICU message syntax exactly: placeholders like {year} or {count} stay in English, and in plural forms like "{count, plural, one {# topic} other {# topics}}" keep "count", "plural", "one", "other", and "#", and translate only the words. Use only the plural categories your language needs (for example only "other" for Chinese and Vietnamese; "one" and "other" for most Indian languages).
 
 ${JSON.stringify(batch, null, 2)}`,
       { type: Type.OBJECT, properties: Object.fromEntries(Object.keys(batch).map((k) => [k, { type: Type.STRING }])), required: Object.keys(batch) },

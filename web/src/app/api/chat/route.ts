@@ -80,8 +80,12 @@ function toContents(history: HistoryTurn[], question: string): Content[] {
  * Text used for guide search and the AP check. Short follow-ups ("what about UCLA?") make sense
  * only with the previous question, so it's included.
  */
+function previousQuestion(history: HistoryTurn[]): string | undefined {
+  return [...history].reverse().find((t) => t.role === "user")?.text;
+}
+
 function searchText(history: HistoryTurn[], question: string): string {
-  const previous = [...history].reverse().find((t) => t.role === "user")?.text;
+  const previous = previousQuestion(history);
   return previous ? `${previous.slice(0, 500)}\n${question}` : question;
 }
 
@@ -127,14 +131,17 @@ async function officialAnswerResponse(
   locale: Locale,
   headers: Headers,
   persist: Persist,
-): Promise<Response> {
-  const answer = await answerWithWebSearch(contents, locale);
-  const text = answer?.text ?? (await getTranslations({ locale, namespace: "Chat" }))("webNoResult");
+): Promise<Response | null> {
+  // Searches sometimes come back empty by chance, so try twice. If both find nothing official,
+  // return null and the caller gives the normal answer (without web search) instead of a dead end.
+  const answer = (await answerWithWebSearch(contents, locale)) ?? (await answerWithWebSearch(contents, locale));
+  if (!answer) return null;
+  const text = answer.text;
   const followUps = await suggestFollowUps(question, text, locale);
   const meta: AnswerMeta = {
-    webKind: answer ? "official" : undefined,
-    webSources: answer?.sources ?? [],
-    suggestionsHtml: answer?.suggestionsHtml,
+    webKind: "official",
+    webSources: answer.sources,
+    suggestionsHtml: answer.suggestionsHtml,
     followUps,
   };
   await persist(text, null, meta);
@@ -167,7 +174,13 @@ export async function POST(req: Request) {
     }
 
     const userId = (await auth())?.user?.id;
-    const conversation = await resolveConversation(userId, raw.conversationId, question, clientHistory);
+    // If the database is down, still answer; the exchange just isn't saved to the account.
+    const conversation = await resolveConversation(userId, raw.conversationId, question, clientHistory).catch(
+      (err: unknown) => {
+        console.error("[api/chat] could not load conversation, answering without saving:", err);
+        return { conversationId: null, history: clientHistory };
+      },
+    );
     const history = conversation.history;
     const persist = makePersist(userId, conversation.conversationId, question);
     const headers = new Headers(TEXT_HEADERS);
@@ -177,11 +190,20 @@ export async function POST(req: Request) {
     const lookup = searchText(history, question);
 
     // Guide search and the "is this an AP-credit question?" check run in parallel.
-    const [sources, apCredit] = await Promise.all([retrieveTopChunks(lookup), needsWebSearch(lookup)]);
+    // If guide search fails (e.g. database unreachable), Marg answers without guide sources.
+    const [sources, apCredit] = await Promise.all([
+      retrieveTopChunks(lookup).catch((err: unknown) => {
+        console.error("[api/chat] guide search failed, answering without it:", err);
+        return [];
+      }),
+      needsWebSearch(question, previousQuestion(history)),
+    ]);
 
     if (apCredit) {
       try {
-        return await officialAnswerResponse(contents, question, locale, headers, persist);
+        const official = await officialAnswerResponse(contents, question, locale, headers, persist);
+        if (official) return official;
+        console.warn("[api/chat] no official source found for an AP-credit question, using general answer");
       } catch (err) {
         // e.g. search quota reached: fall back to the general answer below.
         console.error("[api/chat] official search failed, using general answer:", err);
@@ -189,14 +211,15 @@ export async function POST(req: Request) {
     }
 
     // General answer: guide sources in the prompt, plus Google Search that Gemini uses only when
-    // it needs current or specific facts.
+    // it needs current or specific facts. AP-credit questions may only cite College Board and .edu
+    // sites, so if that search found nothing, this answer runs without web search.
     const abort = new AbortController();
     const generator = await getGemini().models.generateContentStream({
       model: chatModel(),
       contents,
       config: {
         systemInstruction: buildSystemPrompt(sources, locale),
-        tools: [{ googleSearch: {} }],
+        tools: apCredit ? [] : [{ googleSearch: {} }],
         temperature: 0.2,
         maxOutputTokens: 2048,
         // LOW keeps replies fast and cheap. (gemini-3.8-flash rejects MINIMAL.)

@@ -38,20 +38,42 @@ export function visitorKey(req: Request): string {
 
 export type RateLimitResult = { ok: true } | { ok: false; retryAfterSec: number };
 
+// Fallback counters for when MongoDB is unreachable (per server instance, so less strict).
+const memoryCounts = new Map<string, { count: number; expiresAt: number }>();
+
+function countInMemory(id: string, expiresAt: number): number {
+  const now = Date.now();
+  for (const [k, v] of memoryCounts) if (v.expiresAt <= now) memoryCounts.delete(k);
+  const entry = memoryCounts.get(id) ?? { count: 0, expiresAt };
+  entry.count += 1;
+  memoryCounts.set(id, entry);
+  return entry.count;
+}
+
 export async function checkRateLimit(key: string): Promise<RateLimitResult> {
-  const collection = await rateCollection();
+  const collection = await rateCollection().catch((err: unknown) => {
+    console.error("[rate-limit] MongoDB unavailable, using in-memory counters:", err instanceof Error ? err.message : err);
+    return null;
+  });
   const now = Date.now();
 
   const results = await Promise.all(
     LIMITS.map(async (limit) => {
       const windowStart = Math.floor(now / limit.windowMs) * limit.windowMs;
       const windowEnd = windowStart + limit.windowMs;
-      const doc = await collection.findOneAndUpdate(
-        { _id: `${key}:${limit.name}:${windowStart}` },
-        { $inc: { count: 1 }, $setOnInsert: { expiresAt: new Date(windowEnd) } },
-        { upsert: true, returnDocument: "after" },
-      );
-      return { blocked: (doc?.count ?? 0) > limit.max, retryAfterSec: Math.ceil((windowEnd - now) / 1000) };
+      const id = `${key}:${limit.name}:${windowStart}`;
+      let count: number;
+      if (collection) {
+        const doc = await collection.findOneAndUpdate(
+          { _id: id },
+          { $inc: { count: 1 }, $setOnInsert: { expiresAt: new Date(windowEnd) } },
+          { upsert: true, returnDocument: "after" },
+        );
+        count = doc?.count ?? 0;
+      } else {
+        count = countInMemory(id, windowEnd);
+      }
+      return { blocked: count > limit.max, retryAfterSec: Math.ceil((windowEnd - now) / 1000) };
     }),
   );
 

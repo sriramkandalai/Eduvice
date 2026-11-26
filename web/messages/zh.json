@@ -16,9 +16,11 @@
   },
   "Navbar": {
     "homeLink": "EduVice 首页",
+    "home": "首页",
     "guide": "学校指南",
     "chat": "问问 Marg",
-    "mainNav": "主导航"
+    "mainNav": "主导航",
+    "menu": "菜单"
   },
   "LanguageSwitcher": {
     "label": "语言",
@@ -27,7 +29,15 @@
       "es": "Español",
       "zh": "中文",
       "vi": "Tiếng Việt",
-      "ar": "العربية"
+      "hi": "हिन्दी",
+      "bn": "বাংলা",
+      "te": "తెలుగు",
+      "mr": "मराठी",
+      "ta": "தமிழ்",
+      "gu": "ગુજરાતી",
+      "kn": "ಕನ್ನಡ",
+      "ml": "മലയാളം",
+      "pa": "ਪੰਜਾਬੀ"
     }
   },
   "Account": {
@@ -92,7 +102,29 @@
   },
   "Home": {
     "eyebrow": "专为刚来美国的家长准备",
-    "title": "读懂美国学校。",
+    "title": "美国学校，<hl>为您讲明白。</hl>",
+    "previewStatus": "在线 · 用您的母语为您解答",
+    "previewQuestion": "没有社会安全号码，孩子可以报名上学吗？",
+    "previewAnswer": "可以。公立学校不能要求提供社会安全号码，每个孩子都有接受免费公立教育的权利。",
+    "previewSource": "来源：EduVice 学校指南",
+    "statTopics": "{count} 个指南主题",
+    "statLanguages": "{count} 种语言",
+    "statFree": "免费 · 无需注册账号",
+    "heroLine1": "美国学校指南，专为家庭准备。",
+    "heroLine2": "用您的母语，随时问任何问题。",
+    "heroLine3": "免费使用，无需注册账号。",
+    "cornerLeft": "EduVice · 专为家庭打造",
+    "cornerRight": "始于 2026 年",
+    "scroll": "下滑浏览",
+    "storyLead": "搬到一个新的国家并不容易。",
+    "storyFollow": "了解这里的学校不该这么难。",
+    "storyBody": "从入学报名、成绩评估、特殊教育，到学校营养餐和升大学——EduVice 用通俗易懂的话为您一一讲明白，Marg 随时解答您的其他任何疑问。",
+    "notesTitle": "使用方法",
+    "topicsSub": "挑选一个主题，或者直接提问。",
+    "askTitle": "随时问 Marg。",
+    "askBody": "任何问题，任何语言。Marg 时时刻刻都在这里陪伴您。",
+    "finalTitle": "有问题吗？问问 Marg 吧。",
+    "finalBody": "任何问题，都可以用您的语言提问。Marg 随时在这里，帮您和家人找到方向。",
     "valueProp": "无论是关于入学、成绩、特殊教育还是学校供餐，欢迎随时提问——您将获得清楚明白的解答和信息来源。",
     "cta": "问问 Marg",
     "browse": "浏览学校指南",
@@ -103,7 +135,10 @@
     "step2Body": "EduVice 会在专为家长编写的 {count} 个主题中帮您查找。",
     "step3Title": "获得清晰解答",
     "step3Body": "简明易懂的回答，并清楚标明信息来源。",
-    "topicsTitle": "按主题浏览"
+    "topicsTitle": "按主题浏览",
+    "roomNav": "房间导航",
+    "roomHome": "回到起点",
+    "roomPrev": "上一个"
   },
   "Categories": {
     "getting-started": {

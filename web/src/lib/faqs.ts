@@ -6,7 +6,15 @@ import en from "../../data/faqs/en.json";
 import es from "../../data/faqs/es.json";
 import zh from "../../data/faqs/zh.json";
 import vi from "../../data/faqs/vi.json";
-import ar from "../../data/faqs/ar.json";
+import hi from "../../data/faqs/hi.json";
+import bn from "../../data/faqs/bn.json";
+import te from "../../data/faqs/te.json";
+import mr from "../../data/faqs/mr.json";
+import ta from "../../data/faqs/ta.json";
+import gu from "../../data/faqs/gu.json";
+import kn from "../../data/faqs/kn.json";
+import ml from "../../data/faqs/ml.json";
+import pa from "../../data/faqs/pa.json";
 import type { Locale } from "@/i18n/routing";
 
 export const CATEGORIES = [
@@ -78,7 +86,15 @@ const TRANSLATIONS: Partial<Record<Locale, TranslationMap>> = {
   es: toTranslationMap(es, "data/faqs/es.json"),
   zh: toTranslationMap(zh, "data/faqs/zh.json"),
   vi: toTranslationMap(vi, "data/faqs/vi.json"),
-  ar: toTranslationMap(ar, "data/faqs/ar.json"),
+  hi: toTranslationMap(hi, "data/faqs/hi.json"),
+  bn: toTranslationMap(bn, "data/faqs/bn.json"),
+  te: toTranslationMap(te, "data/faqs/te.json"),
+  mr: toTranslationMap(mr, "data/faqs/mr.json"),
+  ta: toTranslationMap(ta, "data/faqs/ta.json"),
+  gu: toTranslationMap(gu, "data/faqs/gu.json"),
+  kn: toTranslationMap(kn, "data/faqs/kn.json"),
+  ml: toTranslationMap(ml, "data/faqs/ml.json"),
+  pa: toTranslationMap(pa, "data/faqs/pa.json"),
 };
 
 function localize(faq: Faq, locale: Locale): LocalizedFaq {

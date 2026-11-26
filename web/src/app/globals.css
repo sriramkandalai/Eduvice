@@ -1,114 +1,311 @@
-@import "tailwindcss";
+﻿@import "tailwindcss";
 
 /*
- * EduVice palette — copied from the root index.html (coming-soon page).
- * `--color-*: initial` removes Tailwind's default colors, so ONLY these exist.
- * Do not add new colors here (see Claude.md).
+ * EduVice design system — "education product" style (reference: Khan Academy / Quizlet).
+ * Clean white surfaces, navy text, the logo's blue for actions, yellow as a sparing highlight,
+ * soft rounded cards with thin gray borders. No gradients, glass, glows or hard shadows.
+ *
+ * Brand colors come from the profile logo (social/eduvice-profile-logo.png). The neutrals
+ * (ink, muted, line, mist) were added for this style (user decision, 2026-11-23).
+ * `--color-*: initial` removes Tailwind's defaults, so ONLY these colors exist.
  */
 @theme {
   --color-*: initial;
+  /* brand (logo) */
   --color-yellow: #ffd010;
   --color-blue: #2350b5;
   --color-blue-dark: #1a3d8f;
   --color-blue-light: #3a68cf;
   --color-cream: #fff4dc;
   --color-white: #ffffff;
+  /* neutrals */
+  --color-ink: #1b2440; /* main text */
+  --color-muted: #5a6478; /* secondary text */
+  --color-line: #e2e6ee; /* borders */
+  --color-mist: #f6f8fb; /* light section background */
+  /* home "rooms" (inspired by human-md.ai, user request 2026-11-23) */
+  --color-sand: #d9ccb9; /* floor */
+  --color-paper: #f4efe8; /* paper / light wall */
+  --color-charcoal: #201e1f; /* dark room, footer */
+  --color-wood: #d8b07c;
+  --color-wood-dark: #b5874f;
 
-  --shadow-card: 0 18px 40px -10px rgb(26 61 143 / 0.35);
-  --shadow-pill: 0 0 0 6px rgb(255 255 255 / 0.35), 0 18px 40px -10px rgb(26 61 143 / 0.55);
+  --shadow-card: 0 1px 2px rgb(27 36 64 / 0.04), 0 2px 8px rgb(27 36 64 / 0.05);
+  --shadow-card-lg: 0 4px 12px rgb(27 36 64 / 0.06), 0 12px 32px rgb(27 36 64 / 0.08);
+  --shadow-pill: none;
+  --shadow-glow: 0 0 0 4px rgb(35 80 181 / 0.15);
+
+  --radius-card: 1rem;
 }
 
-/* Fonts are loaded by next/font in [locale]/layout.tsx and exposed as CSS variables.
-   --font-body / --font-heading are switched per language below. */
+/* Fonts are loaded by next/font in [locale]/layout.tsx and exposed as CSS variables. */
 @theme inline {
   --font-sans: var(--font-body);
   --font-display: var(--font-heading);
+  --font-serif: var(--font-accent);
+  --font-mono: var(--font-type);
 }
 
 :root {
-  --font-body: var(--font-poppins), system-ui, sans-serif;
-  --font-heading: var(--font-luckiest), var(--font-poppins), sans-serif;
-  --wordmark-stroke: 0.09em;
-  --wordmark-weight: 400; /* Luckiest Guy has a single weight */
+  /* --font-script is set per Indian language below; Latin text (EduVice, IEP…) keeps the
+     brand fonts and the script's characters fall through to its Noto Sans font. */
+  --font-body: var(--font-inter), var(--font-script, system-ui), system-ui, sans-serif;
+  --font-heading: var(--font-bricolage), var(--font-inter), var(--font-script, system-ui), system-ui, sans-serif;
+  --font-accent: var(--font-serif), var(--font-script, Georgia), Georgia, serif;
+  --font-type: var(--font-typewriter), var(--font-script, "Courier New"), "Courier New", monospace;
 }
-:root:lang(vi),
-:root:lang(ar),
-:root:lang(zh) {
-  --wordmark-weight: 800;
-}
+/* Instrument Serif and Cutive Mono have no Vietnamese glyphs. */
 :root:lang(vi) {
-  --font-body: var(--font-vietnamese), system-ui, sans-serif;
-  --font-heading: var(--font-vietnamese), system-ui, sans-serif;
-  --wordmark-stroke: 0.07em;
+  --font-accent: Georgia, "Times New Roman", serif;
+  --font-type: "Courier New", monospace;
 }
-:root:lang(ar) {
-  --font-body: var(--font-arabic), system-ui, sans-serif;
-  --font-heading: var(--font-arabic), system-ui, sans-serif;
-  --wordmark-stroke: 0.06em;
+/* Indian scripts */
+:root:lang(hi),
+:root:lang(mr) {
+  --font-script: var(--font-devanagari);
+}
+:root:lang(bn) {
+  --font-script: var(--font-bengali);
+}
+:root:lang(te) {
+  --font-script: var(--font-telugu);
+}
+:root:lang(ta) {
+  --font-script: var(--font-tamil);
+}
+:root:lang(gu) {
+  --font-script: var(--font-gujarati);
+}
+:root:lang(kn) {
+  --font-script: var(--font-kannada);
+}
+:root:lang(ml) {
+  --font-script: var(--font-malayalam);
+}
+:root:lang(pa) {
+  --font-script: var(--font-gurmukhi);
 }
 :root:lang(zh) {
-  --font-body: var(--font-poppins), "PingFang SC", "Microsoft YaHei", "Noto Sans SC", system-ui, sans-serif;
-  --font-heading: var(--font-body);
-  --wordmark-stroke: 0.06em;
+  --font-body: var(--font-inter), "PingFang SC", "Microsoft YaHei", "Noto Sans SC", system-ui, sans-serif;
+  --font-heading: var(--font-bricolage), "PingFang SC", "Microsoft YaHei", "Noto Sans SC", system-ui, sans-serif;
 }
 
 @layer base {
   html {
-    background-color: var(--color-yellow);
+    background-color: var(--color-mist);
   }
 
-  /* Page background: soft glows (::before) and a slowly drifting doodle path (::after).
-     Both sit behind all content. */
-  body::before,
-  body::after {
-    content: "";
-    position: fixed;
-    inset: 0;
-    z-index: -1;
-    pointer-events: none;
-  }
-  body::before {
-    background:
-      radial-gradient(circle at 12% 18%, rgb(255 244 220 / 0.75), transparent 38%),
-      radial-gradient(circle at 88% 12%, rgb(58 104 207 / 0.14), transparent 34%),
-      radial-gradient(circle at 80% 82%, rgb(255 244 220 / 0.6), transparent 40%),
-      radial-gradient(circle at 18% 88%, rgb(58 104 207 / 0.1), transparent 36%);
-  }
-  body::after {
-    background-image: url("/patterns/marg-path.svg");
-    background-size: 320px 320px;
-    animation: bg-drift 90s linear infinite;
-  }
-  @keyframes bg-drift {
-    from {
-      background-position: 0 0;
-    }
-    to {
-      background-position: 320px 320px;
-    }
-  }
-
-  /* Letter-spacing breaks the joined letters of Arabic script. */
-  :lang(ar) * {
+  /* Indian scripts: tight letter-spacing breaks joined letters and vowel signs, and their
+     marks above and below the line need more line height than the Latin display styles use. */
+  :is(:lang(hi), :lang(mr), :lang(bn), :lang(te), :lang(ta), :lang(gu), :lang(kn), :lang(ml), :lang(pa)) * {
     letter-spacing: normal !important;
+  }
+  :is(:lang(hi), :lang(mr), :lang(bn), :lang(te), :lang(ta), :lang(gu), :lang(kn), :lang(ml), :lang(pa))
+    :is(.mega, .wordmark, h1, h2, h3) {
+    line-height: 1.25 !important;
+  }
+  /* Indian-language words are longer, so the giant Latin display sizes are capped
+     (the EduVice.org wordmark is Latin, marked lang="en", and keeps its size). */
+  :is(:lang(hi), :lang(mr), :lang(bn), :lang(te), :lang(ta), :lang(gu), :lang(kn), :lang(ml), :lang(pa))
+    .mega:not([lang="en"]) {
+    font-size: clamp(2.2rem, 5vw, 4.6rem) !important;
+  }
+  :is(:lang(hi), :lang(mr), :lang(bn), :lang(te), :lang(ta), :lang(gu), :lang(kn), :lang(ml), :lang(pa))
+    .story-head {
+    font-size: clamp(1.8rem, 2.9vw, 2.8rem) !important;
   }
 
   :focus-visible {
-    outline: 3px solid var(--color-blue-dark);
+    outline: 2px solid var(--color-blue);
     outline-offset: 2px;
+  }
+
+  ::selection {
+    background: rgb(255 208 16 / 0.45);
   }
 }
 
 @layer components {
-  /* Same treatment as the coming-soon wordmark: blue fill, cream outline. */
+  /* Page and section headings. (Class name kept from the first design.) */
   .wordmark {
     font-family: var(--font-heading);
-    font-weight: var(--wordmark-weight);
+    font-weight: 800;
+    color: var(--color-ink);
+    letter-spacing: -0.025em;
+    line-height: 1.08;
+  }
+
+  /* Yellow highlighter under a word, e.g. "US schools, <hl>explained.</hl>" */
+  .text-gradient,
+  .marker {
+    background: linear-gradient(transparent 68%, rgb(255 208 16 / 0.75) 68%, rgb(255 208 16 / 0.75) 94%, transparent 94%);
+    padding-inline: 0.06em;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+
+  /* The "EduVice" logotype. */
+  .brand {
+    font-family: var(--font-bricolage), var(--font-inter), sans-serif;
+    font-weight: 800;
+    letter-spacing: -0.03em;
     color: var(--color-blue);
-    -webkit-text-stroke: var(--wordmark-stroke) var(--color-cream);
-    paint-order: stroke fill;
-    text-shadow: 0.05em 0.06em 0 rgb(26 61 143 / 0.28);
-    line-height: 1;
+  }
+
+  /* Small label pill, e.g. FOR PARENTS NEW TO THE US. */
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-radius: 9999px;
+    background: rgb(35 80 181 / 0.08);
+    padding: 0.35rem 0.8rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--color-blue);
+  }
+  .eyebrow::before {
+    content: "";
+    width: 0.45rem;
+    height: 0.45rem;
+    border-radius: 9999px;
+    background: var(--color-yellow);
+  }
+
+  /* White card with a thin border and soft shadow. (.glass kept as an alias.) */
+  .glass,
+  .card {
+    background: var(--color-white);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card);
+  }
+  .card-hover {
+    transition:
+      border-color 0.15s ease,
+      box-shadow 0.15s ease,
+      transform 0.15s ease;
+  }
+  .card-hover:hover {
+    border-color: rgb(35 80 181 / 0.35);
+    box-shadow: var(--shadow-card-lg);
+    transform: translateY(-1px);
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 0.75rem;
+    font-weight: 700;
+    transition:
+      background 0.15s ease,
+      border-color 0.15s ease,
+      box-shadow 0.15s ease;
+  }
+  .btn-primary {
+    background: var(--color-blue);
+    color: var(--color-white);
+    border: 1px solid var(--color-blue);
+  }
+  .btn-primary:hover {
+    background: var(--color-blue-dark);
+    border-color: var(--color-blue-dark);
+  }
+  .btn-secondary {
+    background: var(--color-white);
+    color: var(--color-ink);
+    border: 1px solid #cfd5e1;
+  }
+  .btn-secondary:hover {
+    border-color: var(--color-blue);
+    color: var(--color-blue);
+  }
+  .btn-primary:focus-visible,
+  .btn-secondary:focus-visible {
+    outline: none;
+    box-shadow: var(--shadow-glow);
+  }
+  .btn-primary:disabled,
+  .btn-secondary:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+
+  /* Buttons for use on blue bands. */
+  .btn-accent,
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 0.75rem;
+    font-weight: 700;
+    transition:
+      background 0.15s ease,
+      transform 0.15s ease,
+      box-shadow 0.15s ease;
+  }
+  .btn-accent {
+    background: var(--color-yellow);
+    color: var(--color-blue-dark);
+    box-shadow: 0 6px 18px -6px rgb(255 208 16 / 0.7);
+  }
+  .btn-accent:hover {
+    transform: translateY(-1px);
+    background: #ffdb3d;
+  }
+  .btn-ghost {
+    color: var(--color-white);
+    border: 1px solid rgb(255 255 255 / 0.45);
+  }
+  .btn-ghost:hover {
+    background: rgb(255 255 255 / 0.12);
+    border-color: var(--color-white);
+  }
+
+  /* On blue bands: white headings, yellow highlighted word, light eyebrow. */
+  .band-blue .wordmark {
+    color: var(--color-white);
+  }
+  .band-blue .marker {
+    background: none;
+    color: var(--color-yellow);
+    padding: 0;
+  }
+  .band-blue .eyebrow {
+    background: rgb(255 255 255 / 0.14);
+    color: var(--color-white);
+  }
+
+  /* Tinted icon tile for categories (set --accent and --on-accent). */
+  .accent-chip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.75rem;
+    background: var(--accent);
+    color: var(--on-accent, var(--color-blue));
+  }
+
+  /* Text inputs */
+  .field {
+    width: 100%;
+    border: 1px solid #cfd5e1;
+    border-radius: 0.75rem;
+    background: var(--color-white);
+    padding: 0.65rem 0.9rem;
+    color: var(--color-ink);
+    outline: none;
+    transition:
+      border-color 0.15s ease,
+      box-shadow 0.15s ease;
+  }
+  .field:focus {
+    border-color: var(--color-blue);
+    box-shadow: var(--shadow-glow);
   }
 
   /* ── Marg, the mascot (components/Marg.tsx) ─────────────────────────────── */
@@ -124,24 +321,23 @@
     animation: marg-shadow 3.2s ease-in-out infinite;
   }
   .marg-eyes {
-    transform-origin: 60px 73px;
+    transform-origin: 60px 69px;
     animation: marg-blink 5s infinite;
   }
   .marg-pupils {
     transition: transform 0.3s ease;
   }
   .marg-tassel {
-    transform-origin: 89px 25px;
+    transform-origin: 89px 27px;
     animation: marg-sway 2.6s ease-in-out infinite;
   }
   .marg-arm {
-    transform-origin: 94px 84px;
+    transform-origin: 97px 82px;
   }
   .marg-talk,
   .marg-think {
     opacity: 0;
   }
-
   .marg[data-state="wave"] .marg-arm {
     animation: marg-wave 0.9s ease-in-out 3;
   }
@@ -149,7 +345,7 @@
     animation-duration: 1.6s;
   }
   .marg[data-state="thinking"] .marg-pupils {
-    transform: translate(2px, -3px);
+    transform: translate(2px, -2px);
   }
   .marg[data-state="thinking"] .marg-think {
     opacity: 1;
@@ -168,8 +364,60 @@
   }
   .marg[data-state="talking"] .marg-talk {
     opacity: 1;
-    transform-origin: 60px 89px;
+    transform-origin: 60px 80px;
     animation: marg-talk 0.26s ease-in-out infinite alternate;
+  }
+  /* ── More emotions ── */
+  .marg-happy,
+  .marg-wow,
+  .marg-o {
+    opacity: 0;
+  }
+  .marg[data-state="happy"] .marg-pupils,
+  .marg[data-state="surprised"] .marg-pupils,
+  .marg[data-state="surprised"] .marg-smile {
+    opacity: 0;
+  }
+  .marg[data-state="happy"] .marg-happy,
+  .marg[data-state="surprised"] .marg-wow,
+  .marg[data-state="surprised"] .marg-o {
+    opacity: 1;
+  }
+  .marg[data-state="happy"] .marg-body {
+    animation: marg-hop 0.9s cubic-bezier(0.3, 0, 0.3, 1) 2, marg-bob 3.2s ease-in-out 1.8s infinite;
+  }
+  .marg[data-state="surprised"] .marg-body {
+    animation: marg-jump 0.55s cubic-bezier(0.2, 0.8, 0.3, 1) 1, marg-bob 3.2s ease-in-out 0.6s infinite;
+  }
+  .marg[data-state="surprised"] .marg-arm {
+    transform: rotate(-40deg);
+  }
+  /* walking: quick waddle, looking the way he's going (--look: -1 left, 1 right) */
+  .marg[data-state="walk"] .marg-body {
+    animation: marg-walk 0.42s ease-in-out infinite;
+  }
+  .marg[data-state="walk"] .marg-pupils {
+    transform: translateX(calc(var(--look, -1) * 3px));
+  }
+  .marg[data-state="walk"] .marg-tassel {
+    animation-duration: 0.42s;
+  }
+  @keyframes marg-walk {
+    0%, 100% { transform: translateY(0) rotate(calc(var(--look, -1) * 2deg)); }
+    25% { transform: translateY(-7px) rotate(calc(var(--look, -1) * 6deg)); }
+    50% { transform: translateY(0) rotate(calc(var(--look, -1) * 2deg)); }
+    75% { transform: translateY(-7px) rotate(calc(var(--look, -1) * -2deg)); }
+  }
+  @keyframes marg-hop {
+    0%, 100% { transform: translateY(0) scale(1, 1); }
+    15% { transform: translateY(0) scale(1.06, 0.94); }
+    45% { transform: translateY(-14px) scale(0.97, 1.03); }
+    75% { transform: translateY(0) scale(1.04, 0.96); }
+  }
+  @keyframes marg-jump {
+    0% { transform: translateY(0) scale(1); }
+    40% { transform: translateY(-18px) scale(1.05); }
+    100% { transform: translateY(0) scale(1); }
   }
 
   @keyframes marg-bob {
@@ -201,13 +449,27 @@
     from { transform: scaleY(0.35); }
     to { transform: scaleY(1); }
   }
-
-  /* ── Home page background: scrolling college names (same look as the coming-soon page) ── */
-  /* The home page replaces the site-wide doodle background with this one. */
-  body:has(.uni-bg-layer)::before,
-  body:has(.uni-bg-layer)::after {
-    display: none;
+  .marg-still * {
+    animation: none !important;
   }
+
+  .typing-dot {
+    display: inline-block;
+    width: 0.45rem;
+    height: 0.45rem;
+    border-radius: 9999px;
+    background: var(--color-blue);
+    animation: marg-dot 1.2s ease-in-out infinite;
+  }
+  .typing-dot:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+  .typing-dot:nth-child(3) {
+    animation-delay: 0.4s;
+  }
+
+  /* ── Home hero: faint scrolling college names (from the coming-soon page), kept subtle ── */
+  /* Fixed behind the whole home page (the page wrapper is `isolate`, so this sits above its blue). */
   .uni-bg-layer {
     position: fixed;
     inset: 0;
@@ -234,22 +496,24 @@
     will-change: transform;
   }
   .uni-row span {
-    font-family: var(--font-poppins), sans-serif;
+    font-family: var(--font-bricolage), var(--font-inter), sans-serif;
     font-weight: 800;
     text-transform: uppercase;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.01em;
     padding-inline: 1.4rem;
     font-size: var(--size, 2.4rem);
-    color: rgb(35 80 181 / 0.13);
+    color: rgb(255 255 255 / 0.06);
   }
   .uni-row--outline span {
     color: transparent;
-    -webkit-text-stroke: 1.5px rgb(35 80 181 / 0.22);
+    -webkit-text-stroke: 1px rgb(255 255 255 / 0.14);
   }
   .uni-row span::after {
     content: "•";
     margin-inline-start: 2.8rem;
-    color: rgb(255 255 255 / 0.55);
+    font-size: 0.5em;
+    vertical-align: middle;
+    color: rgb(255 255 255 / 0.18);
     -webkit-text-stroke: 0;
   }
   @keyframes uni-scroll {
@@ -260,54 +524,467 @@
       transform: translateX(-50%);
     }
   }
-  /* Soft glow behind the hero so it reads cleanly over the names. */
+  /* Soft depth: slightly darker edges so the center reads cleanly. */
   .uni-glow {
     position: absolute;
     inset: 0;
-    background: radial-gradient(
-      ellipse 55% 50% at 50% 38%,
-      rgb(255 208 16 / 0.97) 0%,
-      rgb(255 208 16 / 0.85) 40%,
-      rgb(255 208 16 / 0) 75%
-    );
+    background: radial-gradient(ellipse 80% 70% at 50% 40%, rgb(35 80 181 / 0) 40%, rgb(26 61 143 / 0.45) 100%);
   }
 
-  /* Small avatars on older messages stay still. */
-  .marg-still * {
-    animation: none !important;
+  /* ── Scroll animations ─────────────────────────────────────────────────────
+     Elements with data-reveal fade and slide up when scrolled into view (ScrollReveal.tsx adds
+     .is-visible). Hidden only once JS has marked <html class="reveal-ready">, so content is never
+     lost without JavaScript. data-reveal-delay staggers items (ms). */
+  .reveal-ready [data-reveal] {
+    opacity: 0;
+    transform: translateY(28px);
+    transition:
+      opacity 0.7s cubic-bezier(0.2, 0.7, 0.2, 1),
+      transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+  .reveal-ready [data-reveal="scale"] {
+    transform: translateY(20px) scale(0.96);
+  }
+  .reveal-ready [data-reveal].is-visible {
+    opacity: 1;
+    transform: none;
   }
 
-  .typing-dot {
-    display: inline-block;
-    width: 0.5rem;
-    height: 0.5rem;
-    border-radius: 9999px;
-    background: var(--color-blue);
-    animation: marg-dot 1.2s ease-in-out infinite;
+  /* Reading progress bar under the navbar (scroll-driven animation where supported). */
+  .scroll-progress {
+    position: absolute;
+    inset-inline: 0;
+    bottom: -1px;
+    height: 3px;
+    background: var(--color-yellow);
+    transform-origin: 0 50%;
+    transform: scaleX(0);
   }
-  .typing-dot:nth-child(2) {
-    animation-delay: 0.2s;
+  :root[dir="rtl"] .scroll-progress {
+    transform-origin: 100% 50%;
   }
-  .typing-dot:nth-child(3) {
-    animation-delay: 0.4s;
+  @supports (animation-timeline: scroll()) {
+    .scroll-progress {
+      animation: scroll-progress linear both;
+      animation-timeline: scroll(root);
+    }
+  }
+  @keyframes scroll-progress {
+    to {
+      transform: scaleX(1);
+    }
   }
 
-  /* The "EduVice" logotype keeps its brand font in every language. */
-  .brand {
-    --font-heading: var(--font-luckiest), var(--font-poppins), sans-serif;
-    --wordmark-stroke: 0.09em;
-    --wordmark-weight: 400;
-    font-family: var(--font-heading);
-    font-weight: 400;
+  /* Gentle float for the hero chat card. */
+  .float {
+    animation: float 6s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  body::after,
   .marg *,
   .marg[data-state] *,
   .uni-row,
-  .typing-dot {
+  .typing-dot,
+  .card-hover,
+  .float,
+  .scroll-progress {
     animation: none !important;
+    transition: none !important;
+  }
+  .reveal-ready [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   Home "rooms" — inspired by human-md.ai: each scene is a full-screen room with a colored
+   wall and a sand floor, props standing on the floor, typewriter captions, paper grain.
+   ════════════════════════════════════════════════════════════════════════════ */
+@layer components {
+  /* Paper grain over the whole site (tactile, not flat-digital). */
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    pointer-events: none;
+    opacity: 0.07;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .scene {
+    --floor: 30%;
+    position: relative;
+    min-height: 100svh;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  @media (min-width: 640px) {
+    .scene {
+      --floor: 24%;
+    }
+  }
+  .scene-floor {
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0;
+    height: var(--floor);
+    background: var(--color-sand);
+    box-shadow: inset 0 14px 24px -14px rgb(32 30 31 / 0.25); /* where wall meets floor */
+    z-index: -1;
+  }
+  .scene .uni-bg-layer {
+    position: absolute;
+    inset: 0 0 var(--floor) 0;
+    z-index: -2;
+  }
+  .scene .uni-glow {
+    display: none;
+  }
+  /* Soft contact shadow under props and Marg. */
+  .prop-shadow {
+    filter: drop-shadow(0 18px 14px rgb(32 30 31 / 0.22));
+  }
+
+  /* Typewriter captions: "> a line of text" */
+  .typewriter {
+    font-family: var(--font-type);
+    font-size: 0.9rem;
+    letter-spacing: 0.08em;
+    line-height: 1.9;
+  }
+  .typewriter li::before {
+    content: ">";
+    margin-inline-end: 1rem;
+    color: var(--color-blue);
+  }
+  :root[dir="rtl"] .typewriter li::before {
+    content: "<";
+  }
+  .corner-label {
+    font-family: var(--font-type);
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  :lang(zh) .corner-label {
+    letter-spacing: 0;
+  }
+
+  /* Pills (nav, "scroll", CTAs) */
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-radius: 9999px;
+    padding: 0.55rem 1.1rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition:
+      transform 0.15s ease,
+      background 0.15s ease;
+  }
+  .pill:hover {
+    transform: translateY(-1px);
+  }
+  .pill-paper {
+    background: rgb(244 239 232 / 0.92);
+    color: var(--color-charcoal);
+    backdrop-filter: blur(6px);
+  }
+  .pill-yellow {
+    background: var(--color-yellow);
+    color: var(--color-charcoal);
+  }
+  .pill-dark {
+    background: var(--color-charcoal);
+    color: var(--color-paper);
+  }
+  /* Indian-language navbar labels are longer: tighter pills on phones so they fit one row. */
+  @media (max-width: 639px) {
+    :is(:lang(hi), :lang(mr), :lang(bn), :lang(te), :lang(ta), :lang(gu), :lang(kn), :lang(ml), :lang(pa))
+      header .pill {
+      padding-inline: 0.65rem;
+      font-size: 0.75rem;
+    }
+  }
+
+  /* Giant wordmark */
+  .mega {
+    font-family: var(--font-heading);
+    font-weight: 800;
+    letter-spacing: -0.06em;
+    line-height: 0.85;
+  }
+  .serif-accent {
+    font-family: var(--font-accent);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+  }
+
+  /* Polaroid topic cards */
+  .polaroid {
+    background: var(--color-white);
+    padding: 0.7rem 0.7rem 0.9rem;
+    border-radius: 0.25rem;
+    box-shadow:
+      0 1px 2px rgb(32 30 31 / 0.12),
+      0 14px 28px -12px rgb(32 30 31 / 0.35);
+    transform: rotate(var(--tilt, 0deg));
+    transition:
+      transform 0.25s ease,
+      box-shadow 0.25s ease;
+  }
+  .polaroid:hover {
+    transform: rotate(0deg) translateY(-4px) scale(1.03);
+    box-shadow:
+      0 2px 4px rgb(32 30 31 / 0.12),
+      0 24px 40px -14px rgb(32 30 31 / 0.45);
+  }
+
+  /* Pinned paper notes */
+  .note {
+    background: var(--color-paper);
+    color: var(--color-charcoal);
+    border-radius: 0.2rem;
+    box-shadow: 0 16px 30px -14px rgb(0 0 0 / 0.6);
+    transform: rotate(var(--tilt, 0deg));
+  }
+  /* Clickable notes straighten and lift on hover. */
+  a.note,
+  .note-link {
+    transition:
+      transform 0.25s ease,
+      box-shadow 0.25s ease;
+  }
+  a.note:hover,
+  .note-link:hover {
+    transform: rotate(0deg) translateY(-4px);
+    box-shadow: 0 24px 40px -16px rgb(0 0 0 / 0.55);
+  }
+  .note::before {
+    /* pin */
+    content: "";
+    position: absolute;
+    top: -0.45rem;
+    inset-inline-start: 50%;
+    width: 0.9rem;
+    height: 0.9rem;
+    border-radius: 9999px;
+    background: var(--color-yellow);
+    box-shadow: 0 2px 3px rgb(0 0 0 / 0.35);
+    transform: translateX(-50%);
+  }
+
+  /* ── Scroll-driven motion (Chrome/Edge/Safari; elsewhere elements simply sit still) ── */
+  @supports (animation-timeline: view()) {
+    .parallax-slow,
+    .parallax-fast {
+      animation: parallax linear both;
+      animation-timeline: view();
+      animation-range: cover;
+    }
+    .parallax-slow {
+      --px: 40px;
+    }
+    .parallax-fast {
+      --px: 110px;
+    }
+    @keyframes parallax {
+      from {
+        transform: translateY(var(--px));
+      }
+      to {
+        transform: translateY(calc(var(--px) * -1));
+      }
+    }
+    /* Hero wordmark lifts and fades as you scroll away. */
+    .hero-lift {
+      animation: hero-lift linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0 90vh;
+    }
+    @keyframes hero-lift {
+      to {
+        transform: translateY(-18vh) scale(0.92);
+        opacity: 0;
+      }
+    }
+  }
+
+  /* ── Home rooms that slide sideways past a centered Marg (HorizontalRooms.tsx) ──
+     Phones / reduced motion: rooms simply stack and Marg is a small corner companion. */
+  .h-snap {
+    display: none;
+  }
+  .h-marg {
+    position: fixed;
+    z-index: 30;
+    pointer-events: none;
+    inset-inline-end: 4vw;
+    bottom: calc(30svh * 0.72);
+    height: 13vh;
+    transition:
+      opacity 0.45s ease,
+      transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .h-marg.is-hidden {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+
+  /* Back controls for the sliding rooms (wide screens only) */
+  .h-room-nav {
+    display: none;
+  }
+  .h-room-btn {
+    pointer-events: auto;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    border-radius: 9999px;
+    background: rgb(244 239 232 / 0.94);
+    color: var(--color-charcoal);
+    padding: 0.7rem;
+    box-shadow: 0 8px 20px -8px rgb(32 30 31 / 0.45);
+    font-weight: 600;
+    font-size: 0.85rem;
+    transition:
+      transform 0.15s ease,
+      background 0.15s ease;
+  }
+  .h-room-btn:hover {
+    background: var(--color-yellow);
+    transform: translateX(3px);
+  }
+  :root[dir="rtl"] .h-room-btn:hover {
+    transform: translateX(-3px);
+  }
+  /* the label slides out on hover */
+  .h-room-label {
+    max-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    transition: max-width 0.25s ease;
+  }
+  .h-room-btn:hover .h-room-label,
+  .h-room-btn:focus-visible .h-room-label {
+    max-width: 10rem;
+  }
+
+  @media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
+    .h-room-nav {
+      position: absolute;
+      z-index: 35;
+      inset-inline-end: 1.5rem;
+      top: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.6rem;
+      pointer-events: none;
+      opacity: 0;
+      transform: translateY(-50%) translateX(12px);
+      transition:
+        opacity 0.3s ease,
+        transform 0.3s ease;
+    }
+    :root[dir="rtl"] .h-room-nav {
+      transform: translateY(-50%) translateX(-12px);
+    }
+    .h-room-nav.is-shown {
+      opacity: 1;
+      transform: translateY(-50%);
+    }
+    .h-room-nav:not(.is-shown) .h-room-btn {
+      pointer-events: none;
+    }
+    html:has(.h-rooms) {
+      scroll-snap-type: y proximity;
+    }
+    /* tall wrapper: one screen of scrolling per room */
+    .h-rooms {
+      position: relative;
+      height: calc(var(--n) * 100svh);
+    }
+    .h-snap {
+      display: block;
+      position: absolute;
+      inset-inline: 0;
+      top: calc(var(--i) * 100svh);
+      height: 100svh;
+      scroll-snap-align: start;
+      pointer-events: none;
+    }
+    /* the screen stays pinned while the strip of rooms slides */
+    .h-rooms-viewport {
+      position: sticky;
+      top: 0;
+      height: 100svh;
+      overflow: hidden;
+    }
+    /* rooms side by side; the first room is at the end, later rooms wait off-screen
+       on the start side and slide in as the strip moves (background moves right) */
+    .h-rooms-track {
+      position: absolute;
+      top: 0;
+      inset-inline-end: 0;
+      display: flex;
+      flex-direction: row-reverse;
+      width: calc(var(--n) * 100%);
+      height: 100%;
+      will-change: transform;
+    }
+    .h-room {
+      flex: 0 0 calc(100% / var(--n));
+      height: 100%;
+    }
+    .h-room > .scene {
+      height: 100svh;
+      min-height: 0;
+    }
+    /* Marg: big, centered, standing on the floor */
+    .h-marg {
+      position: absolute;
+      inset-inline: 0;
+      margin-inline: auto;
+      width: fit-content;
+      bottom: calc(24svh * 0.3);
+      height: 42vh;
+    }
+  }
+
+  /* "scroll" pill tick */
+  .scroll-tick {
+    display: inline-block;
+    width: 2px;
+    height: 0.8rem;
+    background: currentColor;
+    animation: scroll-tick 1.6s ease-in-out infinite;
+  }
+  @keyframes scroll-tick {
+    0%, 100% { transform: translateY(-2px); opacity: 0.3; }
+    50% { transform: translateY(3px); opacity: 1; }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .parallax-slow,
+  .parallax-fast,
+  .hero-lift,
+  .scroll-tick,
+  .polaroid,
+  .h-marg {
+    animation: none !important;
+    transition: none !important;
   }
 }

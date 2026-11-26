@@ -291,11 +291,12 @@ export function ChatBox() {
       )}
     <div className="flex min-w-0 flex-col gap-5">
       {/* Marg header */}
-      <header className="flex items-center gap-4 rounded-3xl bg-white/85 px-4 py-3 shadow-card backdrop-blur sm:px-5">
-        <Marg state={margState} className="h-20 w-20 shrink-0 sm:h-24 sm:w-24" />
+      <header className="band-blue flex items-center gap-4 rounded-[1.25rem] bg-blue px-4 py-4 text-white shadow-card-lg sm:px-6">
+        <Marg state={margState} className="h-16 w-16 shrink-0 sm:h-20 sm:w-20" />
         <div className="flex min-w-0 flex-1 flex-col gap-1">
           <h1 className="wordmark text-3xl sm:text-4xl">{t("title")}</h1>
-          <p className="text-sm font-medium" aria-live="polite">
+          <p className="flex items-center gap-2 text-sm text-white/85" aria-live="polite">
+            <span aria-hidden="true" className="h-2 w-2 shrink-0 rounded-full bg-yellow" />
             {status === "loading" ? t(slow ? "thinkingLong" : "thinking") : t("tagline")}
           </p>
         </div>
@@ -303,7 +304,7 @@ export function ChatBox() {
           <button
             type="button"
             onClick={newChat}
-            className="shrink-0 rounded-full border-2 border-blue-dark/30 px-3 py-1.5 text-sm font-bold hover:bg-cream"
+            className="btn-ghost shrink-0 px-4 py-2 text-sm"
           >
             {t("newChat")}
           </button>
@@ -312,9 +313,9 @@ export function ChatBox() {
 
       {/* Empty state: greeting and starter questions */}
       {loaded && messages.length === 0 && (
-        <section className="flex flex-col gap-4 rounded-3xl bg-cream/90 px-5 py-5 shadow-card">
+        <section className="glass flex flex-col gap-4 rounded-[var(--radius-card)] px-5 py-5 shadow-card">
           <div>
-            <h2 className="text-xl font-extrabold">{t("greetingTitle")}</h2>
+            <h2 className="text-xl font-bold">{t("greetingTitle")}</h2>
             <p className="mt-1">{t("greetingBody")}</p>
           </div>
           <ul className="flex flex-wrap gap-2">
@@ -323,7 +324,7 @@ export function ChatBox() {
                 <button
                   type="button"
                   onClick={() => void ask(s)}
-                  className="rounded-full border-2 border-blue bg-white px-3 py-1.5 text-start text-sm font-bold text-blue hover:bg-blue hover:text-white"
+                  className="rounded-full border border-line bg-white px-3.5 py-2 text-start text-sm font-semibold text-blue hover:border-blue hover:bg-mist"
                 >
                   {s}
                 </button>
@@ -339,7 +340,7 @@ export function ChatBox() {
           {messages.map((m) =>
             m.role === "user" ? (
               <li key={m.id} className="flex justify-end">
-                <p className="max-w-[85%] whitespace-pre-wrap rounded-3xl rounded-ee-md bg-blue px-4 py-3 text-white shadow-card">
+                <p className="max-w-[85%] whitespace-pre-wrap rounded-2xl rounded-ee-md bg-blue px-4 py-3 text-white">
                   {m.text}
                 </p>
               </li>
@@ -360,7 +361,7 @@ export function ChatBox() {
       {/* Input */}
       <form
         onSubmit={onSubmit}
-        className="sticky bottom-3 z-10 flex items-end gap-2 rounded-3xl border-2 border-blue-dark/15 bg-white p-2 shadow-card"
+        className="glass sticky bottom-3 z-10 flex items-end gap-2 rounded-[var(--radius-card)] p-2 shadow-card transition-shadow focus-within:border-blue focus-within:shadow-glow"
       >
         <label htmlFor={inputId} className="sr-only">
           {t("inputLabel")}
@@ -373,20 +374,20 @@ export function ChatBox() {
           placeholder={t("placeholder")}
           maxLength={MAX_QUESTION_LENGTH}
           rows={2}
-          className="min-h-12 flex-1 resize-none bg-transparent px-3 py-2 text-start outline-none placeholder:text-blue-dark/50"
+          className="min-h-12 flex-1 resize-none bg-transparent px-3 py-2 text-start outline-none placeholder:text-ink/40"
         />
         <button
           type="submit"
           disabled={busy || !question.trim()}
           aria-label={t("submit")}
-          className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-blue text-white shadow-pill hover:bg-blue-dark disabled:opacity-50"
+          className="btn-primary h-12 w-12 shrink-0"
         >
           <svg viewBox="0 0 24 24" className="h-6 w-6 rtl:-scale-x-100" aria-hidden="true">
             <path d="M4 12h14M12 5l7 7-7 7" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </button>
       </form>
-      <p className="-mt-2 text-xs text-blue-dark/80">
+      <p className="-mt-2 text-xs text-muted">
         {t(signedIn ? "accountNote" : "memoryNote")} {t("privacyNote")}{" "}
         {authStatus === "unauthenticated" && (
           <Link href="/signin" className="font-bold text-blue hover:underline">
@@ -394,7 +395,7 @@ export function ChatBox() {
           </Link>
         )}
       </p>
-      <p className="text-sm text-blue-dark/80">{t("disclaimer")}</p>
+      <p className="text-sm text-muted">{t("disclaimer")}</p>
     </div>
     </div>
   );
@@ -421,7 +422,7 @@ function AssistantMessage({
     <li className="flex items-start gap-2">
       <Marg state={live ? (text ? "talking" : "thinking") : "idle"} className={`mt-1 h-10 w-10 shrink-0 ${live ? "" : "marg-still"}`} />
       <div className="flex min-w-0 max-w-[92%] flex-1 flex-col gap-3">
-        <div className="rounded-3xl rounded-ss-md bg-white px-4 py-3 shadow-card">
+        <div className="glass rounded-2xl rounded-ss-md px-4 py-3 shadow-card">
           {error ? (
             <p role="alert" className="font-medium">
               {t(error)}
@@ -439,10 +440,10 @@ function AssistantMessage({
 
         {/* Guide citation */}
         {source && text && (
-          <aside className="rounded-2xl border-s-4 border-blue bg-cream/95 px-4 py-3">
+          <aside className="glass rounded-2xl border-s-4 border-s-blue px-4 py-3">
             <h3 className="text-xs font-bold uppercase tracking-wide text-blue">{t("sourceLabel")}</h3>
             <p className="mt-1 font-bold">{source.title}</p>
-            <p className="mt-1 text-sm leading-relaxed text-blue-dark/90">{source.text}</p>
+            <p className="mt-1 text-sm leading-relaxed text-muted">{source.text}</p>
             <Link href={`/guide/${source.slug}`} className="mt-2 inline-block text-sm font-bold text-blue hover:underline">
               {t("readMore")} <span aria-hidden="true" className="inline-block rtl:rotate-180">→</span>
             </Link>
@@ -451,7 +452,7 @@ function AssistantMessage({
 
         {/* Web sources + Google search suggestions behind an EduVice-styled search button */}
         {webSources.length > 0 && (
-          <aside className="flex flex-col gap-2 rounded-2xl border-s-4 border-blue bg-cream/95 px-4 py-3">
+          <aside className="glass flex flex-col gap-2 rounded-2xl border-s-4 border-s-yellow px-4 py-3">
             <div className="flex items-center gap-2">
               <h3 className="flex-1 text-xs font-bold uppercase tracking-wide text-blue">
                 {t(official ? "webSourcesLabel" : "webSourcesLabelGeneral")}
@@ -463,7 +464,7 @@ function AssistantMessage({
                   aria-expanded={showSuggestions}
                   aria-label={t("searchToggle")}
                   title={t("searchToggle")}
-                  className="flex h-9 w-9 items-center justify-center rounded-full bg-blue text-yellow shadow-pill hover:bg-blue-dark aria-expanded:bg-blue-dark"
+                  className="btn-primary h-9 w-9 text-yellow aria-expanded:bg-blue-dark"
                 >
                   <svg viewBox="0 0 24 24" className="h-5 w-5" aria-hidden="true">
                     <circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" strokeWidth="2.6" />
@@ -480,7 +481,7 @@ function AssistantMessage({
                     target="_blank"
                     rel="noopener noreferrer"
                     dir="ltr"
-                    className="inline-block rounded-full bg-white px-3 py-1 text-sm font-bold text-blue hover:underline"
+                    className="inline-flex items-center gap-1.5 rounded-full border border-line bg-white px-3 py-1 text-xs font-semibold text-ink hover:border-blue hover:text-blue"
                   >
                     {s.domain}
                   </a>
@@ -504,14 +505,14 @@ function AssistantMessage({
         {/* Suggested follow-up questions */}
         {showFollowUps && (meta?.followUps.length ?? 0) > 0 && (
           <div className="flex flex-col gap-2">
-            <h3 className="text-xs font-bold uppercase tracking-wide text-blue-dark/80">{t("followUpsLabel")}</h3>
+            <h3 className="text-xs font-bold uppercase tracking-wide text-muted">{t("followUpsLabel")}</h3>
             <ul className="flex flex-wrap gap-2">
               {meta!.followUps.map((q) => (
                 <li key={q}>
                   <button
                     type="button"
                     onClick={() => onAsk(q)}
-                    className="rounded-full border-2 border-blue bg-white px-3 py-1.5 text-start text-sm font-bold text-blue hover:bg-blue hover:text-white"
+                    className="rounded-full border border-line bg-white px-3.5 py-2 text-start text-sm font-semibold text-blue hover:border-blue hover:bg-mist"
                   >
                     {q}
                   </button>

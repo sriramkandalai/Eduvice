@@ -1,43 +1,36 @@
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { Logo } from "./Logo";
 import { LanguageSwitcher } from "./LanguageSwitcher";
+import { MobileMenu } from "./MobileMenu";
 import { UserMenu } from "./UserMenu";
 
-// Phones: [logo · account] on the first row, [guide · ask · language] on the second.
-// Larger screens: everything on one row, with the account at the end.
+// Floating navigation: paper pills over the page (inspired by human-md.ai).
+// Phones: [Home] … [Ask Marg] [Menu]. Larger screens: everything inline.
 export function Navbar() {
   const t = useTranslations("Navbar");
-  const brand = useTranslations("Brand");
 
   return (
-    <header className="border-b-4 border-blue-dark/15 bg-yellow">
-      <nav
-        aria-label={t("mainNav")}
-        className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-x-4 gap-y-3 px-4 py-3"
-      >
-        <Link href="/" aria-label={t("homeLink")} className="order-1 flex items-center gap-2">
-          <Logo className="h-9 w-auto" />
-          <span className="wordmark brand text-2xl sm:text-3xl" lang="en">
-            {brand("name")}
-          </span>
+    <header className="pointer-events-none fixed inset-x-0 top-0 z-50">
+      <div aria-hidden="true" className="scroll-progress !top-0 !bottom-auto" />
+      <nav aria-label={t("mainNav")} className="mx-auto flex max-w-7xl items-center justify-between gap-2 px-3 py-3 sm:px-6 sm:py-4">
+        <Link href="/" className="pill pill-paper pointer-events-auto shadow-sm">
+          {t("home")}
         </Link>
 
-        <div className="order-3 flex w-full flex-wrap items-center gap-x-3 gap-y-2 sm:order-2 sm:ms-auto sm:w-auto sm:gap-x-4">
-          <Link href="/guide" className="whitespace-nowrap text-sm font-bold hover:underline">
+        <div className="pointer-events-auto flex items-center gap-2">
+          <Link href="/guide" className="pill pill-paper hidden shadow-sm sm:inline-flex">
             {t("guide")}
           </Link>
-          <Link
-            href="/chat"
-            className="whitespace-nowrap rounded-full bg-blue px-3 py-2 text-sm font-bold text-white hover:bg-blue-dark sm:px-4"
-          >
+          <Link href="/chat" className="pill pill-yellow whitespace-nowrap shadow-sm ring-1 ring-charcoal/20">
             {t("chat")}
           </Link>
-          <LanguageSwitcher />
-        </div>
-
-        <div className="order-2 sm:order-3">
-          <UserMenu />
+          <div className="hidden items-center gap-2 sm:flex">
+            <LanguageSwitcher />
+            <UserMenu />
+          </div>
+          <div className="sm:hidden">
+            <MobileMenu />
+          </div>
         </div>
       </nav>
     </header>

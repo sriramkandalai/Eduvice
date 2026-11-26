@@ -16,9 +16,11 @@
   },
   "Navbar": {
     "homeLink": "EduVice home",
+    "home": "Home",
     "guide": "School Guide",
     "chat": "Ask Marg",
-    "mainNav": "Main navigation"
+    "mainNav": "Main navigation",
+    "menu": "Menu"
   },
   "LanguageSwitcher": {
     "label": "Language",
@@ -27,7 +29,15 @@
       "es": "Español",
       "zh": "中文",
       "vi": "Tiếng Việt",
-      "ar": "العربية"
+      "hi": "हिन्दी",
+      "bn": "বাংলা",
+      "te": "తెలుగు",
+      "mr": "मराठी",
+      "ta": "தமிழ்",
+      "gu": "ગુજરાતી",
+      "kn": "ಕನ್ನಡ",
+      "ml": "മലയാളം",
+      "pa": "ਪੰਜਾਬੀ"
     }
   },
   "Account": {
@@ -92,7 +102,29 @@
   },
   "Home": {
     "eyebrow": "For parents new to the US",
-    "title": "US schools, explained.",
+    "title": "US schools, <hl>explained.</hl>",
+    "previewStatus": "Online · answers in your language",
+    "previewQuestion": "Can my child enroll without a Social Security number?",
+    "previewAnswer": "Yes. Public schools can't require a Social Security number, and every child has the right to a free public education.",
+    "previewSource": "Source: EduVice School Guide",
+    "statTopics": "{count} guide topics",
+    "statLanguages": "{count} languages",
+    "statFree": "Free · no account needed",
+    "heroLine1": "US schools, explained for families.",
+    "heroLine2": "ask anything, in your own language.",
+    "heroLine3": "free. no account needed.",
+    "cornerLeft": "EduVice · for families",
+    "cornerRight": "Est. 2026",
+    "scroll": "scroll",
+    "storyLead": "Moving to a new country is hard.",
+    "storyFollow": "Understanding its schools shouldn't be.",
+    "storyBody": "Enrollment, grades, special education, school meals, college — EduVice explains it all in plain words, and Marg answers whatever else you want to know.",
+    "notesTitle": "How it works",
+    "topicsSub": "Pick a topic, or just ask.",
+    "askTitle": "Ask Marg.",
+    "askBody": "Any question, any language. Marg is here day and night.",
+    "finalTitle": "Have a question? Ask Marg.",
+    "finalBody": "Any question, in your language. Marg is here to help your family find its way.",
     "valueProp": "Ask anything about enrollment, grades, special education, or school meals — and get a clear answer with its source.",
     "cta": "Ask Marg",
     "browse": "Browse the School Guide",
@@ -103,7 +135,10 @@
     "step2Body": "EduVice looks through {count} topics written for parents.",
     "step3Title": "Get a clear answer",
     "step3Body": "Short, simple answers that show where the information came from.",
-    "topicsTitle": "Explore by topic"
+    "topicsTitle": "Explore by topic",
+    "roomNav": "Room navigation",
+    "roomHome": "Back to start",
+    "roomPrev": "Previous"
   },
   "Categories": {
     "getting-started": {

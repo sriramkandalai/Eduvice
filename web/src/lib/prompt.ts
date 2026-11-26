@@ -17,7 +17,15 @@ export const LANGUAGE_NAMES: Record<Locale, string> = {
   es: "Spanish",
   zh: "Simplified Chinese",
   vi: "Vietnamese",
-  ar: "Arabic",
+  hi: "Hindi",
+  bn: "Bengali",
+  te: "Telugu",
+  mr: "Marathi",
+  ta: "Tamil",
+  gu: "Gujarati",
+  kn: "Kannada",
+  ml: "Malayalam",
+  pa: "Punjabi (Gurmukhi script)",
 };
 
 const RULES = `

@@ -16,9 +16,11 @@
   },
   "Navbar": {
     "homeLink": "Inicio de EduVice",
+    "home": "Inicio",
     "guide": "Guía escolar",
     "chat": "Pregúntele a Marg",
-    "mainNav": "Navegación principal"
+    "mainNav": "Navegación principal",
+    "menu": "Menú"
   },
   "LanguageSwitcher": {
     "label": "Idioma",
@@ -27,7 +29,15 @@
       "es": "Español",
       "zh": "中文",
       "vi": "Tiếng Việt",
-      "ar": "العربية"
+      "hi": "हिन्दी",
+      "bn": "বাংলা",
+      "te": "తెలుగు",
+      "mr": "मराठी",
+      "ta": "தமிழ்",
+      "gu": "ગુજરાતી",
+      "kn": "ಕನ್ನಡ",
+      "ml": "മലയാളം",
+      "pa": "ਪੰਜਾਬੀ"
     }
   },
   "Account": {
@@ -92,7 +102,29 @@
   },
   "Home": {
     "eyebrow": "Para padres recién llegados a EE. UU.",
-    "title": "Las escuelas de EE. UU., explicadas.",
+    "title": "Las escuelas de EE. UU., <hl>explicadas paso a paso.</hl>",
+    "previewStatus": "En línea · respuestas en su idioma",
+    "previewQuestion": "¿Puede mi hijo inscribirse sin un número de Seguro Social?",
+    "previewAnswer": "Sí. Las escuelas públicas no pueden exigir un número de Seguro Social, y todos los niños tienen derecho a una educación pública gratuita.",
+    "previewSource": "Fuente: Guía Escolar de EduVice",
+    "statTopics": "{count} temas en la guía",
+    "statLanguages": "{count} idiomas",
+    "statFree": "Gratis · no necesita crear una cuenta",
+    "heroLine1": "Las escuelas de EE. UU., explicadas para las familias.",
+    "heroLine2": "pregunte lo que sea, en su propio idioma.",
+    "heroLine3": "gratis. no necesita crear una cuenta.",
+    "cornerLeft": "EduVice · para familias",
+    "cornerRight": "Est. 2026",
+    "scroll": "deslice hacia abajo",
+    "storyLead": "Mudarse a un nuevo país es difícil.",
+    "storyFollow": "Entender sus escuelas no debería serlo.",
+    "storyBody": "Inscripciones, calificaciones, educación especial, comidas escolares, la universidad... EduVice le explica todo en palabras sencillas, y Marg responde cualquier otra duda que tenga.",
+    "notesTitle": "Cómo funciona",
+    "topicsSub": "Elija un tema o simplemente pregunte.",
+    "askTitle": "Pregúntele a Marg.",
+    "askBody": "Cualquier pregunta, en cualquier idioma. Marg está aquí de día y de noche.",
+    "finalTitle": "¿Tiene alguna pregunta? Pregúntele a Marg.",
+    "finalBody": "Cualquier pregunta, en su idioma. Marg está aquí para ayudar a su familia a encontrar el camino.",
     "valueProp": "Pregunte lo que quiera sobre inscripción, calificaciones, educación especial o comidas escolares, y reciba una respuesta clara con su fuente.",
     "cta": "Pregúntele a Marg",
     "browse": "Ver la guía escolar",
@@ -103,7 +135,10 @@
     "step2Body": "EduVice revisa {count} temas escritos para padres.",
     "step3Title": "Reciba una respuesta clara",
     "step3Body": "Respuestas cortas y sencillas que muestran de dónde viene la información.",
-    "topicsTitle": "Explore por tema"
+    "topicsTitle": "Explore por tema",
+    "roomNav": "Navegación de la sala",
+    "roomHome": "Volver al inicio",
+    "roomPrev": "Anterior"
   },
   "Categories": {
     "getting-started": {
