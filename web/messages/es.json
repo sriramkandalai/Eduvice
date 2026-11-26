@@ -16,6 +16,7 @@
   },
   "Navbar": {
     "homeLink": "Inicio de EduVice",
+    "home": "Inicio",
     "guide": "Guía escolar",
     "chat": "Pregúntele a Marg",
     "mainNav": "Navegación principal",

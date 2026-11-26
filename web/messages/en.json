@@ -16,6 +16,7 @@
   },
   "Navbar": {
     "homeLink": "EduVice home",
+    "home": "Home",
     "guide": "School Guide",
     "chat": "Ask Marg",
     "mainNav": "Main navigation",

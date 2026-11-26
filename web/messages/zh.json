@@ -16,6 +16,7 @@
   },
   "Navbar": {
     "homeLink": "EduVice 首页",
+    "home": "首页",
     "guide": "学校指南",
     "chat": "问问 Marg",
     "mainNav": "主导航",
