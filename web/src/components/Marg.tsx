@@ -2,7 +2,7 @@
 // a dark visor face with yellow eyes, and the logo's graduation cap.
 // Animations live in globals.css (.marg…) and switch with `state`; reduced motion turns them off.
 
-export type MargState = "idle" | "wave" | "thinking" | "talking";
+export type MargState = "idle" | "wave" | "thinking" | "talking" | "happy" | "surprised" | "walk";
 
 const OUTLINE = {};
 
@@ -43,6 +43,20 @@ export function Marg({ state = "idle", className }: { state?: MargState; classNa
             <circle cx="75" cy="65" r="1.6" fill="var(--color-white)" />
           </g>
         </g>
+
+        {/* happy eyes (^ ^) */}
+        <g className="marg-happy" fill="none" stroke="var(--color-yellow)" strokeWidth="3.2" strokeLinecap="round">
+          <path d="M42 71 Q47 62 52 71" />
+          <path d="M68 71 Q73 62 78 71" />
+        </g>
+        {/* surprised eyes (big and round) and "O" mouth */}
+        <g className="marg-wow">
+          <circle cx="47" cy="68" r="6.5" fill="var(--color-yellow)" />
+          <circle cx="73" cy="68" r="6.5" fill="var(--color-yellow)" />
+          <circle cx="49" cy="66" r="2" fill="var(--color-white)" />
+          <circle cx="75" cy="66" r="2" fill="var(--color-white)" />
+        </g>
+        <ellipse className="marg-o" cx="60" cy="81.5" rx="3.6" ry="4.2" fill="var(--color-yellow)" />
 
         {/* mouth: smile when idle, moving when talking */}
         <path
