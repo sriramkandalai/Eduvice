@@ -31,7 +31,7 @@ const LANGUAGE: Record<Target, string> = {
 
 const GUIDELINES = `
 The readers are immigrant parents in the United States who may be new to the country and may have limited formal education. Translate naturally and warmly, not word for word. Use simple, everyday words.
-- Keep these unchanged: the brand name "EduVice"; phone numbers like 911 and 988; website addresses; and US program or law names (FERPA, IDEA, McKinney-Vento, Plyler v. Doe, Lau v. Nichols, Title I, Head Start, Medicaid, CHIP, FAFSA, PTA, PTO, GED, SAT, ACT, PSAT, AP).
+- Keep these unchanged: the brand name "EduVice" and the assistant's name "Marg"; phone numbers like 911 and 988; website addresses; and US program or law names (FERPA, IDEA, McKinney-Vento, Plyler v. Doe, Lau v. Nichols, Title I, Head Start, Medicaid, CHIP, FAFSA, PTA, PTO, GED, SAT, ACT, PSAT, AP).
 - For school abbreviations like IEP, ESL, GPA, EL, and K-12, keep the English abbreviation (parents will see it at school) and add a short translated explanation in parentheses the first time it appears, if the English text explains it.
 - Keep the meaning exact. Do not add or remove facts.
 `.trim();
@@ -92,7 +92,8 @@ function rebuild(shape: Json, values: Map<string, string>, prefix = ""): Json {
 }
 
 /** Keys that are the same in every language. */
-const KEEP_AS_IS = (key: string) => key === "Brand.name" || key.startsWith("LanguageSwitcher.names.");
+const KEEP_AS_IS = (key: string) =>
+  key === "Brand.name" || key === "Chat.title" || key.startsWith("LanguageSwitcher.names.");
 
 function placeholders(msg: string): string {
   return [...msg.matchAll(/\{\s*(\w+)/g)].map((m) => m[1]).sort().join(",");

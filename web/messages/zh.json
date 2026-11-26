@@ -7,7 +7,7 @@
     "title": "EduVice — 读懂美国学校",
     "description": "为移民家长清晰解答关于美国学校体系的疑问。",
     "guideTitle": "学校指南",
-    "chatTitle": "在线提问",
+    "chatTitle": "问问 Marg",
     "aboutTitle": "关于我们",
     "contactTitle": "联系我们",
     "privacyTitle": "隐私政策",
@@ -17,7 +17,7 @@
   "Navbar": {
     "homeLink": "EduVice 首页",
     "guide": "学校指南",
-    "chat": "在线提问",
+    "chat": "问问 Marg",
     "mainNav": "主导航"
   },
   "LanguageSwitcher": {
@@ -33,7 +33,7 @@
   "Footer": {
     "nav": "页脚",
     "guide": "学校指南",
-    "chat": "在线提问",
+    "chat": "问问 Marg",
     "about": "关于我们",
     "contact": "联系我们",
     "privacy": "隐私",
@@ -45,7 +45,7 @@
     "eyebrow": "专为刚来美国的家长准备",
     "title": "读懂美国学校。",
     "valueProp": "无论是关于入学、成绩、特殊教育还是学校供餐，欢迎随时提问——您将获得清楚明白的解答和信息来源。",
-    "cta": "在线提问",
+    "cta": "问问 Marg",
     "browse": "浏览学校指南",
     "howTitle": "使用方法",
     "step1Title": "用您的母语提问",
@@ -94,26 +94,38 @@
     "breadcrumb": "导航路径",
     "related": "相关主题",
     "askTitle": "还有疑问吗？",
-    "askBody": "用您习惯的语言向 EduVice 提问，几秒钟内即可获得解答。",
-    "askCta": "我要提问",
+    "askBody": "用您习惯的语言向 EduVice 的向导 Marg 提问，几秒钟内就能得到解答。",
+    "askCta": "问问 Marg",
     "translationNote": "该主题暂无中文版本，目前以英文显示。您依然可以用中文向我们提问。"
   },
   "Chat": {
-    "title": "咨询美国学校相关问题",
-    "intro": "请用您平时说话的方式输入问题，解答均来自我们的学校系统指南。",
+    "title": "Marg",
+    "tagline": "陪伴您了解美国学校，回答您想问的任何问题。",
+    "greetingTitle": "您好，我是 Marg！",
+    "greetingBody": "“Marg”的意思是“道路”。我在这里帮助您的家庭指引方向。您可以随时用任何语言问我任何事情：学校、作业、日常生活，或其他想了解的问题都可以。",
+    "starters": [
+      "没有社会安全号码，我的孩子可以入学吗？",
+      "什么是 IEP？",
+      "我该如何申请学校的免费午餐？",
+      "哪些大学接受 AP Computer Science A 的学分？"
+    ],
+    "newChat": "新对话",
+    "followUpsLabel": "您还可以问",
+    "searchToggle": "显示 Google 搜索建议",
+    "memoryNote": "您的聊天记录只保存在这台设备上。点击“新对话”即可清除。",
     "inputLabel": "您的问题",
-    "placeholder": "例如：孩子没有社会安全号码可以入学吗？",
-    "submit": "提问",
-    "thinking": "正在寻找答案…",
-    "thinkingLong": "还在查找中……搜索官方网站可能需要多花几秒钟，请稍候。",
-    "answerLabel": "回答",
-    "sourceLabel": "来源",
+    "placeholder": "问问 Marg 任何问题…",
+    "submit": "发送",
+    "thinking": "Marg 正在思考…",
+    "thinkingLong": "还在努力查找中… 网上搜索可能需要多等几秒钟。",
+    "sourceLabel": "来自 EduVice 学校指南",
     "readMore": "阅读完整主题",
     "webSourcesLabel": "信息来源（官方网站）",
     "webNote": "此回答来自对 College Board 和大学官方网站的实时搜索。各校规定每年可能会有变化，请务必与大学核实确认。",
     "webNoResult": "未能从 College Board 或大学官方网站上找到此内容。您可以前往 apstudents.collegeboard.org 使用 College Board 的 AP 学分政策查询工具查找，或者查看大学的招生办（admissions）或教务处（registrar）网站。",
     "searchSuggestionsLabel": "Google 搜索建议",
-    "errorEmpty": "请先输入您的问题。",
+    "webSourcesLabelGeneral": "网站来源",
+    "webNoteGeneral": "此回答参考了 Google 搜索。重要细节请前往原始网站核对。",
     "errorGeneric": "系统出错了，请再试一次。",
     "errorRateLimit": "您在短时间内提问过于频繁，请稍等一分钟后再试。",
     "disclaimer": "EduVice 提供常规参考信息，不构成法律建议。各州和各学区的规定可能有所不同，请向所在学校进一步核实。",
@@ -128,9 +140,9 @@
     "principle1Title": "免费",
     "principle1Body": "EduVice 完全免费，无需注册账号。",
     "principle2Title": "保护隐私",
-    "principle2Body": "我们绝不会询问您的姓名或移民身份，也不会保存您的对话内容。",
+    "principle2Body": "我们绝不会询问您的姓名或移民身份。您与 Marg 的对话只保存在您自己的设备上，绝不会存入我们的服务器。",
     "principle3Title": "严谨可靠",
-    "principle3Body": "所有回答均来自我们的学校指南，并且每个回答都会标明出处。",
+    "principle3Body": "只要我们审核过的学校指南里有相关内容，回答就会引用该内容并标明出处。",
     "principle4Title": "尊重包容",
     "principle4Body": "无论用哪种语言，您提出的每一个问题都值得被认真对待。",
     "limitsTitle": "EduVice 不能提供的内容",
@@ -153,11 +165,11 @@
       },
       {
         "heading": "我们如何为您解答问题",
-        "body": "为了回答您的问题，我们会把您提问的内容发送给 Google 的 Gemini 服务，由它来协助找到合适的主题并组织回答。对于哪些大学认可 AP 考试学分的问题，Gemini 还会通过 Google 搜索在 College Board 和大学官方网站上查找。Google 会依据其自身的服务条款处理这些内容，并可能保存这些信息以改进其服务。请不要在问题中包含姓名、家庭住址、案件号码或其他个人隐私信息。"
+        "body": "为了回答您的问题，我们会把您输入的文字发送给 Google 的 Gemini 服务，由它帮我们找到相关主题并写出答案。当问题需要最新或具体的信息时，Gemini 也可能会使用 Google 搜索；针对哪些大学接受 AP 考试学分的问题，它只会在 College Board 和大学官方网站上进行搜索。Google 会根据其自身条款处理这些内容，并可能予以保存来改进其服务。提问时，请不要包含姓名、住址、案件编号或其他个人隐私信息。"
       },
       {
         "heading": "我们绝不会做的事",
-        "body": "我们不会保存您的对话、不会出售您的信息、不会展示广告，也不会使用追踪 cookies。"
+        "body": "我们不会在服务器上保存您的对话，不会出售您的个人信息，不显示广告，也不使用追踪 Cookie。为了让 Marg 能记住您的交谈内容，您的聊天记录只会保存在您设备上的浏览器中。您可以随时点击“新对话”进行清除。"
       },
       {
         "heading": "Cookies",
@@ -188,7 +200,7 @@
       },
       {
         "heading": "回答可能存在误差",
-        "body": "所有回答均是在人工智能的协助下、依据我们的学校指南生成的。我们竭力确保内容的准确性，但回答仍可能不完整、过时或存在错误。请不要仅凭 EduVice 的回答做出重大决定。"
+        "body": "这些回答是在人工智能的帮助下生成的，并在适用时参考我们的学校指南。我们努力确保信息准确，但内容仍可能不完整、过时或有误。遇到重要决定时，请不要仅仅依赖 EduVice。"
       },
       {
         "heading": "合理使用",
