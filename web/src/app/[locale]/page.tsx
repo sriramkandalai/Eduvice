@@ -1,7 +1,7 @@
 import type { CSSProperties } from "react";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
-import { Marg } from "@/components/Marg";
+import { FloatingMarg } from "@/components/FloatingMarg";
 import { CategoryIcon } from "@/components/CategoryIcon";
 import { UniversityNamesBackground } from "@/components/UniversityNamesBackground";
 import { BookStool, Chalkboard, FloorLamp, SchoolDesk } from "@/components/SceneProps";
@@ -28,9 +28,12 @@ export default async function HomePage({ params }: LocaleParams) {
     ));
 
   return (
-    <div className="scenes">
-      {/* ── Room 1: blue wall, the wordmark, Marg between a stool of books and a lamp ── */}
-      <section className="scene bg-blue text-paper" aria-labelledby="hero-title">
+    <div className="scenes scenes-home">
+      {/* Marg stays on screen while the rooms scroll behind him; each room sets his mood. */}
+      <FloatingMarg />
+
+      {/* ── Room 1: blue wall, the wordmark, a stool of books and a lamp ── */}
+      <section className="scene bg-blue text-paper" aria-labelledby="hero-title" data-marg="wave">
         <UniversityNamesBackground />
         <div className="scene-floor" />
 
@@ -48,10 +51,6 @@ export default async function HomePage({ params }: LocaleParams) {
 
         <BookStool className="prop-shadow parallax-slow absolute bottom-[calc(var(--floor)*0.42)] start-[3vw] hidden h-[34vh] w-auto sm:block" />
         <FloorLamp className="prop-shadow absolute bottom-[calc(var(--floor)*0.34)] end-[4vw] hidden h-[64vh] w-auto sm:block" />
-        <Marg
-          state="wave"
-          className="prop-shadow absolute bottom-[calc(var(--floor)*0.92)] end-[50%] h-[24vh] w-auto translate-x-1/2 rtl:-translate-x-1/2 sm:bottom-[calc(var(--floor)*0.32)] sm:end-[24vw] sm:h-[40vh] sm:translate-x-0 sm:rtl:translate-x-0"
-        />
 
         {/* captions on the floor */}
         <div className="absolute inset-x-0 bottom-0 flex h-[var(--floor)] flex-col justify-center px-6 text-charcoal sm:px-[22vw]">
@@ -74,7 +73,7 @@ export default async function HomePage({ params }: LocaleParams) {
       </section>
 
       {/* ── Room 2: yellow wall, the story ── */}
-      <section className="scene bg-yellow text-charcoal">
+      <section className="scene bg-yellow text-charcoal" data-marg="talking">
         <div className="scene-floor" />
         <div className="mx-auto max-w-6xl px-6 pt-28 sm:pt-32">
           <h2 className="font-display text-[clamp(2.4rem,6vw,5rem)] font-semibold leading-[1.02] tracking-tight lg:max-w-[62%]">
@@ -86,12 +85,11 @@ export default async function HomePage({ params }: LocaleParams) {
           </p>
         </div>
         <Chalkboard className="parallax-slow absolute end-[6vw] top-[26%] hidden h-[28vh] w-auto lg:block" />
-        <SchoolDesk className="prop-shadow absolute bottom-[calc(var(--floor)*0.36)] end-[8vw] hidden h-[24vh] w-auto md:block" />
-        <Marg className="prop-shadow absolute bottom-[calc(var(--floor)*0.3)] start-[8vw] h-[26vh] w-auto sm:start-[14vw] md:start-auto md:end-[36vw]" />
+        <SchoolDesk className="prop-shadow absolute bottom-[calc(var(--floor)*0.3)] start-[8vw] hidden h-[17vh] w-auto md:block" />
       </section>
 
       {/* ── Room 3: dark room, three pinned notes ── */}
-      <section className="scene bg-charcoal text-paper" aria-labelledby="how-heading">
+      <section className="scene bg-charcoal text-paper" aria-labelledby="how-heading" data-marg="thinking">
         <div className="scene-floor !bg-paper/10" />
         <div className="mx-auto flex max-w-6xl flex-col gap-12 px-6 pb-[calc(var(--floor)+3rem)] pt-28 sm:pt-32">
           <h2 id="how-heading" className="mega text-[clamp(3rem,8vw,7rem)]" data-reveal>
@@ -115,11 +113,10 @@ export default async function HomePage({ params }: LocaleParams) {
           </ol>
         </div>
         <FloorLamp className="absolute bottom-[calc(var(--floor)*0.34)] start-[5vw] hidden h-[46vh] w-auto opacity-90 sm:block" />
-        <Marg state="thinking" className="prop-shadow absolute bottom-[calc(var(--floor)*0.3)] end-[10vw] h-[24vh] w-auto" />
       </section>
 
       {/* ── Room 4: paper wall, topics as polaroids ── */}
-      <section className="scene bg-paper text-charcoal" aria-labelledby="topics-heading">
+      <section className="scene bg-paper text-charcoal" aria-labelledby="topics-heading" data-marg="idle">
         <div className="scene-floor" />
         <div className="mx-auto flex max-w-6xl flex-col gap-10 px-6 pb-[calc(var(--floor)*0.5)] pt-28 sm:pt-32">
           <div data-reveal>
@@ -129,7 +126,8 @@ export default async function HomePage({ params }: LocaleParams) {
             </h2>
             <p className="serif-accent mt-2 text-2xl italic text-charcoal/70 sm:text-3xl">{t("topicsSub")}</p>
           </div>
-          <ul className="grid grid-cols-2 gap-x-5 gap-y-8 sm:grid-cols-3 lg:grid-cols-4">
+          {/* leave the end side free: that's where Marg stands */}
+          <ul className="grid grid-cols-2 gap-x-5 gap-y-8 sm:grid-cols-3 md:pe-[30vw] lg:grid-cols-4 lg:pe-[26vw]">
             {CATEGORIES.map((c, i) => (
               <li key={c} data-reveal="scale" data-reveal-delay={String((i % 4) * 90)}>
                 <Link
@@ -154,9 +152,9 @@ export default async function HomePage({ params }: LocaleParams) {
       </section>
 
       {/* ── Room 5: blue wall, ask Marg ── */}
-      <section className="scene bg-blue text-paper" aria-labelledby="ask-heading">
+      <section className="scene bg-blue text-paper" aria-labelledby="ask-heading" data-marg="wave">
         <div className="scene-floor" />
-        <div className="mx-auto grid max-w-6xl items-center gap-10 px-6 pb-[calc(var(--floor)+2rem)] pt-28 sm:pt-32 lg:grid-cols-2">
+        <div className="mx-auto grid max-w-6xl items-center gap-10 px-6 pb-[calc(var(--floor)+2rem)] pt-28 sm:pt-32 md:pe-[34vw] lg:pe-[30vw]">
           <div className="flex flex-col items-start gap-5">
             <h2 id="ask-heading" className="mega text-[clamp(3.5rem,10vw,8.5rem)]" data-reveal>
               {t("askTitle")}
@@ -178,8 +176,7 @@ export default async function HomePage({ params }: LocaleParams) {
             <p className="corner-label mt-3 text-muted">{t("previewSource")}</p>
           </div>
         </div>
-        <Marg state="wave" className="prop-shadow absolute bottom-[calc(var(--floor)*0.3)] start-[6vw] h-[22vh] w-auto" />
-        <BookStool className="prop-shadow absolute bottom-[calc(var(--floor)*0.4)] end-[6vw] hidden h-[22vh] w-auto sm:block" />
+        <BookStool className="prop-shadow absolute bottom-[calc(var(--floor)*0.4)] start-[5vw] hidden h-[22vh] w-auto lg:block" />
       </section>
     </div>
   );
