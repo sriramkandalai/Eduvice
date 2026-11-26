@@ -30,6 +30,55 @@
       "ar": "العربية"
     }
   },
+  "Account": {
+    "signIn": "Sign in",
+    "signInTitle": "Sign in",
+    "signInIntro": "Sign in to save your chats with Marg and see them on any device. It's free, and you can still chat without an account.",
+    "google": "Continue with Google",
+    "linkTitle": "Email me a sign-in link",
+    "linkBody": "No password needed. We'll send a link to your email.",
+    "linkButton": "Send me a link",
+    "email": "Email",
+    "emailPlaceholder": "you@example.com",
+    "passwordTitle": "Sign in with a password",
+    "registerTitle": "Create an account",
+    "name": "Your name (optional)",
+    "password": "Password",
+    "passwordHint": "At least {min} characters.",
+    "passwordButton": "Sign in",
+    "registerButton": "Create account",
+    "switchToRegister": "New here? Create an account with a password",
+    "switchToSignin": "Already have an account? Sign in",
+    "forgotPassword": "Forgot your password? Use \"Email me a sign-in link\" above.",
+    "guestNote": "You don't need an account to chat with Marg. Without one, your chat is saved only on this device.",
+    "checkEmailTitle": "Check your email",
+    "checkEmailLink": "We sent a sign-in link to {email}. Open it on this device to sign in.",
+    "checkEmailConfirm": "We sent a confirmation link to {email}. Click it to finish creating your account, then sign in with your password.",
+    "checkEmailSpam": "Don't see it? Check your spam or junk folder. The link expires in 24 hours.",
+    "back": "Back",
+    "verifiedNotice": "Your email is confirmed! Sign in with your password below.",
+    "error_link_expired": "That link has expired or was already used. Please try again.",
+    "error_Verification": "That sign-in link has expired or was already used. Please ask for a new one.",
+    "error_OAuthAccountNotLinked": "This email is already used with a different sign-in method. Please sign in the way you did before.",
+    "error_AccessDenied": "Sign-in was cancelled.",
+    "error_server": "Something went wrong. Please try again.",
+    "error_generic": "Something went wrong while signing in. Please try again.",
+    "register_invalid_email": "Please enter a valid email address.",
+    "register_weak_password": "Please choose a longer password.",
+    "register_exists": "An account with this email already has a password. Please sign in instead.",
+    "register_rate_limited": "Too many attempts. Please wait a minute and try again.",
+    "register_server": "Something went wrong. Please try again.",
+    "register_invalid": "Something went wrong. Please try again.",
+    "signin_wrong_password": "That email and password don't match. Please try again.",
+    "signin_unverified": "Please confirm your email first. Check your inbox for our confirmation link.",
+    "signin_rate_limited": "Too many attempts. Please wait a minute and try again.",
+    "menuLabel": "Account menu",
+    "myChats": "My chats",
+    "signOut": "Sign out",
+    "deleteAccount": "Delete my account",
+    "deleteConfirm": "Delete your account and all your saved chats? This can't be undone.",
+    "deleteFailed": "We couldn't delete your account. Please try again."
+  },
   "Footer": {
     "nav": "Footer",
     "guide": "School Guide",
@@ -113,6 +162,12 @@
     "followUpsLabel": "You could also ask",
     "searchToggle": "Show Google search suggestions",
     "memoryNote": "Your chat is saved only on this device. Tap \"New chat\" to erase it.",
+    "accountNote": "Your chats are saved to your account.",
+    "signInToSave": "Sign in to save your chats.",
+    "yourChats": "Your chats",
+    "noSavedChats": "No saved chats yet. Ask Marg something to start one.",
+    "deleteChat": "Delete chat: {title}",
+    "deleteChatConfirm": "Delete this chat? This can't be undone.",
     "inputLabel": "Your question",
     "placeholder": "Ask Marg anything…",
     "submit": "Send",
@@ -140,7 +195,7 @@
     "principle1Title": "Free",
     "principle1Body": "EduVice is free to use, with no account needed.",
     "principle2Title": "Private",
-    "principle2Body": "We never ask for your name or immigration status. Your chats with Marg are saved only on your own device, never on our servers.",
+    "principle2Body": "We never ask about immigration status. Accounts are optional: without one, your chats stay on your own device.",
     "principle3Title": "Careful",
     "principle3Body": "When our reviewed school guide covers a question, answers use it and show the source.",
     "principle4Title": "Respectful",
@@ -161,7 +216,11 @@
     "sections": [
       {
         "heading": "What we collect",
-        "body": "You don't need an account to use EduVice, and we never ask for your name, contact details, or immigration status. When you ask a question, we receive the text of your question. To stop abuse, we keep a scrambled (hashed) version of your internet address together with a count of how many questions were asked. These counts are deleted automatically within 24 hours."
+        "body": "You don't need an account to use EduVice, and we never ask about immigration status. When you ask a question, we receive the text of your question. To stop abuse, we keep a scrambled (hashed) version of your internet address together with a count of how many questions were asked. These counts are deleted automatically within 24 hours."
+      },
+      {
+        "heading": "If you create an account",
+        "body": "Accounts are optional. If you sign in, we store your email address, your name if you give it, and, if you sign in with Google, your profile picture. If you choose a password, we store only a scrambled (hashed) version of it, never the password itself. Your chats with Marg are saved to your account in our database so you can see them on any device. You can delete any chat, or delete your whole account and all its chats, at any time from the account menu."
       },
       {
         "heading": "How your questions are answered",
@@ -169,11 +228,11 @@
       },
       {
         "heading": "What we don't do",
-        "body": "We don't save your conversations on our servers, sell your information, show ads, or use tracking cookies. So that Marg can remember your conversation, your chat history is stored only in your own browser on your device. Tap \"New chat\" to delete it at any time."
+        "body": "We don't sell your information, show ads, or use tracking cookies. If you don't sign in, we don't save your conversations on our servers: so that Marg can remember your conversation, your chat history is stored only in your own browser on your device. Tap \"New chat\" to delete it at any time."
       },
       {
         "heading": "Cookies",
-        "body": "We use one cookie to remember the language you chose. It doesn't identify you."
+        "body": "We use a cookie to remember the language you chose. If you sign in, we also use cookies to keep you signed in. We don't use cookies for tracking or advertising."
       },
       {
         "heading": "Hosting",

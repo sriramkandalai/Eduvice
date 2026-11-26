@@ -1,6 +1,7 @@
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { Marg } from "@/components/Marg";
+import { UniversityNamesBackground } from "@/components/UniversityNamesBackground";
 import { CATEGORIES, FAQS_EN } from "@/lib/faqs";
 import { initLocale, type LocaleParams } from "@/lib/page";
 
@@ -13,6 +14,7 @@ export default async function HomePage({ params }: LocaleParams) {
 
   return (
     <>
+      <UniversityNamesBackground />
       <section className="mx-auto flex max-w-3xl flex-col items-center gap-6 px-4 py-16 text-center sm:py-24">
         <Marg state="wave" className="h-36 w-36 sm:h-44 sm:w-44" />
 

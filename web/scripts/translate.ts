@@ -95,8 +95,9 @@ function rebuild(shape: Json, values: Map<string, string>, prefix = ""): Json {
 const KEEP_AS_IS = (key: string) =>
   key === "Brand.name" || key === "Chat.title" || key.startsWith("LanguageSwitcher.names.");
 
+/** The set of placeholder names used (a translation may repeat them, e.g. inside plural forms). */
 function placeholders(msg: string): string {
-  return [...msg.matchAll(/\{\s*(\w+)/g)].map((m) => m[1]).sort().join(",");
+  return [...new Set([...msg.matchAll(/\{\s*(\w+)/g)].map((m) => m[1]))].sort().join(",");
 }
 
 function checkMessage(key: string, en: string, translated: string, locale: Target) {

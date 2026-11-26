@@ -10,6 +10,8 @@
 // X-Source header.
 
 export const SOURCE_HEADER = "X-Source";
+/** For signed-in users: the saved conversation this exchange belongs to. */
+export const CONVERSATION_HEADER = "X-Conversation-Id";
 
 /** ASCII "record separator": never appears in answer text. */
 export const META_SEPARATOR = "\u001E";
@@ -76,7 +78,10 @@ export interface HistoryTurn {
 export interface ChatRequestBody {
   question: string;
   locale: string;
+  /** Guests send their recent turns; signed-in users' history is loaded from their account. */
   history?: HistoryTurn[];
+  /** Signed-in users: the saved conversation to continue (omit to start a new one). */
+  conversationId?: string | null;
 }
 
 /** Keep only well-formed, recent turns within the size budget (newest kept first). */

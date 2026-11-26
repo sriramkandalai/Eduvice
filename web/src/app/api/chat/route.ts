@@ -7,6 +7,7 @@ import { chatModel, getGemini } from "@/lib/gemini";
 import { buildSystemPrompt, MAX_TAG_LENGTH, TAG_UNUSED, TAG_USED_PATTERN } from "@/lib/prompt";
 import { checkRateLimit, visitorKey } from "@/lib/rate-limit";
 import {
+  CONVERSATION_HEADER,
   MAX_QUESTION_LENGTH,
   SOURCE_HEADER,
   encodeMeta,
@@ -17,6 +18,9 @@ import {
 import { needsWebSearch } from "@/lib/router";
 import { answerWithWebSearch, citedWebSources } from "@/lib/web-search";
 import { suggestFollowUps } from "@/lib/followups";
+import { auth } from "@/auth";
+import { appendMessages, createConversation, getConversation, type StoredMessage } from "@/lib/conversations";
+import { MAX_HISTORY_TURNS, type AnswerMeta, type ChatSource } from "@/lib/chat-protocol";
 import { isLocale, routing, type Locale } from "@/i18n/routing";
 
 export const runtime = "nodejs"; // the MongoDB driver needs Node, not Edge
@@ -81,20 +85,60 @@ function searchText(history: HistoryTurn[], question: string): string {
   return previous ? `${previous.slice(0, 500)}\n${question}` : question;
 }
 
+/** Saves the finished exchange to the signed-in user's conversation (no-op for guests). */
+type Persist = (answer: string, source: ChatSource | null, meta: AnswerMeta) => Promise<void>;
+
+/**
+ * For signed-in users, find (or start) the conversation this question belongs to. Its saved
+ * messages are the source of truth for history, so Marg remembers chats across devices.
+ */
+async function resolveConversation(userId: string | undefined, conversationId: unknown, question: string, clientHistory: HistoryTurn[]) {
+  if (!userId) return { conversationId: null, history: clientHistory };
+  const existing = typeof conversationId === "string" ? await getConversation(userId, conversationId) : null;
+  if (existing) {
+    const history = sanitizeHistory(
+      existing.messages.map((m) => ({ role: m.role === "user" ? "user" : "model", text: m.text })),
+    ).slice(-MAX_HISTORY_TURNS);
+    return { conversationId: existing.id, history };
+  }
+  return { conversationId: await createConversation(userId, question), history: clientHistory };
+}
+
+function makePersist(userId: string | undefined, conversationId: string | null, question: string): Persist {
+  return async (answer, source, meta) => {
+    if (!userId || !conversationId || !answer.trim()) return;
+    const now = Date.now().toString(36);
+    const messages: StoredMessage[] = [
+      { id: `u-${now}`, role: "user", text: question },
+      { id: `a-${now}`, role: "assistant", text: answer, source, meta },
+    ];
+    try {
+      await appendMessages(userId, conversationId, messages);
+    } catch (err) {
+      console.error("[api/chat] could not save conversation:", err);
+    }
+  };
+}
+
 /** AP-credit answer from a live search of College Board / official .edu sites (not streamed: sources are checked first). */
-async function officialAnswerResponse(contents: Content[], question: string, locale: Locale): Promise<Response> {
+async function officialAnswerResponse(
+  contents: Content[],
+  question: string,
+  locale: Locale,
+  headers: Headers,
+  persist: Persist,
+): Promise<Response> {
   const answer = await answerWithWebSearch(contents, locale);
   const text = answer?.text ?? (await getTranslations({ locale, namespace: "Chat" }))("webNoResult");
   const followUps = await suggestFollowUps(question, text, locale);
-  const body =
-    text +
-    encodeMeta({
-      webKind: answer ? "official" : undefined,
-      webSources: answer?.sources ?? [],
-      suggestionsHtml: answer?.suggestionsHtml,
-      followUps,
-    });
-  return new Response(body, { headers: TEXT_HEADERS });
+  const meta: AnswerMeta = {
+    webKind: answer ? "official" : undefined,
+    webSources: answer?.sources ?? [],
+    suggestionsHtml: answer?.suggestionsHtml,
+    followUps,
+  };
+  await persist(text, null, meta);
+  return new Response(text + encodeMeta(meta), { headers });
 }
 
 export async function POST(req: Request) {
@@ -109,7 +153,7 @@ export async function POST(req: Request) {
   const question = typeof raw.question === "string" ? raw.question.trim() : "";
   const locale: Locale =
     typeof raw.locale === "string" && isLocale(raw.locale) ? raw.locale : routing.defaultLocale;
-  const history = sanitizeHistory(raw.history);
+  const clientHistory = sanitizeHistory(raw.history);
 
   if (!question) return jsonError(400, "Question is required.");
   if (question.length > MAX_QUESTION_LENGTH) return jsonError(400, "Question is too long.");
@@ -122,6 +166,13 @@ export async function POST(req: Request) {
       });
     }
 
+    const userId = (await auth())?.user?.id;
+    const conversation = await resolveConversation(userId, raw.conversationId, question, clientHistory);
+    const history = conversation.history;
+    const persist = makePersist(userId, conversation.conversationId, question);
+    const headers = new Headers(TEXT_HEADERS);
+    if (conversation.conversationId) headers.set(CONVERSATION_HEADER, conversation.conversationId);
+
     const contents = toContents(history, question);
     const lookup = searchText(history, question);
 
@@ -130,7 +181,7 @@ export async function POST(req: Request) {
 
     if (apCredit) {
       try {
-        return await officialAnswerResponse(contents, question, locale);
+        return await officialAnswerResponse(contents, question, locale, headers, persist);
       } catch (err) {
         // e.g. search quota reached: fall back to the general answer below.
         console.error("[api/chat] official search failed, using general answer:", err);
@@ -173,6 +224,15 @@ export async function POST(req: Request) {
     // If the model forgot the tag (or gave a bad number), fall back to the best search match.
     const source = sourceIndex === null ? sources[0] : sourceIndex >= 0 ? sources[sourceIndex] : undefined;
 
+    // Show the citation in the reader's language when a translation exists. Only an excerpt is
+    // sent (non-Latin text grows ~6x when percent-encoded); the card links to the full topic.
+    let chatSource: ChatSource | null = null;
+    if (source) {
+      const shown = getFaq(locale, source.slug) ?? source;
+      chatSource = { slug: source.slug, title: shown.title, text: excerpt(shown.text, SOURCE_EXCERPT_CHARS) };
+      headers.set(SOURCE_HEADER, encodeSource(chatSource));
+    }
+
     const encoder = new TextEncoder();
     const stream = new ReadableStream<Uint8Array>({
       async start(controller) {
@@ -193,16 +253,14 @@ export async function POST(req: Request) {
           // After the answer: follow-up suggestions and, if Gemini searched the web, its sources.
           const webSources = citedWebSources(grounding);
           const followUps = await suggestFollowUps(question, answer, locale);
-          controller.enqueue(
-            encoder.encode(
-              encodeMeta({
-                webKind: webSources.length > 0 ? "web" : undefined,
-                webSources,
-                suggestionsHtml: webSources.length > 0 ? grounding?.searchEntryPoint?.renderedContent : undefined,
-                followUps,
-              }),
-            ),
-          );
+          const meta: AnswerMeta = {
+            webKind: webSources.length > 0 ? "web" : undefined,
+            webSources,
+            suggestionsHtml: webSources.length > 0 ? grounding?.searchEntryPoint?.renderedContent : undefined,
+            followUps,
+          };
+          controller.enqueue(encoder.encode(encodeMeta(meta)));
+          await persist(answer, chatSource, meta);
           controller.close();
         } catch (err) {
           controller.error(err);
@@ -212,17 +270,6 @@ export async function POST(req: Request) {
         abort.abort();
       },
     });
-
-    const headers = new Headers(TEXT_HEADERS);
-    if (source) {
-      // Show the citation in the reader's language when a translation exists. Only an excerpt is
-      // sent (non-Latin text grows ~6x when percent-encoded); the card links to the full topic.
-      const shown = getFaq(locale, source.slug) ?? source;
-      headers.set(
-        SOURCE_HEADER,
-        encodeSource({ slug: source.slug, title: shown.title, text: excerpt(shown.text, SOURCE_EXCERPT_CHARS) }),
-      );
-    }
 
     return new Response(stream, { headers });
   } catch (err) {

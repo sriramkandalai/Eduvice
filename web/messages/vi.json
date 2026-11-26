@@ -30,6 +30,55 @@
       "ar": "العربية"
     }
   },
+  "Account": {
+    "signIn": "Đăng nhập",
+    "signInTitle": "Đăng nhập",
+    "signInIntro": "Đăng nhập để lưu lại các cuộc trò chuyện với Marg và xem lại trên bất kỳ thiết bị nào. Dịch vụ này hoàn toàn miễn phí, và quý vị vẫn có thể trò chuyện mà không cần tài khoản.",
+    "google": "Tiếp tục bằng Google",
+    "linkTitle": "Gửi liên kết đăng nhập qua email cho tôi",
+    "linkBody": "Không cần mật khẩu. Chúng tôi sẽ gửi một liên kết đến email của quý vị.",
+    "linkButton": "Gửi liên kết cho tôi",
+    "email": "Email",
+    "emailPlaceholder": "you@example.com",
+    "passwordTitle": "Đăng nhập bằng mật khẩu",
+    "registerTitle": "Tạo tài khoản",
+    "name": "Tên của quý vị (không bắt buộc)",
+    "password": "Mật khẩu",
+    "passwordHint": "Ít nhất {min} ký tự.",
+    "passwordButton": "Đăng nhập",
+    "registerButton": "Tạo tài khoản",
+    "switchToRegister": "Quý vị mới dùng lần đầu? Hãy tạo tài khoản có mật khẩu",
+    "switchToSignin": "Đã có tài khoản? Đăng nhập",
+    "forgotPassword": "Quý vị quên mật khẩu? Hãy dùng mục \"Gửi liên kết đăng nhập qua email cho tôi\" ở trên.",
+    "guestNote": "Quý vị không cần có tài khoản để trò chuyện với Marg. Nếu không có tài khoản, nội dung trò chuyện sẽ chỉ được lưu trên thiết bị này.",
+    "checkEmailTitle": "Kiểm tra email của quý vị",
+    "checkEmailLink": "Chúng tôi đã gửi một liên kết đăng nhập đến {email}. Quý vị hãy mở liên kết trên thiết bị này để đăng nhập.",
+    "checkEmailConfirm": "Chúng tôi đã gửi một liên kết xác nhận đến {email}. Quý vị hãy bấm vào liên kết đó để hoàn tất việc tạo tài khoản, sau đó đăng nhập bằng mật khẩu.",
+    "checkEmailSpam": "Quý vị không tìm thấy thư? Hãy kiểm tra hộp thư rác (spam). Liên kết sẽ hết hạn sau 24 giờ.",
+    "back": "Quay lại",
+    "verifiedNotice": "Email của quý vị đã được xác nhận! Xin vui lòng đăng nhập bằng mật khẩu ở bên dưới.",
+    "error_link_expired": "Liên kết đó đã hết hạn hoặc đã được sử dụng. Xin quý vị vui lòng thử lại.",
+    "error_Verification": "Liên kết đăng nhập đó đã hết hạn hoặc đã được sử dụng. Xin quý vị vui lòng yêu cầu liên kết mới.",
+    "error_OAuthAccountNotLinked": "Email này đã được dùng với một cách đăng nhập khác. Xin quý vị vui lòng đăng nhập theo cách đã dùng trước đây.",
+    "error_AccessDenied": "Quá trình đăng nhập đã bị hủy.",
+    "error_server": "Đã có lỗi xảy ra. Xin quý vị vui lòng thử lại.",
+    "error_generic": "Đã có lỗi xảy ra khi đăng nhập. Xin quý vị vui lòng thử lại.",
+    "register_invalid_email": "Xin vui lòng nhập một địa chỉ email hợp lệ.",
+    "register_weak_password": "Xin vui lòng chọn một mật khẩu dài hơn.",
+    "register_exists": "Tài khoản gắn với email này đã có mật khẩu. Xin quý vị vui lòng chuyển sang đăng nhập.",
+    "register_rate_limited": "Đã thử đăng ký quá nhiều lần. Xin quý vị vui lòng đợi một phút rồi thử lại.",
+    "register_server": "Đã có lỗi xảy ra. Xin quý vị vui lòng thử lại.",
+    "register_invalid": "Đã có lỗi xảy ra. Xin quý vị vui lòng thử lại.",
+    "signin_wrong_password": "Email và mật khẩu không trùng khớp. Xin quý vị vui lòng thử lại.",
+    "signin_unverified": "Xin quý vị vui lòng xác nhận email trước. Hãy kiểm tra hộp thư đến để tìm liên kết xác nhận.",
+    "signin_rate_limited": "Đã có quá nhiều lần thử. Xin quý vị vui lòng đợi một phút rồi thử lại.",
+    "menuLabel": "Menu tài khoản",
+    "myChats": "Các cuộc trò chuyện của tôi",
+    "signOut": "Đăng xuất",
+    "deleteAccount": "Xóa tài khoản của tôi",
+    "deleteConfirm": "Quý vị có chắc muốn xóa tài khoản và tất cả các cuộc trò chuyện đã lưu không? Thao tác này không thể hoàn tác.",
+    "deleteFailed": "Chúng tôi không thể xóa tài khoản của quý vị. Xin vui lòng thử lại."
+  },
   "Footer": {
     "nav": "Chân trang",
     "guide": "Cẩm nang trường học",
@@ -113,6 +162,12 @@
     "followUpsLabel": "Quý vị cũng có thể hỏi",
     "searchToggle": "Hiện gợi ý tìm kiếm của Google",
     "memoryNote": "Tin nhắn của quý vị chỉ được lưu trên thiết bị này. Bấm \"Cuộc trò chuyện mới\" để xóa.",
+    "accountNote": "Các cuộc trò chuyện của quý vị được lưu vào tài khoản.",
+    "signInToSave": "Đăng nhập để lưu các cuộc trò chuyện của quý vị.",
+    "yourChats": "Các cuộc trò chuyện của quý vị",
+    "noSavedChats": "Chưa có cuộc trò chuyện nào được lưu. Quý vị hãy hỏi Marg điều gì đó để bắt đầu.",
+    "deleteChat": "Xóa cuộc trò chuyện: {title}",
+    "deleteChatConfirm": "Xóa cuộc trò chuyện này? Thao tác này không thể hoàn tác.",
     "inputLabel": "Câu hỏi của quý vị",
     "placeholder": "Hỏi Marg bất cứ điều gì…",
     "submit": "Gửi",
@@ -140,7 +195,7 @@
     "principle1Title": "Miễn phí",
     "principle1Body": "Quý vị có thể sử dụng EduVice hoàn toàn miễn phí mà không cần tạo tài khoản.",
     "principle2Title": "Riêng tư",
-    "principle2Body": "Chúng tôi không bao giờ hỏi tên hay tình trạng cư trú của quý vị. Cuộc trò chuyện của quý vị với Marg chỉ được lưu trên chính thiết bị của quý vị, không bao giờ lưu trên máy chủ của chúng tôi.",
+    "principle2Body": "Chúng tôi không bao giờ hỏi về tình trạng cư trú hay nhập cư. Quý vị không bắt buộc phải tạo tài khoản: nếu không có tài khoản, các cuộc trò chuyện sẽ chỉ được lưu trên chính thiết bị của quý vị.",
     "principle3Title": "Cẩn trọng",
     "principle3Body": "Khi cẩm nang học đường đã được kiểm duyệt của chúng tôi có thông tin về câu hỏi, câu trả lời sẽ sử dụng thông tin đó và ghi rõ nguồn gốc.",
     "principle4Title": "Tôn trọng",
@@ -161,31 +216,35 @@
     "sections": [
       {
         "heading": "Những thông tin chúng tôi thu thập",
-        "body": "Quý vị không cần tạo tài khoản để sử dụng EduVice, và chúng tôi không bao giờ hỏi tên, cách liên lạc hay tình trạng di trú của quý vị. Khi quý vị đặt câu hỏi, chúng tôi sẽ nhận được nội dung câu hỏi đó. Để ngăn chặn việc lạm dụng hệ thống, chúng tôi lưu giữ một chuỗi mã hóa (hashed) từ địa chỉ internet của quý vị kèm theo số lượng câu hỏi đã được gửi. Số đếm này sẽ tự động xóa đi trong vòng 24 giờ."
+        "body": "Quý vị không cần tài khoản để sử dụng EduVice, và chúng tôi không bao giờ hỏi về tình trạng cư trú. Khi quý vị đặt câu hỏi, chúng tôi sẽ nhận nội dung câu hỏi đó. Để ngăn ngừa việc lạm dụng, chúng tôi lưu giữ phiên bản mã hóa (băm/hashed) của địa chỉ internet cùng số lượng câu hỏi đã được đặt. Những số liệu đếm này sẽ tự động được xóa trong vòng 24 giờ."
       },
       {
-        "heading": "Cách các câu hỏi được giải đáp",
-        "body": "Để giải đáp câu hỏi của quý phụ huynh, chúng tôi gửi nội dung câu hỏi đến dịch vụ Gemini của Google để tìm đúng chủ đề và soạn câu trả lời. Khi câu hỏi cần thông tin mới nhất hoặc cụ thể, Gemini cũng có thể dùng Google Search; đối với câu hỏi về việc trường đại học nào chấp nhận tính tín chỉ cho các kỳ thi AP, hệ thống chỉ tìm kiếm trên trang College Board và các trang mạng chính thức của trường đại học. Google xử lý nội dung này theo các điều khoản riêng của họ, có thể lưu trữ và sử dụng để cải thiện dịch vụ. Xin quý phụ huynh vui lòng không ghi họ tên, địa chỉ, số hồ sơ hoặc các thông tin cá nhân khác trong câu hỏi của mình."
+        "heading": "Nếu quý vị tạo tài khoản",
+        "body": "Việc tạo tài khoản là hoàn toàn tùy chọn. Nếu quý vị đăng nhập, chúng tôi sẽ lưu địa chỉ email, tên (nếu quý vị cung cấp), và ảnh hồ sơ nếu quý vị đăng nhập bằng Google. Nếu quý vị tạo mật khẩu, chúng tôi chỉ lưu phiên bản mã hóa (băm/hashed) chứ không bao giờ lưu mật khẩu gốc. Các cuộc trò chuyện của quý vị với Marg sẽ được lưu vào tài khoản trong cơ sở dữ liệu để quý vị có thể xem lại trên bất kỳ thiết bị nào. Quý vị có thể xóa bất kỳ cuộc trò chuyện nào, hoặc xóa toàn bộ tài khoản cùng tất cả các cuộc trò chuyện bất cứ lúc nào từ menu tài khoản."
+      },
+      {
+        "heading": "Cách các câu hỏi của quý vị được giải đáp",
+        "body": "Để trả lời câu hỏi của quý vị, chúng tôi gửi nội dung câu hỏi đến dịch vụ Gemini của Google để tìm đúng chủ đề và soạn câu trả lời. Khi câu hỏi cần thông tin mới nhất hoặc cụ thể, Gemini cũng có thể dùng Google Tìm kiếm; đối với các câu hỏi về việc trường đại học nào chấp nhận tín chỉ cho các kỳ thi AP, hệ thống chỉ tìm kiếm trên trang web của College Board và các trang web chính thức của các trường đại học. Google xử lý nội dung này theo các điều khoản riêng của họ và có thể lưu trữ cũng như sử dụng nội dung đó để cải thiện dịch vụ. Xin quý vị vui lòng không đưa tên riêng, địa chỉ, số hồ sơ hoặc các thông tin cá nhân khác vào câu hỏi."
       },
       {
         "heading": "Những điều chúng tôi không làm",
-        "body": "Chúng tôi không lưu các cuộc trò chuyện của quý vị trên máy chủ, không bán thông tin, không hiển thị quảng cáo và không dùng cookie theo dõi. Để Marg có thể nhớ cuộc trò chuyện, lịch sử chat chỉ được lưu trong trình duyệt trên máy của quý vị. Quý vị có thể bấm \"Cuộc trò chuyện mới\" bất cứ lúc nào để xóa."
+        "body": "Chúng tôi không bán thông tin của quý vị, không hiển thị quảng cáo và không dùng cookie theo dõi. Nếu quý vị không đăng nhập, chúng tôi không lưu các cuộc trò chuyện trên máy chủ: để Marg có thể nhớ cuộc trò chuyện, lịch sử chat chỉ được lưu trong trình duyệt trên chính thiết bị của quý vị. Quý vị có thể nhấn vào \"Trò chuyện mới\" để xóa lịch sử bất cứ lúc nào."
       },
       {
-        "heading": "Tập tin cookie",
-        "body": "Chúng tôi chỉ dùng duy nhất một tập tin cookie để ghi nhớ ngôn ngữ mà quý vị đã chọn. Cookie này không dùng để xác định danh tính của quý vị."
+        "heading": "Cookie",
+        "body": "Chúng tôi dùng một cookie để ghi nhớ ngôn ngữ quý vị đã chọn. Nếu quý vị đăng nhập, chúng tôi cũng dùng cookie để duy trì trạng thái đăng nhập. Chúng tôi không dùng cookie để theo dõi hoặc quảng cáo."
       },
       {
-        "heading": "Dịch vụ lưu trữ mạng",
-        "body": "Tương tự như hầu hết các trang mạng khác, bên cung cấp dịch vụ máy chủ của chúng tôi có thể lưu lại những nhật ký kỹ thuật cơ bản, chẳng hạn như địa chỉ internet và loại trình duyệt, nhằm mục đích an toàn và giữ cho trang mạng hoạt động bình thường."
+        "heading": "Dịch vụ lưu trữ hệ thống (Hosting)",
+        "body": "Giống như hầu hết các trang web, nhà cung cấp dịch vụ lưu trữ của chúng tôi có thể lưu lại nhật ký kỹ thuật cơ bản, chẳng hạn như địa chỉ internet và loại trình duyệt, nhằm mục đích an ninh và duy trì hoạt động cho trang web."
       },
       {
         "heading": "Trẻ em",
-        "body": "EduVice được xây dựng dành cho các bậc cha mẹ và người giám hộ. Trang web không được thiết kế để trẻ em dưới 13 tuổi tự sử dụng một mình."
+        "body": "EduVice được xây dựng dành cho cha mẹ và người giám hộ. Trang web không được thiết kế để trẻ em dưới 13 tuổi tự sử dụng một mình."
       },
       {
-        "heading": "Thay đổi và câu hỏi thắc mắc",
-        "body": "Nếu chúng tôi có sửa đổi chính sách này, ngày tháng ở đầu trang sẽ được cập nhật. Nếu quý vị có bất kỳ thắc mắc nào, xin vui lòng liên hệ với chúng tôi."
+        "heading": "Thay đổi và thắc mắc",
+        "body": "Nếu chúng tôi có thay đổi chính sách này, chúng tôi sẽ cập nhật ngày ở đầu trang. Nếu quý vị có bất kỳ thắc mắc nào, xin vui lòng liên hệ với chúng tôi."
       }
     ]
   },

@@ -30,6 +30,55 @@
       "ar": "العربية"
     }
   },
+  "Account": {
+    "signIn": "Iniciar sesión",
+    "signInTitle": "Iniciar sesión",
+    "signInIntro": "Inicie sesión para guardar sus conversaciones con Marg y verlas en cualquier teléfono o computadora. Es gratis, y también puede conversar sin tener una cuenta.",
+    "google": "Continuar con Google",
+    "linkTitle": "Enviarme un enlace para iniciar sesión por correo",
+    "linkBody": "No necesita contraseña. Le enviaremos un enlace a su correo electrónico.",
+    "linkButton": "Enviarme un enlace",
+    "email": "Correo electrónico",
+    "emailPlaceholder": "su_correo@ejemplo.com",
+    "passwordTitle": "Iniciar sesión con contraseña",
+    "registerTitle": "Crear una cuenta",
+    "name": "Su nombre (opcional)",
+    "password": "Contraseña",
+    "passwordHint": "Debe tener al menos {min} caracteres.",
+    "passwordButton": "Iniciar sesión",
+    "registerButton": "Crear cuenta",
+    "switchToRegister": "¿Es nuevo por aquí? Cree una cuenta con una contraseña",
+    "switchToSignin": "¿Ya tiene una cuenta? Inicie sesión",
+    "forgotPassword": "¿Olvidó su contraseña? Use la opción de arriba \"Enviarme un enlace para iniciar sesión por correo\".",
+    "guestNote": "No necesita una cuenta para conversar con Marg. Si no tiene una cuenta, sus conversaciones solo se guardarán en este teléfono o computadora.",
+    "checkEmailTitle": "Revise su correo electrónico",
+    "checkEmailLink": "Le enviamos un enlace para iniciar sesión a {email}. Ábralo en este dispositivo para iniciar sesión.",
+    "checkEmailConfirm": "Le enviamos un enlace de confirmación a {email}. Haga clic en él para terminar de crear su cuenta, y luego inicie sesión con su contraseña.",
+    "checkEmailSpam": "¿No lo ve? Revise su carpeta de correo no deseado o spam. El enlace se vence en 24 horas.",
+    "back": "Volver",
+    "verifiedNotice": "¡Su correo electrónico ha sido confirmado! Inicie sesión con su contraseña aquí abajo.",
+    "error_link_expired": "Ese enlace ya se venció o ya fue usado. Por favor, intente de nuevo.",
+    "error_Verification": "Ese enlace para iniciar sesión ya se venció o ya fue usado. Por favor, pida uno nuevo.",
+    "error_OAuthAccountNotLinked": "Este correo ya está registrado con otra forma de iniciar sesión. Por favor, entre de la misma manera que lo hizo antes.",
+    "error_AccessDenied": "Se canceló el inicio de sesión.",
+    "error_server": "Algo salió mal. Por favor, intente de nuevo.",
+    "error_generic": "Ocurrió un problema al iniciar sesión. Por favor, intente de nuevo.",
+    "register_invalid_email": "Por favor, escriba un correo electrónico válido.",
+    "register_weak_password": "Por favor, elija una contraseña más larga.",
+    "register_exists": "Ya existe una cuenta con este correo que tiene contraseña. Por favor, inicie sesión en su lugar.",
+    "register_rate_limited": "Demasiados intentos. Por favor, espere un minuto y vuelva a intentarlo.",
+    "register_server": "Algo salió mal. Por favor, intente de nuevo.",
+    "register_invalid": "Algo salió mal. Por favor, intente de nuevo.",
+    "signin_wrong_password": "Ese correo y esa contraseña no coinciden. Por favor, intente de nuevo.",
+    "signin_unverified": "Por favor, confirme primero su correo electrónico. Busque en su correo el enlace que le enviamos para confirmar.",
+    "signin_rate_limited": "Demasiados intentos. Por favor espere un minuto y vuelva a intentarlo.",
+    "menuLabel": "Menú de su cuenta",
+    "myChats": "Mis conversaciones",
+    "signOut": "Cerrar sesión",
+    "deleteAccount": "Eliminar mi cuenta",
+    "deleteConfirm": "¿Desea eliminar su cuenta y todas sus conversaciones guardadas? Esta acción no se puede deshacer.",
+    "deleteFailed": "No pudimos eliminar su cuenta. Por favor intente de nuevo."
+  },
   "Footer": {
     "nav": "Pie de página",
     "guide": "Guía escolar",
@@ -113,6 +162,12 @@
     "followUpsLabel": "También puede preguntar",
     "searchToggle": "Mostrar sugerencias de búsqueda de Google",
     "memoryNote": "Su conversación solo se guarda en este dispositivo. Toque \"Nueva conversación\" para borrarla.",
+    "accountNote": "Sus conversaciones quedan guardadas en su cuenta.",
+    "signInToSave": "Inicie sesión para guardar sus conversaciones.",
+    "yourChats": "Sus conversaciones",
+    "noSavedChats": "Aún no tiene conversaciones guardadas. Hágale una pregunta a Marg para comenzar una.",
+    "deleteChat": "Eliminar conversación: {title}",
+    "deleteChatConfirm": "¿Desea eliminar esta conversación? Esta acción no se puede deshacer.",
     "inputLabel": "Su pregunta",
     "placeholder": "Pregúntele lo que sea a Marg…",
     "submit": "Enviar",
@@ -140,7 +195,7 @@
     "principle1Title": "Gratis",
     "principle1Body": "EduVice es gratis y no necesita crear una cuenta.",
     "principle2Title": "Privado",
-    "principle2Body": "Nunca le pedimos su nombre ni su estatus migratorio. Sus conversaciones con Marg se guardan únicamente en su propio dispositivo, nunca en nuestros servidores.",
+    "principle2Body": "Nunca le preguntamos sobre su estatus migratorio. Crear una cuenta es opcional: si no crea una, sus conversaciones se quedan solo en su propio teléfono o computadora.",
     "principle3Title": "Cuidadoso",
     "principle3Body": "Cuando nuestra guía escolar revisada tenga información sobre una pregunta, las respuestas la utilizan y muestran de dónde se obtuvo.",
     "principle4Title": "Respetuoso",
@@ -161,31 +216,35 @@
     "sections": [
       {
         "heading": "Qué información recibimos",
-        "body": "No necesita una cuenta para usar EduVice, y nunca le pedimos su nombre, sus datos de contacto ni su estatus migratorio. Cuando hace una pregunta, recibimos el texto de su pregunta. Para evitar abusos, guardamos una versión codificada (hash) de su dirección de internet junto con el número de preguntas realizadas. Estos datos se borran automáticamente en un plazo de 24 horas."
+        "body": "Usted no necesita una cuenta para usar EduVice, y nunca le preguntamos sobre su estatus migratorio. Cuando hace una pregunta, recibimos el texto de lo que escribió. Para prevenir abusos del sistema, guardamos una versión protegida y codificada (hash) de su dirección de internet junto con el número de preguntas que hizo. Este conteo se borra automáticamente en un plazo de 24 horas."
+      },
+      {
+        "heading": "Si decide crear una cuenta",
+        "body": "Crear una cuenta es opcional. Si inicia sesión, guardamos su correo electrónico, su nombre si decide darlo y, si entra con Google, su foto de perfil. Si elige una contraseña, solo guardamos una versión codificada (hash) y protegida de ella, nunca la contraseña en sí. Sus conversaciones con Marg se guardan en su cuenta en nuestra base de datos para que pueda verlas en cualquier teléfono o computadora. Puede borrar cualquier conversación, o eliminar toda su cuenta con todas sus conversaciones, en cualquier momento desde el menú de su cuenta."
       },
       {
         "heading": "Cómo se responden sus preguntas",
-        "body": "Para responder a su pregunta, enviamos el texto al servicio Gemini de Google, el cual nos ayuda a encontrar el tema adecuado y a redactar la respuesta. Cuando una pregunta necesita información actualizada o específica, Gemini también puede hacer una búsqueda en Google. Para preguntas sobre qué universidades dan créditos por exámenes AP, solo busca en College Board y en los sitios web oficiales de las universidades. Google procesa este texto bajo sus propios términos de servicio, y puede guardarlo y usarlo para mejorar sus servicios. Por favor, no incluya nombres, direcciones, números de caso ni otros datos personales en sus preguntas."
+        "body": "Para responder a su pregunta, enviamos su texto al servicio Gemini de Google, el cual ayuda a encontrar el tema correcto y a redactar la respuesta. Cuando una pregunta necesita información actual o específica, Gemini también puede buscar en Google; para preguntas sobre qué universidades dan créditos por los exámenes AP, solo busca en College Board y en los sitios web oficiales de las universidades. Google procesa este texto bajo sus propios términos de servicio y puede guardarlo y usarlo para mejorar sus servicios. Por favor no incluya nombres, direcciones, números de caso ni otros datos personales en sus preguntas."
       },
       {
         "heading": "Lo que no hacemos",
-        "body": "No guardamos sus conversaciones en nuestros servidores, no vendemos su información, no mostramos anuncios ni usamos cookies de rastreo. Para que Marg recuerde su conversación, el historial solo se guarda en el navegador de su propio dispositivo. Toque \"Nueva conversación\" para borrarlo cuando usted quiera."
+        "body": "Nosotros no vendemos su información, no mostramos anuncios ni usamos rastreadores. Si usted no inicia sesión, no guardamos sus conversaciones en nuestros servidores: para que Marg pueda recordar lo que están hablando, el historial de su conversación se guarda únicamente en el navegador de su propio dispositivo. Presione \"Nueva conversación\" para borrarlo cuando usted quiera."
       },
       {
-        "heading": "Cookies",
-        "body": "Usamos una cookie para recordar el idioma que eligió. No lo identifica a usted."
+        "heading": "Cookies (archivos de navegación)",
+        "body": "Usamos una cookie para recordar el idioma que usted eligió. Si inicia sesión, también usamos cookies para mantener su sesión abierta. No usamos cookies para rastrearlo ni para publicidad."
       },
       {
-        "heading": "Alojamiento",
-        "body": "Como la mayoría de los sitios web, nuestro proveedor de alojamiento puede guardar registros técnicos básicos, como la dirección de internet y el tipo de navegador, por seguridad y para mantener el sitio funcionando."
+        "heading": "Servicio de hospedaje web",
+        "body": "Como la mayoría de los sitios de internet, nuestro proveedor de hospedaje web puede guardar registros técnicos básicos, como la dirección de internet y el tipo de navegador, por razones de seguridad y para que el sitio funcione bien."
       },
       {
-        "heading": "Niños",
-        "body": "EduVice está hecho para padres y tutores. No está diseñado para que lo usen niños menores de 13 años por su cuenta."
+        "heading": "Niños y menores de edad",
+        "body": "EduVice está hecho para padres de familia y tutores. No está diseñado para que los niños menores de 13 años lo usen solos."
       },
       {
         "heading": "Cambios y preguntas",
-        "body": "Si cambiamos esta política, actualizaremos la fecha al principio de esta página. Si tiene preguntas, comuníquese con nosotros."
+        "body": "Si hacemos cambios en esta política, actualizaremos la fecha que aparece arriba en esta página. Si tiene alguna pregunta, por favor comuníquese con nosotros."
       }
     ]
   },

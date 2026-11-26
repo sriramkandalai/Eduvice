@@ -1,10 +1,13 @@
 "use client";
 
-import { useEffect, useId, useRef, useState, type FormEvent, type KeyboardEvent } from "react";
+import { useCallback, useEffect, useId, useRef, useState, type FormEvent, type KeyboardEvent } from "react";
+import { useSession } from "next-auth/react";
 import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { Marg, type MargState } from "./Marg";
+import { ChatHistory, type ConversationSummary } from "./ChatHistory";
 import {
+  CONVERSATION_HEADER,
   MAX_HISTORY_TURNS,
   MAX_QUESTION_LENGTH,
   SOURCE_HEADER,
@@ -89,6 +92,45 @@ export function ChatBox() {
   const abortRef = useRef<AbortController | null>(null);
   const endRef = useRef<HTMLDivElement>(null);
 
+  // Signed-in users: chats are saved to their account instead of this device.
+  const { status: authStatus } = useSession();
+  const signedIn = authStatus === "authenticated";
+  const [conversationId, setConversationId] = useState<string | null>(null);
+  const [conversations, setConversations] = useState<ConversationSummary[]>([]);
+  const importedRef = useRef(false);
+
+  const refreshConversations = useCallback(async () => {
+    try {
+      const res = await fetch("/api/conversations", { cache: "no-store" });
+      if (res.ok) setConversations(((await res.json()) as { conversations: ConversationSummary[] }).conversations);
+    } catch (err) {
+      console.error(err);
+    }
+  }, []);
+
+  // On sign-in: move any chat they had as a guest into their account, then load their chat list.
+  useEffect(() => {
+    if (authStatus !== "authenticated" || !loaded || importedRef.current) return;
+    importedRef.current = true;
+    const guestChat = loadMessages().filter((m) => !m.error && m.text.trim());
+    saveMessages([]); // clear the device copy right away, so it's never imported twice
+    void (async () => {
+      if (guestChat.length > 0) {
+        try {
+          const res = await fetch("/api/conversations", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ messages: guestChat }),
+          });
+          if (res.ok) setConversationId(((await res.json()) as { id: string }).id);
+        } catch (err) {
+          console.error(err);
+        }
+      }
+      await refreshConversations();
+    })();
+  }, [authStatus, loaded, refreshConversations]);
+
   // Restore the saved conversation, and let Marg wave hello for a moment.
   useEffect(() => {
     setMessages(loadMessages());
@@ -100,10 +142,10 @@ export function ChatBox() {
     };
   }, []);
 
-  // Save after each completed exchange (not on every streamed chunk).
+  // Guests: save to this device after each completed exchange (not on every streamed chunk).
   useEffect(() => {
-    if (loaded && status === "idle") saveMessages(messages);
-  }, [messages, loaded, status]);
+    if (loaded && status === "idle" && authStatus === "unauthenticated") saveMessages(messages);
+  }, [messages, loaded, status, authStatus]);
 
   // Scroll to the newest message when one is added.
   useEffect(() => {
@@ -148,7 +190,8 @@ export function ChatBox() {
     abortRef.current = controller;
 
     try {
-      const body: ChatRequestBody = { question: q, locale, history };
+      // Signed-in users' history is loaded from their account on the server.
+      const body: ChatRequestBody = signedIn ? { question: q, locale, conversationId } : { question: q, locale, history };
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -158,6 +201,8 @@ export function ChatBox() {
       if (res.status === 429) throw new RateLimitedError();
       if (!res.ok || !res.body) throw new Error(`HTTP ${res.status}`);
 
+      const savedId = res.headers.get(CONVERSATION_HEADER);
+      if (savedId) setConversationId(savedId);
       update(botId, { source: decodeSource(res.headers.get(SOURCE_HEADER)) });
       setStatus("streaming");
 
@@ -176,15 +221,46 @@ export function ChatBox() {
       if (!(err instanceof RateLimitedError)) console.error(err);
       update(botId, { error: err instanceof RateLimitedError ? "errorRateLimit" : "errorGeneric" });
     } finally {
-      if (!controller.signal.aborted) setStatus("idle");
+      if (!controller.signal.aborted) {
+        setStatus("idle");
+        if (signedIn) void refreshConversations();
+      }
     }
   }
 
   function newChat() {
     abortRef.current?.abort();
     setMessages([]);
+    setConversationId(null);
     setStatus("idle");
     setQuestion("");
+  }
+
+  async function openConversation(id: string) {
+    if (id === conversationId) return;
+    abortRef.current?.abort();
+    setStatus("idle");
+    try {
+      const res = await fetch(`/api/conversations/${id}`, { cache: "no-store" });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const doc = (await res.json()) as { id: string; messages: ChatMessage[] };
+      setMessages(doc.messages);
+      setConversationId(doc.id);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  async function removeConversation(id: string) {
+    if (!window.confirm(t("deleteChatConfirm"))) return;
+    try {
+      const res = await fetch(`/api/conversations/${id}`, { method: "DELETE" });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      if (id === conversationId) newChat();
+      await refreshConversations();
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   function onSubmit(e: FormEvent) {
@@ -203,7 +279,17 @@ export function ChatBox() {
   const lastId = messages[messages.length - 1]?.id;
 
   return (
-    <div className="flex flex-col gap-5">
+    <div className={signedIn ? "grid gap-5 lg:grid-cols-[15rem_minmax(0,1fr)] lg:items-start" : "mx-auto w-full max-w-3xl"}>
+      {signedIn && (
+        <ChatHistory
+          conversations={conversations}
+          activeId={conversationId}
+          onOpen={(id) => void openConversation(id)}
+          onDelete={(id) => void removeConversation(id)}
+          onNew={newChat}
+        />
+      )}
+    <div className="flex min-w-0 flex-col gap-5">
       {/* Marg header */}
       <header className="flex items-center gap-4 rounded-3xl bg-white/85 px-4 py-3 shadow-card backdrop-blur sm:px-5">
         <Marg state={margState} className="h-20 w-20 shrink-0 sm:h-24 sm:w-24" />
@@ -301,8 +387,15 @@ export function ChatBox() {
         </button>
       </form>
       <p className="-mt-2 text-xs text-blue-dark/80">
-        {t("memoryNote")} {t("privacyNote")}
+        {t(signedIn ? "accountNote" : "memoryNote")} {t("privacyNote")}{" "}
+        {authStatus === "unauthenticated" && (
+          <Link href="/signin" className="font-bold text-blue hover:underline">
+            {t("signInToSave")}
+          </Link>
+        )}
       </p>
+      <p className="text-sm text-blue-dark/80">{t("disclaimer")}</p>
+    </div>
     </div>
   );
 }
