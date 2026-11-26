@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Eduvice Social Asset</title>
+  <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Poppins:wght@600;700;800&display=block" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #ffd010;
+      --blue: #2350b5;
+      --blue-dark: #1a3d8f;
+      --cream: #fff4dc;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { background: var(--bg); overflow: hidden; }
+
+    .canvas {
+      position: relative;
+      overflow: hidden;
+      background: var(--bg);
+      font-family: "Poppins", sans-serif;
+    }
+
+    /* University names background */
+    .bg {
+      position: absolute;
+      inset: -40%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: var(--gap, 18px);
+      transform: rotate(-8deg);
+    }
+    .row { display: flex; white-space: nowrap; }
+    .row span {
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 0 0.6em;
+      font-size: var(--size);
+      color: rgba(35, 80, 181, 0.13);
+    }
+    .row.outline span {
+      color: transparent;
+      -webkit-text-stroke: 1.5px rgba(35, 80, 181, 0.22);
+    }
+    .row span::after {
+      content: "•";
+      margin-left: 1.2em;
+      color: rgba(255, 255, 255, 0.6);
+      -webkit-text-stroke: 0;
+    }
+    .glow {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(var(--glow-shape, ellipse 55% 50% at 50% 50%),
+        rgba(255, 208, 16, 0.97) 0%,
+        rgba(255, 208, 16, 0.85) 40%,
+        rgba(255, 208, 16, 0) 75%);
+    }
+
+    .content {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .stack { display: flex; flex-direction: column; align-items: center; }
+
+    .cap { display: block; filter: drop-shadow(0 14px 18px rgba(26, 61, 143, 0.25)); }
+
+    .wordmark {
+      display: flex;
+      font-family: "Luckiest Guy", sans-serif;
+      line-height: 1;
+    }
+    .wordmark span {
+      display: inline-block;
+      color: var(--blue);
+      -webkit-text-stroke: 0.09em var(--cream);
+      paint-order: stroke fill;
+      text-shadow: 0.05em 0.06em 0 rgba(26, 61, 143, 0.28);
+    }
+
+    .soon {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.8em;
+      border-radius: 999px;
+      background: var(--blue);
+      color: #fff;
+      font-weight: 700;
+      letter-spacing: 0.42em;
+      text-transform: uppercase;
+      box-shadow:
+        0 0 0 0.35em rgba(255, 255, 255, 0.35),
+        0 0.9em 2em -0.5em rgba(26, 61, 143, 0.55);
+    }
+    .soon .label { padding-left: 0.42em; }
+    .soon .dot {
+      width: 0.55em; height: 0.55em;
+      border-radius: 50%;
+      background: var(--bg);
+      box-shadow: 0 0 0 0.3em rgba(255, 208, 16, 0.3);
+      flex: none;
+    }
+
+    .tagline {
+      font-weight: 700;
+      color: var(--blue-dark);
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+<body>
+  <div class="canvas" id="canvas"></div>
+
+  <template id="cap-svg">
+    <svg class="cap" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg">
+      <path d="M58 62 L58 104 Q120 132 182 104 L182 62 Z" fill="#1a3d8f" />
+      <path d="M58 98 Q120 124 182 98" fill="none" stroke="#fff4dc" stroke-width="4" stroke-linecap="round" opacity="0.9" />
+      <polygon points="120,8 232,46 120,84 8,46" fill="#2350b5" />
+      <polygon points="120,8 232,46 120,84 8,46" fill="none" stroke="#fff4dc" stroke-width="3" stroke-linejoin="round" opacity="0.55" />
+      <polygon points="120,8 232,46 120,30 8,46" fill="#3a68cf" opacity="0.55" />
+      <ellipse cx="120" cy="46" rx="7" ry="4" fill="#1a3d8f" />
+      <path d="M120 46 Q170 44 206 52" fill="none" stroke="#1a3d8f" stroke-width="3.5" stroke-linecap="round" />
+      <g transform="rotate(6 206 52)">
+        <line x1="206" y1="52" x2="206" y2="104" stroke="#1a3d8f" stroke-width="3.5" stroke-linecap="round" />
+        <path d="M200 104 L212 104 L215 128 L197 128 Z" fill="#1a3d8f" />
+        <rect x="199" y="100" width="14" height="6" rx="2" fill="#2350b5" />
+      </g>
+    </svg>
+  </template>
+
+  <script>
+    const type = new URLSearchParams(location.search).get("type") || "post";
+
+    const universities = [
+      "Harvard University", "Williams College", "University of Michigan", "Reed College", "Stanford University",
+      "Spelman College", "UC Berkeley", "Bowdoin College", "Texas A&M University", "Grinnell College",
+      "MIT", "Berea College", "University of Florida", "Swarthmore College", "Yale University",
+      "Howard University", "Ohio State University", "Carleton College", "Princeton University", "Deep Springs College",
+      "UCLA", "Davidson College", "Purdue University", "Pomona College", "Columbia University",
+      "Kenyon College", "University of Texas at Austin", "Middlebury College", "Duke University", "Whitman College",
+      "Georgia Tech", "Oberlin College", "Johns Hopkins University", "Colby College", "Penn State",
+      "Macalester College", "Northwestern University", "Hamilton College", "University of Washington", "Bates College",
+      "Rice University", "Harvey Mudd College", "Vanderbilt University", "Vassar College", "Arizona State University",
+      "Wellesley College", "Cornell University", "Smith College", "University of Virginia", "Haverford College",
+      "Brown University", "Colgate University", "UNC Chapel Hill", "Bucknell University", "Carnegie Mellon University",
+      "Morehouse College", "NYU", "Gonzaga University", "Dartmouth College", "Tuskegee University",
+      "Caltech", "Furman University", "Emory University", "Rhodes College", "Notre Dame",
+      "St. Olaf College", "Georgetown University", "Butler University", "Boston University", "Elon University",
+      "University of Chicago", "Collin College", "Virginia Tech", "University of Vermont", "Rutgers University",
+      "Creighton University", "University of Hawaii", "Drake University", "Clemson University", "University of Montana",
+    ];
+
+    const configs = {
+      profile: { w: 1080, h: 1080, bg: false },
+      banner:  { w: 1584, h: 396,  bg: true, rows: 9,  size: "26px", gap: "12px",
+                 glow: "ellipse 38% 85% at 58% 50%" },
+      post:    { w: 1200, h: 1200, bg: true, rows: 22, size: "40px", gap: "16px",
+                 glow: "ellipse 52% 46% at 50% 50%" },
+    };
+    const cfg = configs[type];
+
+    const canvas = document.getElementById("canvas");
+    canvas.style.width = cfg.w + "px";
+    canvas.style.height = cfg.h + "px";
+
+    if (cfg.bg) {
+      const bg = document.createElement("div");
+      bg.className = "bg";
+      bg.style.setProperty("--size", cfg.size);
+      bg.style.setProperty("--gap", cfg.gap);
+      const sizes = [1, 1.5, 1.2, 1.8, 1.1, 1.4];
+      for (let r = 0; r < cfg.rows; r++) {
+        const row = document.createElement("div");
+        row.className = "row" + (r % 3 === 1 ? " outline" : "");
+        row.style.fontSize = `calc(${cfg.size} * ${sizes[r % sizes.length]})`;
+        row.style.marginLeft = `${-((r * 137) % 600)}px`;
+        const start = (r * 7) % universities.length;
+        const names = [...universities.slice(start), ...universities.slice(0, start)];
+        names.forEach(n => {
+          const s = document.createElement("span");
+          s.style.fontSize = "inherit";
+          s.textContent = n;
+          row.appendChild(s);
+        });
+        bg.appendChild(row);
+      }
+      canvas.appendChild(bg);
+
+      const glow = document.createElement("div");
+      glow.className = "glow";
+      glow.style.setProperty("--glow-shape", cfg.glow);
+      canvas.appendChild(glow);
+    } else {
+      // Profile: clean yellow with a soft light center so it pops as a small avatar
+      canvas.style.background = "radial-gradient(circle at 50% 45%, #ffe066 0%, #ffd010 60%, #f5c400 100%)";
+    }
+
+    const cap = (width) => {
+      const el = document.getElementById("cap-svg").content.firstElementChild.cloneNode(true);
+      el.style.width = width + "px";
+      return el;
+    };
+
+    const wordmark = (px) => {
+      const h = document.createElement("div");
+      h.className = "wordmark";
+      h.style.fontSize = px + "px";
+      const word = "EDUVICE", mid = (word.length - 1) / 2;
+      [...word].forEach((c, i) => {
+        const off = i - mid;
+        const s = document.createElement("span");
+        s.textContent = c;
+        s.style.transform = `translateY(${off * off * 0.018}em) rotate(${off * 3.2}deg)`;
+        h.appendChild(s);
+      });
+      return h;
+    };
+
+    const soon = (px, padY, padX) => {
+      const d = document.createElement("div");
+      d.className = "soon";
+      d.style.fontSize = px + "px";
+      d.style.padding = `${padY}px ${padX}px`;
+      d.innerHTML = `<span class="dot"></span><span class="label">Coming Soon</span>`;
+      return d;
+    };
+
+    const content = document.createElement("div");
+    content.className = "content";
+    const stack = document.createElement("div");
+    stack.className = "stack";
+
+    if (type === "profile") {
+      stack.appendChild(cap(560));
+      const wm = wordmark(218);
+      wm.style.marginTop = "-24px";
+      stack.appendChild(wm);
+      stack.style.marginTop = "-30px";
+      content.appendChild(stack);
+    }
+
+    if (type === "banner") {
+      // Keep the left side clear: LinkedIn places the profile photo/logo there
+      content.style.justifyContent = "flex-start";
+      content.style.paddingLeft = "560px";
+      const rowEl = document.createElement("div");
+      rowEl.style.display = "flex";
+      rowEl.style.alignItems = "center";
+      rowEl.style.gap = "28px";
+      rowEl.appendChild(cap(230));
+      const right = document.createElement("div");
+      right.className = "stack";
+      right.style.alignItems = "flex-start";
+      right.appendChild(wordmark(124));
+      const s = soon(19, 13, 30);
+      s.style.marginTop = "26px";
+      s.style.marginLeft = "10px";
+      right.appendChild(s);
+      rowEl.appendChild(right);
+      content.appendChild(rowEl);
+    }
+
+    if (type === "post") {
+      const tag = document.createElement("div");
+      tag.className = "tagline";
+      tag.style.fontSize = "22px";
+      tag.style.marginBottom = "28px";
+      tag.textContent = "Something new is on the way";
+      stack.appendChild(tag);
+      stack.appendChild(cap(380));
+      const wm = wordmark(170);
+      wm.style.marginTop = "-10px";
+      stack.appendChild(wm);
+      const s = soon(30, 22, 52);
+      s.style.marginTop = "56px";
+      stack.appendChild(s);
+      content.appendChild(stack);
+    }
+
+    canvas.appendChild(content);
+  </script>
+</body>
+</html>
