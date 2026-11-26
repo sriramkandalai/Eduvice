@@ -12,9 +12,12 @@ export const TAG_USED_PATTERN = /^\[SOURCE:(\d+)\]/;
 /** Longest possible tag, used to know when enough of the reply has arrived to read it. */
 export const MAX_TAG_LENGTH = 12;
 
-const LANGUAGE_NAMES: Record<Locale, string> = {
+export const LANGUAGE_NAMES: Record<Locale, string> = {
   en: "English",
   es: "Spanish",
+  zh: "Simplified Chinese",
+  vi: "Vietnamese",
+  ar: "Arabic",
 };
 
 const RULES = `

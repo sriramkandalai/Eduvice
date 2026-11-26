@@ -1,0 +1,216 @@
+{
+  "Brand": {
+    "name": "EduVice",
+    "tagline": "Trường học tại Mỹ, giải thích dễ hiểu cho các gia đình nhập cư."
+  },
+  "Metadata": {
+    "title": "EduVice — Trường học tại Mỹ, giải thích dễ hiểu",
+    "description": "Câu trả lời rõ ràng dành cho phụ huynh nhập cư về hệ thống trường học tại Mỹ.",
+    "guideTitle": "Cẩm nang trường học",
+    "chatTitle": "Đặt câu hỏi",
+    "aboutTitle": "Giới thiệu",
+    "contactTitle": "Liên hệ",
+    "privacyTitle": "Chính sách bảo mật",
+    "termsTitle": "Điều khoản sử dụng",
+    "notFoundTitle": "Không tìm thấy trang"
+  },
+  "Navbar": {
+    "homeLink": "Trang chủ EduVice",
+    "guide": "Cẩm nang trường học",
+    "chat": "Đặt câu hỏi",
+    "mainNav": "Điều hướng chính"
+  },
+  "LanguageSwitcher": {
+    "label": "Ngôn ngữ",
+    "names": {
+      "en": "English",
+      "es": "Español",
+      "zh": "中文",
+      "vi": "Tiếng Việt",
+      "ar": "العربية"
+    }
+  },
+  "Footer": {
+    "nav": "Chân trang",
+    "guide": "Cẩm nang trường học",
+    "chat": "Đặt câu hỏi",
+    "about": "Giới thiệu",
+    "contact": "Liên hệ",
+    "privacy": "Quyền riêng tư",
+    "terms": "Điều khoản",
+    "disclaimer": "EduVice cung cấp thông tin chung, không phải lời khuyên pháp lý. Các quy định có thể khác nhau tùy theo tiểu bang và học khu, vì vậy xin quý phụ huynh luôn kiểm tra lại với trường của con.",
+    "copyright": "© {year} EduVice"
+  },
+  "Home": {
+    "eyebrow": "Dành cho phụ huynh mới đến Mỹ",
+    "title": "Trường học tại Mỹ, giải thích dễ hiểu.",
+    "valueProp": "Quý vị có thể hỏi bất cứ điều gì về việc ghi danh nhập học, điểm số, giáo dục đặc biệt, hay bữa ăn tại trường — và nhận câu trả lời rõ ràng kèm theo nguồn thông tin.",
+    "cta": "Đặt câu hỏi",
+    "browse": "Xem Cẩm nang trường học",
+    "howTitle": "Cách hoạt động",
+    "step1Title": "Hỏi bằng ngôn ngữ của quý vị",
+    "step1Body": "Nhập câu hỏi tự nhiên như khi quý vị trò chuyện với một người bạn.",
+    "step2Title": "Chúng tôi tìm trong cẩm nang",
+    "step2Body": "EduVice tìm kiếm qua {count} chủ đề được soạn riêng cho phụ huynh.",
+    "step3Title": "Nhận câu trả lời rõ ràng",
+    "step3Body": "Câu trả lời ngắn gọn, đơn giản và có nêu rõ nguồn thông tin.",
+    "topicsTitle": "Tìm hiểu theo chủ đề"
+  },
+  "Categories": {
+    "getting-started": {
+      "title": "Bắt đầu",
+      "description": "Ghi danh nhập học, chọn trường và các giấy tờ cần thiết."
+    },
+    "how-school-works": {
+      "title": "Cách trường học hoạt động",
+      "description": "Điểm số, lịch học, các kỳ thi và bài tập về nhà."
+    },
+    "learning-support": {
+      "title": "Hỗ trợ học tập",
+      "description": "Học sinh học tiếng Anh, giáo dục đặc biệt và các hỗ trợ thêm."
+    },
+    "family-rights": {
+      "title": "Quyền của gia đình",
+      "description": "Thông dịch viên, quyền riêng tư, kỷ luật và việc tham gia cùng nhà trường."
+    },
+    "daily-life": {
+      "title": "Sinh hoạt hàng ngày",
+      "description": "Bữa ăn, xe đưa đón, điểm danh và các chương trình của trường."
+    },
+    "health-safety": {
+      "title": "Sức khỏe và an toàn",
+      "description": "Tiêm chủng, y tá trường học, phòng chống bắt nạt và chăm sóc sức khỏe."
+    },
+    "high-school-college": {
+      "title": "Trung học phổ thông và tương lai",
+      "description": "Tốt nghiệp, vào đại học và các lớp học dành cho phụ huynh."
+    }
+  },
+  "Guide": {
+    "title": "Cẩm nang trường học",
+    "intro": "Câu trả lời ngắn gọn, dễ hiểu cho những câu hỏi phụ huynh thường gặp nhất về trường học tại Mỹ. Quý vị có thể chọn một chủ đề hoặc tự đặt câu hỏi.",
+    "topicCount": "{count, plural, other {# chủ đề}}",
+    "backToGuide": "Cẩm nang trường học",
+    "breadcrumb": "Đường dẫn trang",
+    "related": "Các chủ đề liên quan",
+    "askTitle": "Quý vị vẫn còn thắc mắc?",
+    "askBody": "Hãy hỏi EduVice bằng từ ngữ tự nhiên của quý vị để nhận câu trả lời chỉ sau vài giây.",
+    "askCta": "Đặt câu hỏi",
+    "translationNote": "Chủ đề này hiện chưa có bản tiếng Việt nên được hiển thị bằng tiếng Anh. Quý vị vẫn có thể đặt câu hỏi bằng tiếng Việt."
+  },
+  "Chat": {
+    "title": "Hỏi về trường học tại Mỹ",
+    "intro": "Hãy nhập câu hỏi bằng cách diễn đạt quen thuộc của quý vị. Câu trả lời được tổng hợp từ cẩm nang trường học của chúng tôi.",
+    "inputLabel": "Câu hỏi của quý vị",
+    "placeholder": "Ví dụ: Con tôi có thể nhập học mà không cần số An sinh Xã hội không?",
+    "submit": "Gửi câu hỏi",
+    "thinking": "Đang tìm câu trả lời…",
+    "thinkingLong": "Hệ thống vẫn đang tìm kiếm… việc tra cứu trên các trang web chính thức có thể mất thêm vài giây nữa.",
+    "answerLabel": "Câu trả lời",
+    "sourceLabel": "Nguồn thông tin",
+    "readMore": "Đọc toàn bộ chủ đề",
+    "webSourcesLabel": "Nguồn tham khảo (các trang web chính thức)",
+    "webNote": "Câu trả lời này được tra cứu trực tiếp từ College Board và trang web chính thức của các trường đại học. Các quy định có thể thay đổi mỗi năm, vì vậy xin quý phụ huynh vui lòng kiểm tra lại với trường.",
+    "webNoResult": "Hệ thống không tìm thấy thông tin này trên College Board hay trang web chính thức của các trường đại học. Quý phụ huynh có thể tự tra cứu qua công cụ AP Credit Policy Search của College Board tại apstudents.collegeboard.org, hoặc xem tại trang web tuyển sinh hay văn phòng phụ trách học vụ của trường đại học.",
+    "searchSuggestionsLabel": "Gợi ý tìm kiếm của Google",
+    "errorEmpty": "Xin vui lòng nhập câu hỏi trước.",
+    "errorGeneric": "Đã xảy ra lỗi. Xin quý vị vui lòng thử lại.",
+    "errorRateLimit": "Quý vị đã đặt nhiều câu hỏi trong thời gian ngắn. Xin vui lòng đợi một phút rồi thử lại.",
+    "disclaimer": "EduVice chỉ cung cấp thông tin chung, không phải là lời khuyên pháp lý. Các quy định có thể khác nhau tùy theo từng tiểu bang và học khu — xin quý vị hỏi lại trường của con để biết rõ.",
+    "privacyNote": "Xin quý vị đừng ghi tên họ, địa chỉ hoặc thông tin cá nhân khác trong câu hỏi."
+  },
+  "About": {
+    "title": "Giới thiệu về EduVice",
+    "lead": "EduVice giúp các phụ huynh nhập cư hiểu rõ cách trường học tại Hoa Kỳ hoạt động, bằng lời văn giản dị và bằng chính tiếng mẹ đẻ của quý vị.",
+    "whyTitle": "Lý do chúng tôi tạo nên trang web này",
+    "whyBody": "Hệ thống trường học tại Mỹ có thể gây nhiều bỡ ngỡ, ngay cả với những gia đình lớn lên tại đây. Các từ ngữ như IEP (kế hoạch giáo dục cá nhân), GPA (điểm trung bình) và học khu có thể rất khó hiểu, và nhiều phụ huynh không rõ gia đình mình có những quyền lợi gì, chẳng hạn như quyền nhập học mà không cần số An sinh Xã hội hoặc quyền yêu cầu thông dịch viên miễn phí. EduVice giúp quý vị tìm thấy những câu trả lời rõ ràng tại cùng một nơi.",
+    "principlesTitle": "Điều chúng tôi tin tưởng",
+    "principle1Title": "Miễn phí",
+    "principle1Body": "Quý vị có thể sử dụng EduVice hoàn toàn miễn phí mà không cần tạo tài khoản.",
+    "principle2Title": "Riêng tư",
+    "principle2Body": "Chúng tôi không bao giờ hỏi tên hay tình trạng di trú của quý vị, và chúng tôi cũng không lưu lại nội dung trò chuyện.",
+    "principle3Title": "Cẩn trọng",
+    "principle3Body": "Mọi câu trả lời đều chỉ lấy từ tài liệu hướng dẫn học đường của chúng tôi, và mỗi câu trả lời đều ghi rõ nguồn thông tin.",
+    "principle4Title": "Tôn trọng",
+    "principle4Body": "Mọi câu hỏi đều đáng quý, bằng bất kỳ ngôn ngữ nào.",
+    "limitsTitle": "Những điều EduVice không hỗ trợ",
+    "limitsBody": "EduVice chỉ cung cấp thông tin chung, không phải là lời khuyên pháp lý. Các quy định có thể khác nhau tùy theo từng tiểu bang và học khu, vì vậy xin quý vị hãy kiểm tra lại những điều quan trọng với trường của con mình. Nếu quý vị có thắc mắc về tình trạng di trú của bản thân hoặc gia đình, xin vui lòng hỏi ý kiến luật sư di trú có chứng chỉ hành nghề hoặc một tổ chức trợ giúp pháp lý phi lợi nhuận."
+  },
+  "Contact": {
+    "title": "Liên hệ với chúng tôi",
+    "lead": "Quý vị có ý kiến đóng góp, phát hiện điểm chưa đúng, hoặc muốn cùng tham gia dịch thuật hay hợp tác? Chúng tôi luôn rất mong nhận được tin nhắn từ quý vị.",
+    "emailLabel": "Email",
+    "note": "Xin quý vị vui lòng không gửi thông tin cá nhân hay thông tin về tình trạng di trú của mình. Nếu có câu hỏi riêng về con em quý vị, xin hãy liên hệ trực tiếp với nhà trường. Trong trường hợp khẩn cấp, xin gọi 911."
+  },
+  "Privacy": {
+    "title": "Chính sách quyền riêng tư",
+    "updated": "Cập nhật lần cuối: {date}",
+    "intro": "EduVice là trang thông tin miễn phí dành cho các bậc phụ huynh. Chính sách này giải thích thông tin được xử lý như thế nào khi quý vị sử dụng trang web.",
+    "sections": [
+      {
+        "heading": "Những thông tin chúng tôi thu thập",
+        "body": "Quý vị không cần tạo tài khoản để sử dụng EduVice, và chúng tôi không bao giờ hỏi tên, cách liên lạc hay tình trạng di trú của quý vị. Khi quý vị đặt câu hỏi, chúng tôi sẽ nhận được nội dung câu hỏi đó. Để ngăn chặn việc lạm dụng hệ thống, chúng tôi lưu giữ một chuỗi mã hóa (hashed) từ địa chỉ internet của quý vị kèm theo số lượng câu hỏi đã được gửi. Số đếm này sẽ tự động xóa đi trong vòng 24 giờ."
+      },
+      {
+        "heading": "Cách các câu hỏi được giải đáp",
+        "body": "Để trả lời câu hỏi của quý phụ huynh, chúng tôi gửi nội dung câu hỏi đến dịch vụ Gemini của Google để giúp tìm đúng chủ đề và soạn câu trả lời. Đối với những câu hỏi về việc trường đại học nào công nhận tín chỉ cho các kỳ thi AP, Gemini cũng sẽ dùng Google Search để tra cứu thông tin trên College Board và các trang web chính thức của trường. Google sẽ xử lý nội dung này theo các điều khoản riêng của họ, đồng thời có thể lưu giữ và sử dụng dữ liệu để cải thiện dịch vụ. Xin quý phụ huynh vui lòng không ghi họ tên, địa chỉ, số hồ sơ hoặc các thông tin cá nhân khác vào câu hỏi."
+      },
+      {
+        "heading": "Những điều chúng tôi không làm",
+        "body": "Chúng tôi không lưu lại nội dung trò chuyện, không bán thông tin của quý vị, không đặt quảng cáo và không dùng cookie theo dõi."
+      },
+      {
+        "heading": "Tập tin cookie",
+        "body": "Chúng tôi chỉ dùng duy nhất một tập tin cookie để ghi nhớ ngôn ngữ mà quý vị đã chọn. Cookie này không dùng để xác định danh tính của quý vị."
+      },
+      {
+        "heading": "Dịch vụ lưu trữ mạng",
+        "body": "Tương tự như hầu hết các trang mạng khác, bên cung cấp dịch vụ máy chủ của chúng tôi có thể lưu lại những nhật ký kỹ thuật cơ bản, chẳng hạn như địa chỉ internet và loại trình duyệt, nhằm mục đích an toàn và giữ cho trang mạng hoạt động bình thường."
+      },
+      {
+        "heading": "Trẻ em",
+        "body": "EduVice được xây dựng dành cho các bậc cha mẹ và người giám hộ. Trang web không được thiết kế để trẻ em dưới 13 tuổi tự sử dụng một mình."
+      },
+      {
+        "heading": "Thay đổi và câu hỏi thắc mắc",
+        "body": "Nếu chúng tôi có sửa đổi chính sách này, ngày tháng ở đầu trang sẽ được cập nhật. Nếu quý vị có bất kỳ thắc mắc nào, xin vui lòng liên hệ với chúng tôi."
+      }
+    ]
+  },
+  "Terms": {
+    "title": "Điều khoản sử dụng",
+    "updated": "Cập nhật lần cuối: {date}",
+    "intro": "Khi sử dụng EduVice, quý vị đồng ý với các điều khoản này.",
+    "sections": [
+      {
+        "heading": "Chỉ mang tính tham khảo thông tin",
+        "body": "EduVice cung cấp thông tin chung về trường học tại Hoa Kỳ. Đây không phải là lời khuyên về pháp lý, y tế hay di trú. Các quy định có thể khác biệt tùy theo tiểu bang và học khu, vì vậy xin quý vị hãy xác nhận lại các nội dung quan trọng với trường của con mình hoặc các chuyên gia có chuyên môn."
+      },
+      {
+        "heading": "Câu trả lời có thể có thiếu sót",
+        "body": "Các câu trả lời được soạn với sự hỗ trợ của trí tuệ nhân tạo dựa trên tài liệu hướng dẫn học đường của chúng tôi. Chúng tôi luôn nỗ lực giữ cho thông tin chính xác, tuy nhiên câu trả lời vẫn có thể chưa đủ ý, đã cũ hoặc có sai sót. Quý vị xin đừng chỉ dựa vào một mình EduVice để đưa ra những quyết định quan trọng."
+      },
+      {
+        "heading": "Sử dụng đúng mực",
+        "body": "Xin quý vị vui lòng sử dụng EduVice một cách văn minh và tôn trọng. Xin đừng cố ý làm hỏng, gây quá tải, lạm dụng trang mạng, hoặc dùng công cụ tự động để lấy dữ liệu. Chúng tôi có giới hạn số lượng câu hỏi có thể gửi trong một khoảng thời gian ngắn."
+      },
+      {
+        "heading": "Không cam kết bảo đảm",
+        "body": "EduVice được cung cấp theo tình trạng hiện có và không kèm theo bất kỳ bảo đảm nào. Trong phạm vi luật pháp cho phép, chúng tôi không chịu trách nhiệm về những mất mát hay tổn thất phát sinh từ việc sử dụng trang web này."
+      },
+      {
+        "heading": "Các trang web khác",
+        "body": "EduVice có thể nhắc đến các trang web hoặc tổ chức khác. Chúng tôi không kiểm soát những nơi này và không chịu trách nhiệm về nội dung của họ."
+      },
+      {
+        "heading": "Các thay đổi",
+        "body": "Chúng tôi có thể cập nhật các điều khoản này. Nếu có thay đổi, chúng tôi sẽ cập nhật lại ngày ghi ở đầu trang này."
+      }
+    ]
+  },
+  "NotFound": {
+    "title": "Không tìm thấy trang",
+    "body": "Chúng tôi không tìm thấy trang này. Trang có thể đã được chuyển đi hoặc đường dẫn bị sai.",
+    "home": "Trở về trang chủ"
+  }
+}

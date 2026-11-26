@@ -1,14 +1,35 @@
 import { NextResponse } from "next/server";
 import { ThinkingLevel, type GenerateContentResponse } from "@google/genai";
 import { retrieveTopChunks } from "@/lib/rag";
+import { getFaq } from "@/lib/faqs";
 import { chatModel, getGemini } from "@/lib/gemini";
 import { buildSystemPrompt, MAX_TAG_LENGTH, TAG_UNUSED, TAG_USED_PATTERN } from "@/lib/prompt";
 import { checkRateLimit, visitorKey } from "@/lib/rate-limit";
-import { MAX_QUESTION_LENGTH, SOURCE_HEADER, encodeSource } from "@/lib/chat-protocol";
+import {
+  MAX_QUESTION_LENGTH,
+  SOURCE_HEADER,
+  SUGGESTIONS_HEADER,
+  WEB_SOURCES_HEADER,
+  encodeJsonHeader,
+  encodeSource,
+} from "@/lib/chat-protocol";
+import { needsWebSearch } from "@/lib/router";
+import { answerWithWebSearch } from "@/lib/web-search";
+import { getTranslations } from "next-intl/server";
 import { isLocale, routing, type Locale } from "@/i18n/routing";
 
 export const runtime = "nodejs"; // the MongoDB driver needs Node, not Edge
 export const dynamic = "force-dynamic";
+
+const SOURCE_EXCERPT_CHARS = 280;
+
+/** Cut text to roughly `max` characters at a word boundary (CJK text has no spaces, so fall back to a hard cut). */
+function excerpt(text: string, max: number): string {
+  if (text.length <= max) return text;
+  const cut = text.slice(0, max);
+  const lastSpace = cut.lastIndexOf(" ");
+  return `${(lastSpace > max * 0.6 ? cut.slice(0, lastSpace) : cut).trimEnd()}…`;
+}
 
 function jsonError(status: number, error: string, headers?: HeadersInit) {
   return NextResponse.json({ error }, { status, headers });
@@ -30,6 +51,24 @@ function parseTag(text: string, sourceCount: number): { sourceIndex: number | nu
     return { sourceIndex: n >= 1 && n <= sourceCount ? n - 1 : null, rest: strip(match[0].length) };
   }
   return { sourceIndex: null, rest: text };
+}
+
+/** Answer from a live search of College Board / official .edu sites (not streamed: sources are checked first). */
+async function webAnswerResponse(question: string, locale: Locale): Promise<Response> {
+  const answer = await answerWithWebSearch(question, locale);
+  const headers = new Headers({
+    "Content-Type": "text/plain; charset=utf-8",
+    "Cache-Control": "no-store",
+  });
+
+  if (!answer) {
+    const t = await getTranslations({ locale, namespace: "Chat" });
+    return new Response(t("webNoResult"), { headers });
+  }
+
+  headers.set(WEB_SOURCES_HEADER, encodeJsonHeader(answer.sources));
+  if (answer.suggestionsHtml) headers.set(SUGGESTIONS_HEADER, encodeURIComponent(answer.suggestionsHtml));
+  return new Response(answer.text, { headers });
 }
 
 export async function POST(req: Request) {
@@ -56,7 +95,17 @@ export async function POST(req: Request) {
       });
     }
 
-    const sources = await retrieveTopChunks(question);
+    // Guide search and the "does this need a live web search?" check run in parallel.
+    const [sources, webSearch] = await Promise.all([retrieveTopChunks(question), needsWebSearch(question)]);
+
+    if (webSearch) {
+      try {
+        return await webAnswerResponse(question, locale);
+      } catch (err) {
+        // e.g. search quota reached: fall back to the guide-based answer below.
+        console.error("[api/chat] web search failed, using guide answer:", err);
+      }
+    }
 
     const abort = new AbortController();
     const generator = await getGemini().models.generateContentStream({
@@ -116,7 +165,13 @@ export async function POST(req: Request) {
       "Cache-Control": "no-store",
     });
     if (source) {
-      headers.set(SOURCE_HEADER, encodeSource({ slug: source.slug, title: source.title, text: source.text }));
+      // Show the citation in the reader's language when a translation exists. Only an excerpt is
+      // sent (non-Latin text grows ~6x when percent-encoded); the card links to the full topic.
+      const shown = getFaq(locale, source.slug) ?? source;
+      headers.set(
+        SOURCE_HEADER,
+        encodeSource({ slug: source.slug, title: shown.title, text: excerpt(shown.text, SOURCE_EXCERPT_CHARS) }),
+      );
     }
 
     return new Response(stream, { headers });

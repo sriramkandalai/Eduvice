@@ -18,15 +18,48 @@
   --shadow-pill: 0 0 0 6px rgb(255 255 255 / 0.35), 0 18px 40px -10px rgb(26 61 143 / 0.55);
 }
 
-/* Fonts are loaded by next/font in [locale]/layout.tsx and exposed as CSS variables. */
+/* Fonts are loaded by next/font in [locale]/layout.tsx and exposed as CSS variables.
+   --font-body / --font-heading are switched per language below. */
 @theme inline {
-  --font-sans: var(--font-poppins), system-ui, sans-serif;
-  --font-display: var(--font-luckiest), var(--font-poppins), sans-serif;
+  --font-sans: var(--font-body);
+  --font-display: var(--font-heading);
+}
+
+:root {
+  --font-body: var(--font-poppins), system-ui, sans-serif;
+  --font-heading: var(--font-luckiest), var(--font-poppins), sans-serif;
+  --wordmark-stroke: 0.09em;
+  --wordmark-weight: 400; /* Luckiest Guy has a single weight */
+}
+:root:lang(vi),
+:root:lang(ar),
+:root:lang(zh) {
+  --wordmark-weight: 800;
+}
+:root:lang(vi) {
+  --font-body: var(--font-vietnamese), system-ui, sans-serif;
+  --font-heading: var(--font-vietnamese), system-ui, sans-serif;
+  --wordmark-stroke: 0.07em;
+}
+:root:lang(ar) {
+  --font-body: var(--font-arabic), system-ui, sans-serif;
+  --font-heading: var(--font-arabic), system-ui, sans-serif;
+  --wordmark-stroke: 0.06em;
+}
+:root:lang(zh) {
+  --font-body: var(--font-poppins), "PingFang SC", "Microsoft YaHei", "Noto Sans SC", system-ui, sans-serif;
+  --font-heading: var(--font-body);
+  --wordmark-stroke: 0.06em;
 }
 
 @layer base {
   html {
     background-color: var(--color-yellow);
+  }
+
+  /* Letter-spacing breaks the joined letters of Arabic script. */
+  :lang(ar) * {
+    letter-spacing: normal !important;
   }
 
   :focus-visible {
@@ -38,11 +71,21 @@
 @layer components {
   /* Same treatment as the coming-soon wordmark: blue fill, cream outline. */
   .wordmark {
-    font-family: var(--font-display);
+    font-family: var(--font-heading);
+    font-weight: var(--wordmark-weight);
     color: var(--color-blue);
-    -webkit-text-stroke: 0.09em var(--color-cream);
+    -webkit-text-stroke: var(--wordmark-stroke) var(--color-cream);
     paint-order: stroke fill;
     text-shadow: 0.05em 0.06em 0 rgb(26 61 143 / 0.28);
     line-height: 1;
+  }
+
+  /* The "EduVice" logotype keeps its brand font in every language. */
+  .brand {
+    --font-heading: var(--font-luckiest), var(--font-poppins), sans-serif;
+    --wordmark-stroke: 0.09em;
+    --wordmark-weight: 400;
+    font-family: var(--font-heading);
+    font-weight: 400;
   }
 }

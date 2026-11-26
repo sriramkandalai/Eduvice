@@ -1,28 +1,102 @@
 {
   "Brand": {
-    "name": "EduVice"
+    "name": "EduVice",
+    "tagline": "US schools, explained for immigrant families."
   },
   "Metadata": {
     "title": "EduVice — US schools, explained",
-    "description": "Clear answers for immigrant parents about the US school system."
+    "description": "Clear answers for immigrant parents about the US school system.",
+    "guideTitle": "School Guide",
+    "chatTitle": "Ask a question",
+    "aboutTitle": "About",
+    "contactTitle": "Contact",
+    "privacyTitle": "Privacy Policy",
+    "termsTitle": "Terms of Use",
+    "notFoundTitle": "Page not found"
   },
   "Navbar": {
     "homeLink": "EduVice home",
+    "guide": "School Guide",
     "chat": "Ask a question",
     "mainNav": "Main navigation"
   },
   "LanguageSwitcher": {
     "label": "Language",
-    "en": "EN",
-    "es": "ES",
-    "enFull": "English",
-    "esFull": "Español"
+    "names": {
+      "en": "English",
+      "es": "Español",
+      "zh": "中文",
+      "vi": "Tiếng Việt",
+      "ar": "العربية"
+    }
+  },
+  "Footer": {
+    "nav": "Footer",
+    "guide": "School Guide",
+    "chat": "Ask a question",
+    "about": "About",
+    "contact": "Contact",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "disclaimer": "EduVice gives general information, not legal advice. Rules can differ by state and school district, so always check with your school.",
+    "copyright": "© {year} EduVice"
   },
   "Home": {
     "eyebrow": "For parents new to the US",
     "title": "US schools, explained.",
     "valueProp": "Ask anything about enrollment, grades, special education, or school meals — and get a clear answer with its source.",
-    "cta": "Ask a question"
+    "cta": "Ask a question",
+    "browse": "Browse the School Guide",
+    "howTitle": "How it works",
+    "step1Title": "Ask in your language",
+    "step1Body": "Type your question the way you would ask a friend.",
+    "step2Title": "We search our guide",
+    "step2Body": "EduVice looks through {count} topics written for parents.",
+    "step3Title": "Get a clear answer",
+    "step3Body": "Short, simple answers that show where the information came from.",
+    "topicsTitle": "Explore by topic"
+  },
+  "Categories": {
+    "getting-started": {
+      "title": "Getting started",
+      "description": "Enrolling, choosing a school, and documents."
+    },
+    "how-school-works": {
+      "title": "How school works",
+      "description": "Grades, the calendar, tests, and homework."
+    },
+    "learning-support": {
+      "title": "Learning support",
+      "description": "English learners, special education, and extra help."
+    },
+    "family-rights": {
+      "title": "Family rights",
+      "description": "Interpreters, privacy, discipline, and getting involved."
+    },
+    "daily-life": {
+      "title": "Daily life",
+      "description": "Meals, buses, attendance, and school programs."
+    },
+    "health-safety": {
+      "title": "Health and safety",
+      "description": "Vaccines, the school nurse, bullying, and well-being."
+    },
+    "high-school-college": {
+      "title": "High school and beyond",
+      "description": "Graduation, college, and classes for parents."
+    }
+  },
+  "Guide": {
+    "title": "School Guide",
+    "intro": "Short, clear answers to the questions parents ask most about US schools. Pick a topic, or ask your own question.",
+    "topicCount": "{count, plural, one {# topic} other {# topics}}",
+    "backToGuide": "School Guide",
+    "breadcrumb": "Breadcrumb",
+    "related": "Related topics",
+    "askTitle": "Still have a question?",
+    "askBody": "Ask EduVice in your own words and get an answer in seconds.",
+    "askCta": "Ask a question",
+    "translationNote": "This topic is not yet available in your language, so it is shown in English. You can still ask questions in your language."
   },
   "Chat": {
     "title": "Ask about US schools",
@@ -31,11 +105,112 @@
     "placeholder": "Example: Can my child enroll without a Social Security number?",
     "submit": "Ask",
     "thinking": "Finding an answer…",
+    "thinkingLong": "Still working… searching official websites can take a few more seconds.",
     "answerLabel": "Answer",
     "sourceLabel": "Source",
+    "readMore": "Read the full topic",
+    "webSourcesLabel": "Sources (official websites)",
+    "webNote": "This answer comes from a live search of College Board and official college websites. Policies can change each year, so confirm with the college.",
+    "webNoResult": "I couldn't find this on College Board or official college websites. You can look it up with College Board's AP Credit Policy Search at apstudents.collegeboard.org, or check the college's admissions or registrar website.",
+    "searchSuggestionsLabel": "Google Search suggestions",
     "errorEmpty": "Please type a question first.",
     "errorGeneric": "Something went wrong. Please try again.",
     "errorRateLimit": "You've asked a lot of questions in a short time. Please wait a minute and try again.",
-    "disclaimer": "EduVice gives general information, not legal advice. Rules can differ by state and district — check with your school."
+    "disclaimer": "EduVice gives general information, not legal advice. Rules can differ by state and district — check with your school.",
+    "privacyNote": "Please don't include names, addresses, or other personal details in your question."
+  },
+  "About": {
+    "title": "About EduVice",
+    "lead": "EduVice helps immigrant parents understand how schools work in the United States, in plain language and in their own language.",
+    "whyTitle": "Why we built this",
+    "whyBody": "The US school system can be confusing, even for families who grew up here. Words like IEP, GPA, and school district can be hard to understand, and many parents don't know the rights their family has, like the right to enroll without a Social Security number or to have a free interpreter. EduVice puts clear answers in one place.",
+    "principlesTitle": "What we believe",
+    "principle1Title": "Free",
+    "principle1Body": "EduVice is free to use, with no account needed.",
+    "principle2Title": "Private",
+    "principle2Body": "We never ask for your name or immigration status, and we don't save your conversations.",
+    "principle3Title": "Careful",
+    "principle3Body": "Answers come only from our school guide, and each answer shows its source.",
+    "principle4Title": "Respectful",
+    "principle4Body": "Every question is a good question, in any language.",
+    "limitsTitle": "What EduVice is not",
+    "limitsBody": "EduVice gives general information, not legal advice. Rules can differ by state and school district, so check important details with your child's school. For questions about your own immigration situation, talk to a qualified immigration lawyer or a nonprofit legal aid organization."
+  },
+  "Contact": {
+    "title": "Contact us",
+    "lead": "Have feedback, found a mistake, or want to help translate or partner with us? We'd love to hear from you.",
+    "emailLabel": "Email",
+    "note": "Please don't send personal details or information about your immigration situation. For questions about your child, contact your school directly. In an emergency, call 911."
+  },
+  "Privacy": {
+    "title": "Privacy Policy",
+    "updated": "Last updated: {date}",
+    "intro": "EduVice is a free information website for parents. This policy explains what happens to information when you use it.",
+    "sections": [
+      {
+        "heading": "What we collect",
+        "body": "You don't need an account to use EduVice, and we never ask for your name, contact details, or immigration status. When you ask a question, we receive the text of your question. To stop abuse, we keep a scrambled (hashed) version of your internet address together with a count of how many questions were asked. These counts are deleted automatically within 24 hours."
+      },
+      {
+        "heading": "How your questions are answered",
+        "body": "To answer your question, we send its text to Google's Gemini service, which helps find the right topic and write the answer. For questions about which colleges give credit for AP exams, Gemini also uses Google Search to look up College Board and official college websites. Google processes this text under its own terms and may store it and use it to improve its services. Please don't include names, addresses, case numbers, or other personal details in your questions."
+      },
+      {
+        "heading": "What we don't do",
+        "body": "We don't save your conversations, sell your information, show ads, or use tracking cookies."
+      },
+      {
+        "heading": "Cookies",
+        "body": "We use one cookie to remember the language you chose. It doesn't identify you."
+      },
+      {
+        "heading": "Hosting",
+        "body": "Like most websites, our hosting provider may keep basic technical logs, such as internet address and browser type, for security and to keep the site running."
+      },
+      {
+        "heading": "Children",
+        "body": "EduVice is made for parents and guardians. It is not designed for children under 13 to use on their own."
+      },
+      {
+        "heading": "Changes and questions",
+        "body": "If we change this policy, we will update the date at the top of this page. If you have questions, please contact us."
+      }
+    ]
+  },
+  "Terms": {
+    "title": "Terms of Use",
+    "updated": "Last updated: {date}",
+    "intro": "By using EduVice, you agree to these terms.",
+    "sections": [
+      {
+        "heading": "Information only",
+        "body": "EduVice provides general information about US schools. It is not legal, medical, or immigration advice. Rules differ by state and school district, so confirm important details with your child's school or a qualified professional."
+      },
+      {
+        "heading": "Answers can be wrong",
+        "body": "Answers are written with the help of artificial intelligence based on our school guide. We work to keep them accurate, but they may be incomplete, out of date, or wrong. Don't rely on EduVice alone for important decisions."
+      },
+      {
+        "heading": "Fair use",
+        "body": "Please use EduVice respectfully. Don't try to break, overload, or misuse the website, or collect its content with automated tools. We limit how many questions can be asked in a short time."
+      },
+      {
+        "heading": "No warranty",
+        "body": "EduVice is provided \"as is\", without guarantees of any kind. To the extent the law allows, we are not responsible for losses that come from using the website."
+      },
+      {
+        "heading": "Other websites",
+        "body": "EduVice may mention other websites or organizations. We don't control them and aren't responsible for their content."
+      },
+      {
+        "heading": "Changes",
+        "body": "We may update these terms. If we do, we will change the date at the top of this page."
+      }
+    ]
+  },
+  "NotFound": {
+    "title": "Page not found",
+    "body": "We couldn't find that page. It may have moved, or the link may be wrong.",
+    "home": "Go to the home page"
   }
 }
